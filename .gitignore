@@ -1,4 +1,3 @@
-*.iml
 .gradle
 /local.properties
 /.idea/workspace.xml
@@ -6,4 +5,11 @@
 .DS_Store
 /build
 /captures
-.externalNativeBuild
+cache.xml
+/gradle
+compiler.xml
+.idea/encodings.xml
+.idea/gradle.xml
+.idea/runConfigurations.xml
+StockAndroid.iml
+app.iml
