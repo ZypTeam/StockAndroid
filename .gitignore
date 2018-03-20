@@ -13,3 +13,5 @@ compiler.xml
 .idea/runConfigurations.xml
 StockAndroid.iml
 app.iml
+*.iml
+.idea/
