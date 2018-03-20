@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#333">
+
+    <TextView
+        android:id="@+id/register"
+        android:text="还没有账号？立即注册"
+        android:textSize="16sp"
+        android:textColor="#666"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textColor="#666"
+        android:textSize="16sp"
+        android:text="忘记密码"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="150dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/login"
+        android:background="@drawable/bg_login_btn"
+        android:text="登录"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        android:layout_marginBottom="20dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp" />
+    
+    <EditText
+        android:hint="密码"
+        android:drawableLeft="@mipmap/login_icon_password"
+        android:drawablePadding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/login"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/password"
+        android:gravity="center|left"
+        android:textColor="#d3d3d3"
+        android:textColorHint="#d3d3d3"
+        android:textSize="17sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:hint="手机"
+        android:drawableLeft="@mipmap/login_icon_user"
+        android:drawablePadding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        android:id="@+id/phone"
+        android:gravity="center|left"
+        android:textColor="#d3d3d3"
+        android:textColorHint="#d3d3d3"
+        android:textSize="17sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="50dp" />
+
+    <ImageView
+        app:layout_constraintBottom_toTopOf="@+id/phone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="80dp"
+        android:src="@mipmap/login_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>

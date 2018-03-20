@@ -1,8 +1,10 @@
 package com.yiyoupin.stock.ui.fragment;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
 /**
@@ -13,6 +15,7 @@ import com.yiyoupin.stock.ui.base.BaseStockFragment;
  */
 public class MyFrgament extends BaseStockFragment {
 
+    private ImageView iconHead;
     public static MyFrgament getInstance() {
         MyFrgament fragment = new MyFrgament();
         return fragment;
@@ -35,11 +38,13 @@ public class MyFrgament extends BaseStockFragment {
 
     @Override
     public void initView(View rootView) {
-
+        iconHead=rootView.findViewById(R.id.icon_head);
     }
 
     @Override
     public void initAction() {
-
+        iconHead.setOnClickListener(v -> {
+            goActivity(null, LoginActivity.class);
+        });
     }
 }
