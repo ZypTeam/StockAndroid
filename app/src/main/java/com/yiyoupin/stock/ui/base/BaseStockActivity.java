@@ -1,29 +1,30 @@
 package com.yiyoupin.stock.ui.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.jusfoun.baselibrary.base.BaseViewPagerFragment;
+import com.jusfoun.baselibrary.base.BaseActivity;
 import com.jusfoun.baselibrary.dialog.LoadingDialog;
 import com.jusfoun.baselibrary.permissiongen.PermissionGen;
 
 /**
  * @author wangcc
  * @date 2017/11/17
- * @describe
+ * @describe 说法 activity基类
  */
 
-public abstract class BaseTalkLawFragment extends BaseViewPagerFragment{
+public abstract class BaseStockActivity extends BaseActivity {
 
     private LoadingDialog loadingDialog;
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDialog();
+        initDatas();
+        initView();
+        initAction();
     }
 
     @Override
@@ -33,7 +34,7 @@ public abstract class BaseTalkLawFragment extends BaseViewPagerFragment{
 
     private void initDialog(){
         if (loadingDialog == null) {
-            loadingDialog = new LoadingDialog(mContext, com.jusfoun.baselibrary.R.style.my_dialog);
+            loadingDialog = new LoadingDialog(this, com.jusfoun.baselibrary.R.style.my_dialog);
             loadingDialog.setCancelable(true);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
@@ -53,18 +54,5 @@ public abstract class BaseTalkLawFragment extends BaseViewPagerFragment{
         if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.cancel();
         }
-    }
-
-    /**
-     * 跳转界面
-     * @param bundle 传递数据，为NULL不传递
-     * @param cls 跳转的界面
-     */
-    protected void goActivity(Bundle bundle, Class<?> cls){
-        Intent intent=new Intent();
-        intent.setClass(mContext,cls);
-        if (bundle!=null)
-            intent.putExtras(bundle);
-       startActivity(intent);
     }
 }

@@ -28,21 +28,21 @@
             android:background="@color/home_bottom_btn_selscter">
 
             <LinearLayout
-                android:id="@+id/layout_opinion"
+                android:id="@+id/layout_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/img_opinion"
+                    android:id="@+id/img_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/img_home_select" />
 
                 <TextView
-                    android:id="@+id/text_opinion"
+                    android:id="@+id/text_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -62,7 +62,7 @@
             android:background="@color/home_bottom_btn_normal">
 
             <LinearLayout
-                android:id="@+id/layout_statement"
+                android:id="@+id/layout_quotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -70,14 +70,14 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/img_stetement"
+                    android:id="@+id/img_quotes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/img_home_normal" />
+                    android:src="@drawable/img_quotes_noraml" />
 
                 <TextView
-                    android:id="@+id/text_statement"
+                    android:id="@+id/text_quotes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -97,6 +97,7 @@
             android:background="@color/home_bottom_btn_normal">
 
             <LinearLayout
+                android:id="@+id/layout_optional"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -104,12 +105,14 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/img_optional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/img_home_normal" />
+                    android:src="@drawable/img_optional_normal_" />
 
                 <TextView
+                    android:id="@+id/text_optional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

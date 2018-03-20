@@ -54,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setStatusBarLight(true);
+        setStatusBarLight(false);
         TAG=getClass().getSimpleName();
         mContext=this;
         setContentView(getLayoutResId());
@@ -177,4 +177,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initDatas();
     public abstract void initView();
     public abstract void initAction();
+
+
 }
