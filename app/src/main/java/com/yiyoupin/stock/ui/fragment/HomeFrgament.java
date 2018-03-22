@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.fragment;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
@@ -7,9 +8,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.ui.HomeListModel;
+import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 import com.yiyoupin.stock.ui.view.HomeBottomQuotesView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhaoyapeng
@@ -38,10 +45,13 @@ public class HomeFrgament extends BaseStockFragment {
     protected HomeBottomQuotesView viewShenzheng;
     protected HomeBottomQuotesView viewChuangye;
 
+    private HomeListAdapter adapter;
+
     public static HomeFrgament getInstance() {
         HomeFrgament fragment = new HomeFrgament();
         return fragment;
     }
+
 
     @Override
     protected void refreshData() {
@@ -55,6 +65,7 @@ public class HomeFrgament extends BaseStockFragment {
 
     @Override
     public void initDatas() {
+        adapter = new HomeListAdapter(mContext);
 
     }
 
@@ -82,6 +93,69 @@ public class HomeFrgament extends BaseStockFragment {
 
     @Override
     public void initAction() {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setAdapter(adapter);
+
+        layoutCelue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textCelue.setTextColor(0xffff4b36);
+                textJingxuan.setTextColor(mContext.getResources().getColor(R.color.write));
+                textXingtai.setTextColor(mContext.getResources().getColor(R.color.write));
+
+                lineCelue.setVisibility(View.VISIBLE);
+                lineJingxuan.setVisibility(View.GONE);
+                lineXingtai.setVisibility(View.GONE);
+
+                adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
+        layoutJingxuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textCelue.setTextColor(mContext.getResources().getColor(R.color.write));
+                textJingxuan.setTextColor(0xffff4b36);
+                textXingtai.setTextColor(mContext.getResources().getColor(R.color.write));
+
+                lineCelue.setVisibility(View.GONE);
+                lineJingxuan.setVisibility(View.VISIBLE);
+                lineXingtai.setVisibility(View.GONE);
+
+                adapter.setType(HomeListAdapter.TYPE_FEATURED);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        layoutXingtai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                textCelue.setTextColor(mContext.getResources().getColor(R.color.write));
+                textJingxuan.setTextColor(mContext.getResources().getColor(R.color.write));
+                textXingtai.setTextColor(0xffff4b36);
+
+                lineCelue.setVisibility(View.GONE);
+                lineJingxuan.setVisibility(View.GONE);
+                lineXingtai.setVisibility(View.VISIBLE);
+
+                adapter.setType(HomeListAdapter.TYPE_FORM);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        List<BaseModel> list = new ArrayList<>();
+        list.add(new HomeListModel());
+        list.add(new HomeListModel());
+        list.add(new HomeListModel());
+        list.add(new HomeListModel());
+        list.add(new HomeListModel());
+        adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
+        adapter.refreshList(list);
+
         viewShangzheng.setData();
         viewShenzheng.setData();
         viewChuangye.setData();

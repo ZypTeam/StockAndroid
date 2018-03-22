@@ -138,7 +138,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp" />
 
     <TextView
         android:id="@+id/text_more"
@@ -203,6 +205,7 @@
                 >
 
                 <ImageView
+                    android:id="@+id/img_trend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -298,7 +301,7 @@
             android:id="@+id/view_shenzheng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_centerInParent="true" />
+            android:layout_centerInParent="true" />
 
         <com.yiyoupin.stock.ui.view.HomeBottomQuotesView
             android:id="@+id/view_chuangye"
@@ -311,7 +314,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/line_color_black"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:background="@color/line_color_black" />
 
 </LinearLayout>
