@@ -9,4 +9,8 @@
     
     <color name="home_bottom__btn_text_normal">#e9eae7</color>
     <color name="home_bottom__btn_text_selecter">#fb4932</color>
+
+
+    <color name="write">#ffffff</color>
+    <color name="line_color_black">#171616</color>
 </resources>

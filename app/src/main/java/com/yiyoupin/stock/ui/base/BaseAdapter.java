@@ -50,7 +50,7 @@ public abstract class BaseAdapter<T extends Serializable> extends RecyclerView.A
 
     public abstract int getLayoutResId(int viewType);
 
-    protected abstract  <E extends BaseViewHolder> E getViewHolder(int viewType,View view);
+    protected abstract  BaseViewHolder getViewHolder(int viewType,View view);
 
     /**
      * 添加多项
