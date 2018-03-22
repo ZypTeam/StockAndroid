@@ -9,10 +9,10 @@ import com.yiyoupin.stock.ui.base.BaseStockActivity;
  * @describe
  */
 
-public class RegisterActivity extends BaseStockActivity {
+public class AuthPhoneCodeActivity extends BaseStockActivity {
     @Override
     public int getLayoutResId() {
-        return R.layout.activity_register;
+        return R.layout.activity_auth_phone_code;
     }
 
     @Override

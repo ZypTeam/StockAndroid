@@ -37,6 +37,9 @@ public class LoginActivity extends BaseStockActivity {
     @Override
     public void initAction() {
         register.setText(getText("还没有账号？","立即注册"));
+        register.setOnClickListener(v -> {
+            goActivity(null,GetPhoneCodeActivity.class);
+        });
     }
 
     public SpannableStringBuilder getText(String txt1, String txt2) {
