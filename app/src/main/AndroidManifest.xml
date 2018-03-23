@@ -20,9 +20,16 @@
             </intent-filter>
         </activity>
 
+        <!--登录页面-->
         <activity android:name=".ui.activity.LoginActivity" />
 
+        <!--获取手机验证码-->
         <activity android:name=".ui.activity.GetPhoneCodeActivity"/>
+
+        <!--首页更多页面-->
+        <activity android:name=".ui.activity.HomeMoreActivity"
+            android:screenOrientation="portrait"/>
+
 
     </application>
 

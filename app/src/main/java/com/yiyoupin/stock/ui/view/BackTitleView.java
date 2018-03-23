@@ -26,7 +26,7 @@ import com.yiyoupin.stock.R;
 public class BackTitleView extends FrameLayout {
     protected ImageView back,right;
     protected TextView title,rightText;
-    protected TitleStatusBarView titleBar;
+//    protected TitleStatusBarView titleBar;
     private Context context;
 
     public BackTitleView(@NonNull Context context) {
@@ -49,7 +49,7 @@ public class BackTitleView extends FrameLayout {
         back = (ImageView) findViewById(R.id.back);
         right = (ImageView) findViewById(R.id.right);
         title = (TextView) findViewById(R.id.title);
-        titleBar = (TitleStatusBarView) findViewById(R.id.title_bar);
+//        titleBar = (TitleStatusBarView) findViewById(R.id.title_bar);
         rightText = findViewById(R.id.right_text);
         rightText.setVisibility(View.GONE);
         right.setVisibility(GONE);

@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:textColor="#d0d0d0"
-            android:textSize="15sp" />
+            android:textColor="#7d7d7d"
+            android:textSize="10sp" />
     </LinearLayout>
 
 

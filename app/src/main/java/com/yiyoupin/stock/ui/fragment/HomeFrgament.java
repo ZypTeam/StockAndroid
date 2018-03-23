@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.HomeListModel;
+import com.yiyoupin.stock.ui.activity.HomeMoreActivity;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 import com.yiyoupin.stock.ui.view.HomeBottomQuotesView;
@@ -144,6 +146,15 @@ public class HomeFrgament extends BaseStockFragment {
 
                 adapter.setType(HomeListAdapter.TYPE_FORM);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        textMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(HomeMoreActivity.TYPE,adapter.getType());
+                goActivity(bundle,HomeMoreActivity.class);
             }
         });
 

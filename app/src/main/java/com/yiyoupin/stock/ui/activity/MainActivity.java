@@ -60,6 +60,7 @@ public class MainActivity extends BaseStockActivity {
     @Override
     public void initAction() {
         viewpager.setAdapter(homeAdapter);
+        viewpager.setNotTouchScoll(true);
 
         layoutHome.setOnClickListener(new View.OnClickListener() {
             @Override
