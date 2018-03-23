@@ -1,11 +1,13 @@
 package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.ui.activity.FromListActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
 
@@ -22,6 +24,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
     public static int TYPE_STRATEGIES = 1;// 选个策略
     public static int TYPE_FEATURED = 2;// 买点精选
     public static int TYPE_FORM = 3;// 技术形态
+    public static int TYPE_FORM_LIST = 4;// 技术形态列表
 
     private int type = 1;
 
@@ -37,6 +40,8 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             return R.layout.item_featured;
         } else if (viewType == 3) {
             return R.layout.item_from;
+        } else if (viewType == 4) {
+            return R.layout.item_from_list;
         }
         return 0;
     }
@@ -49,6 +54,8 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             return new FeaturedViewHolder(view, context);
         } else if (viewType == TYPE_FORM) {
             return new FromViewHolder(view, context);
+        } else if (viewType == TYPE_FORM_LIST) {
+            return new FromListViewHolder(view, context);
         }
         return new StrategiesViewHolder(view, context);
     }
@@ -103,7 +110,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("只会农业");
+            textTitle.setText("智慧");
             textCount1.setText("+3.93%");
             textCount2.setText("+3.93%");
             textId.setText("0816");
@@ -133,10 +140,54 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
         @Override
         public void update(Serializable model) {
             textTitle.setText("战神归来");
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent  = new Intent(mContext, FromListActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         private void initView(View rootView) {
             textTitle = (TextView) rootView.findViewById(R.id.text_title);
+
+        }
+    }
+
+    /**
+     * 技术形态
+     */
+    public class FromListViewHolder extends BaseViewHolder {
+
+        protected TextView textTitle;
+        protected TextView textId;
+        protected TextView newText,gainsText,fallText;
+
+
+        public FromListViewHolder(View itemView, Context mContext) {
+            super(itemView, mContext);
+            initView(itemView);
+        }
+
+        @Override
+        public void update(Serializable model) {
+            textTitle.setText("只会农业");
+            textId.setText("0816");
+            newText.setText("3.9");
+            gainsText.setText("+3.93%");
+            fallText.setText("2.01");
+        }
+
+        private void initView(View rootView) {
+            textTitle = (TextView) rootView.findViewById(R.id.text_title);
+            textId = (TextView) rootView.findViewById(R.id.text_id);
+            newText = (TextView) rootView.findViewById(R.id.text_new);
+            gainsText = (TextView) rootView.findViewById(R.id.text_gains);
+            fallText = (TextView) rootView.findViewById(R.id.text_fall);
+
+
         }
     }
 
@@ -144,7 +195,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
         this.type = type;
     }
 
-    public int getType(){
+    public int getType() {
         return type;
     }
 }
