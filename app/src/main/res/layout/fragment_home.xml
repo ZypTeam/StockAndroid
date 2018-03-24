@@ -173,6 +173,7 @@
                 android:paddingRight="18dp">
 
                 <RelativeLayout
+                    android:id="@+id/newspaper"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -202,6 +203,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/charts"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -232,6 +234,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/notice"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -259,6 +262,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/replay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">

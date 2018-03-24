@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1e1e1e">
+
+    <com.yiyoupin.stock.ui.view.BackTitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_home_search"
+        android:drawableLeft="@drawable/img_home_search"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:hint="搜索股票代码/名称/简拼/"
+        android:paddingLeft="10dp"
+        android:textColor="#d3d3d3"
+        android:textColorHint="#767676"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_view" />
+
+    <com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView
+        android:id="@+id/search_result"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+
+</android.support.constraint.ConstraintLayout>

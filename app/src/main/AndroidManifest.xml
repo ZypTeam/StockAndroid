@@ -46,14 +46,33 @@
         <activity android:name=".ui.activity.UpdatePassActivity"
             android:screenOrientation="portrait"/>
 
+        <!--搜索-->
+        <activity android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait"/>
+
         <!--首页更多页面-->
         <activity android:name=".ui.activity.HomeMoreActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--早晚报列表-->
+        <activity android:name=".ui.activity.NewspaperListActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--龙虎榜列表-->
+        <activity android:name=".ui.activity.ChartsListActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--公告列表-->
+        <activity android:name=".ui.activity.NoticeListActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--复盘列表-->
+        <activity android:name=".ui.activity.ReplayListActivity"
             android:screenOrientation="portrait"/>
 
         <!--选股技术形态页面-->
         <activity android:name=".ui.activity.FromListActivity"
             android:screenOrientation="portrait"/>
-
 
 
     </application>

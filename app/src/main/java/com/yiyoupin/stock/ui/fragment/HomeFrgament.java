@@ -3,6 +3,8 @@ package com.yiyoupin.stock.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.activity.HomeMoreActivity;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
+import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.HomeBottomQuotesView;
 
 import java.util.ArrayList;
@@ -46,6 +49,7 @@ public class HomeFrgament extends BaseStockFragment {
     protected HomeBottomQuotesView viewShangzheng;
     protected HomeBottomQuotesView viewShenzheng;
     protected HomeBottomQuotesView viewChuangye;
+    private View newspaper,charts,notice,replay;
 
     private HomeListAdapter adapter;
 
@@ -91,6 +95,11 @@ public class HomeFrgament extends BaseStockFragment {
         viewShenzheng = (HomeBottomQuotesView) rootView.findViewById(R.id.view_shenzheng);
         viewChuangye = (HomeBottomQuotesView) rootView.findViewById(R.id.view_chuangye);
 
+        newspaper=rootView.findViewById(R.id.newspaper);
+        charts=rootView.findViewById(R.id.charts);
+        notice=rootView.findViewById(R.id.notice);
+        replay=rootView.findViewById(R.id.replay);
+
     }
 
     @Override
@@ -116,6 +125,22 @@ public class HomeFrgament extends BaseStockFragment {
             }
         });
 
+        newspaper.setOnClickListener(v -> {
+            UiUtils.goNewsPaparList();
+        });
+
+        charts.setOnClickListener(v -> {
+            UiUtils.goCharrtsList();
+        });
+
+        notice.setOnClickListener(v -> {
+            UiUtils.goNoticeList();
+        });
+
+        replay.setOnClickListener(v -> {
+            UiUtils.goReplayList();
+        });
+
         layoutJingxuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +154,21 @@ public class HomeFrgament extends BaseStockFragment {
 
                 adapter.setType(HomeListAdapter.TYPE_FEATURED);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        editSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode==KeyEvent.KEYCODE_ENTER&&event.getAction()==KeyEvent.ACTION_DOWN){
+                    if (!TextUtils.isEmpty(editSearch.getText().toString())){
+                        UiUtils.goSearch(editSearch.getText().toString());
+                    }else {
+                        showToast("不能为空");
+                    }
+                    return true;
+                }
+                return false;
             }
         });
 

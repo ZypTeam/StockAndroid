@@ -7,10 +7,14 @@ import android.os.Bundle;
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.activity.AuthPhoneCodeActivity;
+import com.yiyoupin.stock.ui.activity.ChartsListActivity;
 import com.yiyoupin.stock.ui.activity.ForgetPassActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.activity.MainActivity;
+import com.yiyoupin.stock.ui.activity.NewspaperListActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
+import com.yiyoupin.stock.ui.activity.ReplayListActivity;
+import com.yiyoupin.stock.ui.activity.SearchActivity;
 import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
 
 /**
@@ -22,6 +26,7 @@ import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
 public class UiUtils {
 
     public static final String PHONE="phone";
+    public static final String WORD="word";
     public static final String USER_INFO="user_info";
     public static final void goAuthPhone(String phone){
         Bundle bundle=new Bundle();
@@ -53,6 +58,27 @@ public class UiUtils {
         goActivity(bundle, UpdatePassActivity.class);
     }
 
+    public static final void goSearch(String word){
+        Bundle bundle=new Bundle();
+        bundle.putString(WORD,word);
+        goActivity(bundle, SearchActivity.class);
+    }
+
+    public static final void goNewsPaparList(){
+        goActivity(null, NewspaperListActivity.class);
+    }
+
+    public static final void goCharrtsList(){
+        goActivity(null, ChartsListActivity.class);
+    }
+
+    public static final void goNoticeList(){
+        goActivity(null, NewspaperListActivity.class);
+    }
+
+    public static final void goReplayList(){
+        goActivity(null, ReplayListActivity.class);
+    }
     /**
      * 跳转界面
      * @param bundle 传递数据，为NULL不传递

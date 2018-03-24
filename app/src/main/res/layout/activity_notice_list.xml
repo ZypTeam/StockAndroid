@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.yiyoupin.stock.ui.view.BackTitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView
+        android:id="@+id/notice_list"
+        android:layout_marginTop="10dp"
+        android:background="#1e1e1e"
+        app:layout_constraintTop_toBottomOf="@+id/title_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+</android.support.constraint.ConstraintLayout>
