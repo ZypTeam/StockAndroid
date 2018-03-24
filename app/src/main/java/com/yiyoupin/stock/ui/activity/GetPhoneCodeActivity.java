@@ -63,9 +63,8 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e("edit",s.toString());
                 phoneNum=s.toString();
-                if (phone.length()>0&& RegularUtils.checkPhone(phoneNum)){
+                if (phone.length()==11&& RegularUtils.checkPhone(phoneNum)){
                     getCode.setEnabled(true);
                 }else {
                     getCode.setEnabled(false);
@@ -83,5 +82,6 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
 
     private void getCode(){
         UiUtils.goAuthPhone(phoneNum);
+        onBackPressed();
     }
 }

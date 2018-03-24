@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StockAndroid</string>
+    <string name="app_exit_string" >再按一次退出程序</string>
 </resources>

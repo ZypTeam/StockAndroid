@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--首页-->
+        <activity android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"/>
 
         <!--登录-->
         <activity android:name=".ui.activity.LoginActivity"
@@ -32,6 +37,24 @@
         <!--设置昵称-->
         <activity android:name=".ui.activity.RegisterNameActivity"
             android:screenOrientation="portrait"/>
+
+        <!--忘记密码-->
+        <activity android:name=".ui.activity.ForgetPassActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--更新密码-->
+        <activity android:name=".ui.activity.UpdatePassActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--首页更多页面-->
+        <activity android:name=".ui.activity.HomeMoreActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--选股技术形态页面-->
+        <activity android:name=".ui.activity.FromListActivity"
+            android:screenOrientation="portrait"/>
+
+
 
     </application>
 

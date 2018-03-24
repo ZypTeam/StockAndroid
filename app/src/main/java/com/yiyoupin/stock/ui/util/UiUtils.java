@@ -7,8 +7,11 @@ import android.os.Bundle;
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.activity.AuthPhoneCodeActivity;
+import com.yiyoupin.stock.ui.activity.ForgetPassActivity;
+import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.activity.MainActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
+import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
 
 /**
  * @author wangcc
@@ -32,8 +35,22 @@ public class UiUtils {
         goActivity(bundle, RegisterNameActivity.class);
     }
 
+    public static final void goLoginActivity(){
+        goActivity(null, LoginActivity.class);
+    }
+
     public static final void goHomeActivity(){
         goActivity(null, MainActivity.class);
+    }
+
+    public static final void goForgetPass(){
+        goActivity(null, ForgetPassActivity.class);
+    }
+
+    public static final void goUpdatePass(String phone){
+        Bundle bundle=new Bundle();
+        bundle.putString(PHONE,phone);
+        goActivity(bundle, UpdatePassActivity.class);
     }
 
     /**

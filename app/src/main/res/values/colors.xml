@@ -13,4 +13,6 @@
 
     <color name="write">#ffffff</color>
     <color name="line_color_black">#171616</color>
+
+    <color name="bg_main">#202020</color>
 </resources>

@@ -51,6 +51,7 @@ public class RegisterNameActivity extends BaseStockActivity {
         titleView.setRightText("跳过",v -> {
             UserInfoDelegate.getInstance().saveUserInfo(userModel);
             UiUtils.goHomeActivity();
+            onBackPressed();
         });
         editName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -86,5 +87,6 @@ public class RegisterNameActivity extends BaseStockActivity {
     private void updateName(String name){
         UserInfoDelegate.getInstance().saveUserInfo(userModel);
         UiUtils.goHomeActivity();
+        onBackPressed();
     }
 }

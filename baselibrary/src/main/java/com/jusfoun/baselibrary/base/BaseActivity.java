@@ -93,8 +93,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         RelativeLayout container=new RelativeLayout(this);
         swipeBackLayout=new SwipeBackLayout(this);
         swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
+        swipeBackLayout.setBackgroundResource(R.color.transparent);
         isShadow=new ImageView(this);
-        isShadow.setBackgroundColor(getResources().getColor(R.color.transparent));
+        isShadow.setImageResource(R.color.app_bg_color);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.MATCH_PARENT);
@@ -103,6 +104,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         swipeBackLayout.setOnSwipeBackListener(new SwipeBackLayout.SwipeBackListener() {
             @Override
             public void onViewPositionChanged(float fractionAnchor, float fractionScreen) {
+                Log.e("isShadow","1-fractionScreen"+(1-fractionScreen));
                 isShadow.setAlpha(1-fractionScreen);
             }
         });

@@ -1,6 +1,9 @@
 package com.yiyoupin.stock;
 
+import android.os.Build;
+
 import com.jusfoun.baselibrary.BaseApplication;
+import com.jusfoun.baselibrary.Util.SharePrefenceUtils;
 
 /**
  * @author zhaoyapeng
@@ -9,4 +12,10 @@ import com.jusfoun.baselibrary.BaseApplication;
  * @Description ${TODO}
  */
 public class StockApplication extends BaseApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SharePrefenceUtils.getInstance().register(this, BuildConfig.APPLICATION_ID);
+    }
 }

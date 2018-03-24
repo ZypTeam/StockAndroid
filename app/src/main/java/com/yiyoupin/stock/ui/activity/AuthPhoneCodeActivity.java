@@ -77,16 +77,19 @@ public class AuthPhoneCodeActivity extends BaseStockActivity {
 
                     @Override
                     public void onCompleted() {
+                        timerTxt.setEnabled(true);
                         timerTxt.setText("重发");
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        timerTxt.setEnabled(true);
                         timerTxt.setText("重发");
                     }
 
                     @Override
                     public void onNext(Long aLong) {
+                        timerTxt.setEnabled(false);
                         timerTxt.setText("("+aLong+")重发");
                     }
                 });
@@ -114,6 +117,7 @@ public class AuthPhoneCodeActivity extends BaseStockActivity {
 
         next.setOnClickListener(v -> {
             UiUtils.goRegisterName(new UserModel());
+            onBackPressed();
         });
 
         inputPhone.setFocusable(true);

@@ -1,12 +1,15 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jusfoun.baselibrary.view.HomeViewPager;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.ui.adapter.HomeAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 
@@ -60,6 +63,7 @@ public class MainActivity extends BaseStockActivity {
     @Override
     public void initAction() {
         viewpager.setAdapter(homeAdapter);
+        viewpager.setNotTouchScoll(true);
 
         layoutHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,5 +89,23 @@ public class MainActivity extends BaseStockActivity {
                 viewpager.setCurrentItem(3);
             }
         });
+    }
+
+    private long mLastTime;
+    /**
+     * 退出程序
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mLastTime > 0 && System.currentTimeMillis() - mLastTime <= 2000) {
+                StockApplication.getBaseApplication().removeAll();
+            } else {
+                Toast.makeText(mContext, R.string.app_exit_string, Toast.LENGTH_SHORT).show();
+                mLastTime = System.currentTimeMillis();
+            }
+            return true;
+        }
+        return false;
     }
 }
