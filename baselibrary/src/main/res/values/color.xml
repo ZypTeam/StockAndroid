@@ -2,4 +2,7 @@
 <resources>
     <color name="theme_black_7f">#8f000000</color>
     <color name="transparent">#00000000</color>
+
+    <color name="app_bg_color">#161616</color>
+    <color name="line_color">#585859</color>
 </resources>

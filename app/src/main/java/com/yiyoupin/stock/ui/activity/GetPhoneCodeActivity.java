@@ -2,12 +2,17 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.Util.RegularUtils;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
+import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+
+import rx.Subscription;
 
 /**
  * @author wangcc
@@ -21,6 +26,7 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
     protected EditText inputPhone;
     protected TextView getCode;
 
+    protected String phoneNum;
     @Override
     public int getLayoutResId() {
         return R.layout.activity_get_phone_code;
@@ -57,13 +63,25 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()>0){
+                Log.e("edit",s.toString());
+                phoneNum=s.toString();
+                if (phone.length()>0&& RegularUtils.checkPhone(phoneNum)){
                     getCode.setEnabled(true);
+                }else {
+                    getCode.setEnabled(false);
                 }
             }
         });
 
-        getCode.setOnClickListener(v -> {});
+        getCode.setOnClickListener(v -> {
+            getCode();
+        });
 
+        inputPhone.setFocusable(true);
+        inputPhone.requestFocus();
+    }
+
+    private void getCode(){
+        UiUtils.goAuthPhone(phoneNum);
     }
 }

@@ -94,7 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         swipeBackLayout=new SwipeBackLayout(this);
         swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         isShadow=new ImageView(this);
-        isShadow.setBackgroundColor(getResources().getColor(R.color.theme_black_7f));
+        isShadow.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.MATCH_PARENT);
