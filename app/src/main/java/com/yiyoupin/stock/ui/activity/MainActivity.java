@@ -105,7 +105,7 @@ public class MainActivity extends BaseStockActivity {
 
         imgOptional.setImageResource(R.drawable.img_optional_normal);
         textOptional.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_normal));
-        layoutHome.setBackgroundResource(R.color.home_bottom_btn_normal);
+        layoutOptional.setBackgroundResource(R.color.home_bottom_btn_normal);
 
         imgMy.setImageResource(R.drawable.img_my_normal);
         textMy.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_normal));
