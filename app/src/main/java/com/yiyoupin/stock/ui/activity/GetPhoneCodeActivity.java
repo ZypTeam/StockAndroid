@@ -81,7 +81,7 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
     }
 
     private void getCode(){
-        UiUtils.goAuthPhone(phoneNum);
+        UiUtils.goAuthPhone(GetPhoneCodeActivity.this,phoneNum);
         onBackPressed();
     }
 }

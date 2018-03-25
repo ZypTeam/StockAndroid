@@ -69,6 +69,6 @@ public class UpdatePassActivity extends BaseStockActivity {
             return;
         }
 
-        UiUtils.goHomeActivity();
+        UiUtils.goHomeActivity(UpdatePassActivity.this);
     }
 }

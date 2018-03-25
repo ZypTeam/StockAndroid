@@ -126,19 +126,19 @@ public class HomeFrgament extends BaseStockFragment {
         });
 
         newspaper.setOnClickListener(v -> {
-            UiUtils.goNewsPaparList();
+            UiUtils.goNewsPaparList(mContext);
         });
 
         charts.setOnClickListener(v -> {
-            UiUtils.goCharrtsList();
+            UiUtils.goCharrtsList(mContext);
         });
 
         notice.setOnClickListener(v -> {
-            UiUtils.goNoticeList();
+            UiUtils.goNoticeList(mContext);
         });
 
         replay.setOnClickListener(v -> {
-            UiUtils.goReplayList();
+            UiUtils.goReplayList(mContext);
         });
 
         layoutJingxuan.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +162,7 @@ public class HomeFrgament extends BaseStockFragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode==KeyEvent.KEYCODE_ENTER&&event.getAction()==KeyEvent.ACTION_DOWN){
                     if (!TextUtils.isEmpty(editSearch.getText().toString())){
-                        UiUtils.goSearch(editSearch.getText().toString());
+                        UiUtils.goSearch(mContext,editSearch.getText().toString());
                     }else {
                         showToast("不能为空");
                     }

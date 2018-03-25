@@ -58,13 +58,13 @@ public class LoginActivity extends BaseStockActivity {
         });
 
         forgetPassword.setOnClickListener(v ->{
-            UiUtils.goForgetPass();
+            UiUtils.goForgetPass(LoginActivity.this);
         });
     }
 
     private void login(){
 //        UserInfoDelegate.getInstance().saveUserInfo(new UserModel());
-        UiUtils.goHomeActivity();
+        UiUtils.goHomeActivity(LoginActivity.this);
         finish();
     }
 
