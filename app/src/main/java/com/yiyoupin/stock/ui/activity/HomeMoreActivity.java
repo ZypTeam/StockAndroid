@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
@@ -55,9 +56,14 @@ public class HomeMoreActivity extends BaseStockActivity {
 
         if (type == HomeListAdapter.TYPE_STRATEGIES) {
             titlebar.setTitle("选股策略");
+            adapter.setType(HomeListAdapter.TYPE_STRATEGIES_MORE);
         } else if (type == HomeListAdapter.TYPE_FEATURED) {
+
             titlebar.setTitle("买点精选");
+            adapter.setType(HomeListAdapter.TYPE_FEATURED_MORE);
         } else if (type == HomeListAdapter.TYPE_FORM) {
+
+            adapter.setType(type);
             titlebar.setTitle("技术形态");
         }
 
@@ -68,7 +74,7 @@ public class HomeMoreActivity extends BaseStockActivity {
         list.add(new HomeListModel());
         list.add(new HomeListModel());
         list.add(new HomeListModel());
-        adapter.setType(type);
+
         adapter.refreshList(list);
 
     }
