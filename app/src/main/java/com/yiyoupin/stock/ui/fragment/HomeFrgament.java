@@ -33,7 +33,7 @@ public class HomeFrgament extends BaseStockFragment {
 
 
     protected ImageView imgHead;
-    protected EditText editSearch;
+    protected TextView editSearch;
     protected ImageView imgCommnet;
     protected TextView textCelue;
     protected View lineCelue;
@@ -78,7 +78,7 @@ public class HomeFrgament extends BaseStockFragment {
     @Override
     public void initView(View rootView) {
         imgHead = (ImageView) rootView.findViewById(R.id.img_head);
-        editSearch = (EditText) rootView.findViewById(R.id.edit_search);
+        editSearch = (TextView) rootView.findViewById(R.id.edit_search);
         imgCommnet = (ImageView) rootView.findViewById(R.id.img_commnet);
         textCelue = (TextView) rootView.findViewById(R.id.text_celue);
         lineCelue = (View) rootView.findViewById(R.id.line_celue);
