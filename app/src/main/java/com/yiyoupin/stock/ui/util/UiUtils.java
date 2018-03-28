@@ -15,6 +15,7 @@ import com.yiyoupin.stock.ui.activity.NewspaperListActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
 import com.yiyoupin.stock.ui.activity.SearchActivity;
+import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
 
 /**
@@ -79,6 +80,15 @@ public class UiUtils {
     public static final void goReplayList(Context mContext){
         goActivity(mContext,null, ReplayListActivity.class);
     }
+
+
+    /**
+     *  跳转策略详情页面
+     * */
+    public static final void goStrategiesDetailActivity(Context mContext){
+        goActivity(mContext,null, StrategiesDetailActivity.class);
+    }
+
     /**
      * 跳转界面
      * @param bundle 传递数据，为NULL不传递

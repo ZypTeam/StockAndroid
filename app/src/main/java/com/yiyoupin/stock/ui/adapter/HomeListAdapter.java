@@ -2,16 +2,17 @@ package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.io.Serializable;
 
@@ -28,12 +29,11 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
     public static int TYPE_FORM = 3;// 技术形态
     public static int TYPE_FORM_LIST = 4;// 技术形态列表
 
-    public static int TYPE_STRATEGIES_MORE = 5;// 选个策略
+    public static int TYPE_STRATEGIES_MORE = 5;// 选个策略更多
 
     public static int TYPE_FEATURED_MORE = 6;// 买点精选
 
     public static int TYPE_STRATEGIES_DETAIL = 7;// 策略详情 列表
-
 
 
     private int type = 1;
@@ -57,7 +57,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             return R.layout.item_featured_more;
         } else if (viewType == TYPE_FEATURED_MORE) {
             return R.layout.item_featured_more;
-        }else if(viewType==TYPE_STRATEGIES_DETAIL){
+        } else if (viewType == TYPE_STRATEGIES_DETAIL) {
             return R.layout.item_strategies_detail;
         }
 
@@ -75,10 +75,10 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
         } else if (viewType == TYPE_FORM_LIST) {
             return new FromListViewHolder(view, context);
         } else if (viewType == TYPE_STRATEGIES_MORE) {
-            return  new FeaturedMoreViewHolder(view, context);
+            return new FeaturedMoreViewHolder(view, context);
         } else if (viewType == TYPE_FEATURED_MORE) {
             return new FeaturedMoreViewHolder(view, context);
-        }else if (viewType == TYPE_STRATEGIES_DETAIL) {
+        } else if (viewType == TYPE_STRATEGIES_DETAIL) {
             return new FeaturedViewHolder(view, context);
         }
 
@@ -112,8 +112,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, StrategiesDetailActivity.class);
-                    mContext.startActivity(intent);
+                    UiUtils.goStrategiesDetailActivity(mContext);
                 }
             });
         }
@@ -146,6 +145,12 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             textCount1.setText("+3.93%");
             textCount2.setText("+3.93%");
             textId.setText("0816");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UiUtils.goStrategiesDetailActivity(mContext);
+                }
+            });
         }
 
         private void initView(View rootView) {
@@ -210,6 +215,14 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             newText.setText("3.9");
             gainsText.setText("+3.93%");
             fallText.setText("2.01");
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, StockShowActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         private void initView(View rootView) {
@@ -249,6 +262,12 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             textFrom.setText("VIP 服务器推送");
             textDes.setText("新牛奔腾新牛奔腾新牛奔腾新牛奔腾");
             textType.setText("买入");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UiUtils.goStrategiesDetailActivity(mContext);
+                }
+            });
         }
 
         private void initView(View rootView) {

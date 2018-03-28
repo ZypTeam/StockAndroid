@@ -22,63 +22,82 @@
         </activity>
 
         <!--首页-->
-        <activity android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait" />
 
         <!--登录-->
-        <activity android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait" />
         <!--获取验证码-->
-        <activity android:name=".ui.activity.GetPhoneCodeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.GetPhoneCodeActivity"
+            android:screenOrientation="portrait" />
         <!--验证验证码-->
-        <activity android:name=".ui.activity.AuthPhoneCodeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.AuthPhoneCodeActivity"
+            android:screenOrientation="portrait" />
         <!--设置昵称-->
-        <activity android:name=".ui.activity.RegisterNameActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.RegisterNameActivity"
+            android:screenOrientation="portrait" />
 
         <!--忘记密码-->
-        <activity android:name=".ui.activity.ForgetPassActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ForgetPassActivity"
+            android:screenOrientation="portrait" />
 
         <!--更新密码-->
-        <activity android:name=".ui.activity.UpdatePassActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.UpdatePassActivity"
+            android:screenOrientation="portrait" />
 
         <!--搜索-->
-        <activity android:name=".ui.activity.SearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <!--首页更多页面-->
-        <activity android:name=".ui.activity.HomeMoreActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.HomeMoreActivity"
+            android:screenOrientation="portrait" />
 
         <!--早晚报列表-->
-        <activity android:name=".ui.activity.NewspaperListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.NewspaperListActivity"
+            android:screenOrientation="portrait" />
 
         <!--龙虎榜列表-->
-        <activity android:name=".ui.activity.ChartsListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ChartsListActivity"
+            android:screenOrientation="portrait" />
 
         <!--公告列表-->
-        <activity android:name=".ui.activity.NoticeListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.NoticeListActivity"
+            android:screenOrientation="portrait" />
 
         <!--复盘列表-->
-        <activity android:name=".ui.activity.ReplayListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ReplayListActivity"
+            android:screenOrientation="portrait" />
 
         <!--选股技术形态页面-->
-        <activity android:name=".ui.activity.FromListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.FromListActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--策略详情-->
-        <activity android:name=".ui.activity.StrategiesDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.StrategiesDetailActivity"
+            android:screenOrientation="portrait" />
 
+        <!--个股展示-->
+        <activity
+            android:name=".ui.activity.StockShowActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>
