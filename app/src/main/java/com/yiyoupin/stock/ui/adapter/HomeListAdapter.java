@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
+import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
 
@@ -31,6 +32,10 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
     public static int TYPE_FEATURED_MORE = 6;// 买点精选
 
+    public static int TYPE_STRATEGIES_DETAIL = 7;// 策略详情 列表
+
+
+
     private int type = 1;
 
     public HomeListAdapter(Context context) {
@@ -40,18 +45,20 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
     @Override
     public int getLayoutResId(int viewType) {
 
-        if (viewType == 1) {
+        if (viewType == TYPE_STRATEGIES) {
             return R.layout.item_strategies;
-        } else if (viewType == 2) {
+        } else if (viewType == TYPE_FEATURED) {
             return R.layout.item_featured;
-        } else if (viewType == 3) {
+        } else if (viewType == TYPE_FORM) {
             return R.layout.item_from;
-        } else if (viewType == 4) {
+        } else if (viewType == TYPE_FORM_LIST) {
             return R.layout.item_from_list;
         } else if (viewType == TYPE_STRATEGIES_MORE) {
             return R.layout.item_featured_more;
         } else if (viewType == TYPE_FEATURED_MORE) {
             return R.layout.item_featured_more;
+        }else if(viewType==TYPE_STRATEGIES_DETAIL){
+            return R.layout.item_strategies_detail;
         }
 
         return 0;
@@ -71,6 +78,8 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             return  new FeaturedMoreViewHolder(view, context);
         } else if (viewType == TYPE_FEATURED_MORE) {
             return new FeaturedMoreViewHolder(view, context);
+        }else if (viewType == TYPE_STRATEGIES_DETAIL) {
+            return new FeaturedViewHolder(view, context);
         }
 
         return new StrategiesViewHolder(view, context);
@@ -100,6 +109,13 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
         public void update(Serializable model) {
             textTitle.setText("战神归来");
             textCount.setText("+3.93%");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, StrategiesDetailActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         private void initView(View rootView) {
