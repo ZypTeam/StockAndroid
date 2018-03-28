@@ -157,18 +157,25 @@ public class HomeFrgament extends BaseStockFragment {
             }
         });
 
-        editSearch.setOnKeyListener(new View.OnKeyListener() {
+//        editSearch.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode==KeyEvent.KEYCODE_ENTER&&event.getAction()==KeyEvent.ACTION_DOWN){
+//                    if (!TextUtils.isEmpty(editSearch.getText().toString())){
+//                        UiUtils.goSearch(mContext,editSearch.getText().toString());
+//                    }else {
+//                        showToast("不能为空");
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        editSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode==KeyEvent.KEYCODE_ENTER&&event.getAction()==KeyEvent.ACTION_DOWN){
-                    if (!TextUtils.isEmpty(editSearch.getText().toString())){
-                        UiUtils.goSearch(mContext,editSearch.getText().toString());
-                    }else {
-                        showToast("不能为空");
-                    }
-                    return true;
-                }
-                return false;
+            public void onClick(View view) {
+                UiUtils.goSearch(mContext,editSearch.getText().toString());
             }
         });
 

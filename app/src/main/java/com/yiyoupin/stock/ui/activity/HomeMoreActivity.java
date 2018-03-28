@@ -1,7 +1,8 @@
 package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
@@ -23,12 +24,14 @@ import java.util.List;
 public class HomeMoreActivity extends BaseStockActivity {
     protected BackTitleView titlebar;
     protected XRecyclerView recyclerView;
+    protected LinearLayout layoutTitle;
     private int type;
 
     public static String TYPE = "type";
 
 
     private HomeListAdapter adapter;
+
 
     @Override
     public int getLayoutResId() {
@@ -45,6 +48,7 @@ public class HomeMoreActivity extends BaseStockActivity {
     public void initView() {
         titlebar = (BackTitleView) findViewById(R.id.titlebar);
         recyclerView = (XRecyclerView) findViewById(R.id.recycler_view);
+        layoutTitle = (LinearLayout) findViewById(R.id.layout_title);
 
     }
 
@@ -60,7 +64,8 @@ public class HomeMoreActivity extends BaseStockActivity {
         } else if (type == HomeListAdapter.TYPE_FEATURED) {
 
             titlebar.setTitle("买点精选");
-            adapter.setType(HomeListAdapter.TYPE_FEATURED_MORE);
+            adapter.setType(HomeListAdapter.TYPE_FEATURED);
+            layoutTitle.setVisibility(View.VISIBLE);
         } else if (type == HomeListAdapter.TYPE_FORM) {
 
             adapter.setType(type);
