@@ -50,7 +50,7 @@ public class RegisterNameActivity extends BaseStockActivity {
         titleView.setTitle("注册成功");
         titleView.setRightText("跳过",v -> {
             UserInfoDelegate.getInstance().saveUserInfo(userModel);
-            UiUtils.goHomeActivity();
+            UiUtils.goHomeActivity(RegisterNameActivity.this);
             onBackPressed();
         });
         editName.addTextChangedListener(new TextWatcher() {
@@ -86,7 +86,7 @@ public class RegisterNameActivity extends BaseStockActivity {
 
     private void updateName(String name){
         UserInfoDelegate.getInstance().saveUserInfo(userModel);
-        UiUtils.goHomeActivity();
+        UiUtils.goHomeActivity(RegisterNameActivity.this);
         onBackPressed();
     }
 }

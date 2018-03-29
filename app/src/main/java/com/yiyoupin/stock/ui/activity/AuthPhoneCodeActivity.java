@@ -116,7 +116,7 @@ public class AuthPhoneCodeActivity extends BaseStockActivity {
         });
 
         next.setOnClickListener(v -> {
-            UiUtils.goRegisterName(new UserModel());
+            UiUtils.goRegisterName(AuthPhoneCodeActivity.this,new UserModel());
             onBackPressed();
         });
 

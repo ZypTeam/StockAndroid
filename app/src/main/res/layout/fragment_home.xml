@@ -38,17 +38,16 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/img_home_search" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edit_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@null"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="搜索股票代码/名称/简拼"
+                android:text="搜索股票代码/名称/简拼"
+                android:gravity="center_vertical"
+                android:textColor="#6b6b6b"
                 android:paddingLeft="6dp"
-                android:textColorHint="#6b6b6b"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -153,8 +152,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="19dp"
-                android:layout_marginRight="19dp" />
+              />
 
             <TextView
                 android:id="@+id/text_more"

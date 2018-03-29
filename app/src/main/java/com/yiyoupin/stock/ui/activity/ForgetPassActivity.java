@@ -154,7 +154,7 @@ public class ForgetPassActivity extends BaseStockActivity {
         });
 
         next.setOnClickListener(v -> {
-            UiUtils.goUpdatePass(inputPhone.getText().toString());
+            UiUtils.goUpdatePass(ForgetPassActivity.this,inputPhone.getText().toString());
         });
     }
 

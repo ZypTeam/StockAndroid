@@ -45,9 +45,9 @@ public class SplashActivity extends BaseStockActivity {
 
     private void goNextActivity(){
         if (UserInfoDelegate.getInstance().getUserInfo()!=null){
-            UiUtils.goHomeActivity();
+            UiUtils.goHomeActivity(this);
         }else {
-            UiUtils.goLoginActivity();
+            UiUtils.goLoginActivity(this);
         }
         onBackPressed();
     }

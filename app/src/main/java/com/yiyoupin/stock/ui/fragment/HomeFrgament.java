@@ -33,7 +33,7 @@ public class HomeFrgament extends BaseStockFragment {
 
 
     protected ImageView imgHead;
-    protected EditText editSearch;
+    protected TextView editSearch;
     protected ImageView imgCommnet;
     protected TextView textCelue;
     protected View lineCelue;
@@ -78,7 +78,7 @@ public class HomeFrgament extends BaseStockFragment {
     @Override
     public void initView(View rootView) {
         imgHead = (ImageView) rootView.findViewById(R.id.img_head);
-        editSearch = (EditText) rootView.findViewById(R.id.edit_search);
+        editSearch = (TextView) rootView.findViewById(R.id.edit_search);
         imgCommnet = (ImageView) rootView.findViewById(R.id.img_commnet);
         textCelue = (TextView) rootView.findViewById(R.id.text_celue);
         lineCelue = (View) rootView.findViewById(R.id.line_celue);
@@ -126,19 +126,19 @@ public class HomeFrgament extends BaseStockFragment {
         });
 
         newspaper.setOnClickListener(v -> {
-            UiUtils.goNewsPaparList();
+            UiUtils.goNewsPaparList(mContext);
         });
 
         charts.setOnClickListener(v -> {
-            UiUtils.goCharrtsList();
+            UiUtils.goCharrtsList(mContext);
         });
 
         notice.setOnClickListener(v -> {
-            UiUtils.goNoticeList();
+            UiUtils.goNoticeList(mContext);
         });
 
         replay.setOnClickListener(v -> {
-            UiUtils.goReplayList();
+            UiUtils.goReplayList(mContext);
         });
 
         layoutJingxuan.setOnClickListener(new View.OnClickListener() {
@@ -157,18 +157,25 @@ public class HomeFrgament extends BaseStockFragment {
             }
         });
 
-        editSearch.setOnKeyListener(new View.OnKeyListener() {
+//        editSearch.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode==KeyEvent.KEYCODE_ENTER&&event.getAction()==KeyEvent.ACTION_DOWN){
+//                    if (!TextUtils.isEmpty(editSearch.getText().toString())){
+//                        UiUtils.goSearch(mContext,editSearch.getText().toString());
+//                    }else {
+//                        showToast("不能为空");
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        editSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode==KeyEvent.KEYCODE_ENTER&&event.getAction()==KeyEvent.ACTION_DOWN){
-                    if (!TextUtils.isEmpty(editSearch.getText().toString())){
-                        UiUtils.goSearch(editSearch.getText().toString());
-                    }else {
-                        showToast("不能为空");
-                    }
-                    return true;
-                }
-                return false;
+            public void onClick(View view) {
+                UiUtils.goSearch(mContext,editSearch.getText().toString());
             }
         });
 

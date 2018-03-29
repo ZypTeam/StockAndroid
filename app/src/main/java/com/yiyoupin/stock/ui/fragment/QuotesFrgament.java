@@ -102,7 +102,7 @@ public class QuotesFrgament extends BaseStockFragment {
 
         stringBuilder.setSpan(new AbsoluteSizeSpan(19,true),0,len1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         stringBuilder.setSpan(new AbsoluteSizeSpan(15,true),len1,len2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        stringBuilder.setSpan(new AbsoluteSizeSpan(10,true),len2,len3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        stringBuilder.setSpan(new AbsoluteSizeSpan(12,true),len2,len3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return stringBuilder;
     }
 

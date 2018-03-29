@@ -15,6 +15,7 @@ import com.yiyoupin.stock.ui.activity.NewspaperListActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
 import com.yiyoupin.stock.ui.activity.SearchActivity;
+import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
 
 /**
@@ -28,69 +29,78 @@ public class UiUtils {
     public static final String PHONE="phone";
     public static final String WORD="word";
     public static final String USER_INFO="user_info";
-    public static final void goAuthPhone(String phone){
+    public static final void goAuthPhone(Context mContext,String phone){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);
-        goActivity(bundle, AuthPhoneCodeActivity.class);
+        goActivity(mContext,bundle, AuthPhoneCodeActivity.class);
     }
 
-    public static final void goRegisterName(UserModel userModel){
+    public static final void goRegisterName(Context mContext,UserModel userModel){
         Bundle bundle=new Bundle();
         bundle.putSerializable(USER_INFO,userModel);
-        goActivity(bundle, RegisterNameActivity.class);
+        goActivity(mContext,bundle, RegisterNameActivity.class);
     }
 
-    public static final void goLoginActivity(){
-        goActivity(null, LoginActivity.class);
+    public static final void goLoginActivity(Context mContext){
+        goActivity(mContext,null, LoginActivity.class);
     }
 
-    public static final void goHomeActivity(){
-        goActivity(null, MainActivity.class);
+    public static final void goHomeActivity(Context mContext){
+        goActivity(mContext,null, MainActivity.class);
     }
 
-    public static final void goForgetPass(){
-        goActivity(null, ForgetPassActivity.class);
+    public static final void goForgetPass(Context mContext){
+        goActivity(mContext,null, ForgetPassActivity.class);
     }
 
-    public static final void goUpdatePass(String phone){
+    public static final void goUpdatePass(Context mContext,String phone){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);
-        goActivity(bundle, UpdatePassActivity.class);
+        goActivity(mContext,bundle, UpdatePassActivity.class);
     }
 
-    public static final void goSearch(String word){
+    public static final void goSearch(Context mContext,String word){
         Bundle bundle=new Bundle();
         bundle.putString(WORD,word);
-        goActivity(bundle, SearchActivity.class);
+        goActivity(mContext,bundle, SearchActivity.class);
     }
 
-    public static final void goNewsPaparList(){
-        goActivity(null, NewspaperListActivity.class);
+    public static final void goNewsPaparList(Context mContext){
+        goActivity(mContext,null, NewspaperListActivity.class);
     }
 
-    public static final void goCharrtsList(){
-        goActivity(null, ChartsListActivity.class);
+    public static final void goCharrtsList(Context mContext){
+        goActivity(mContext,null, ChartsListActivity.class);
     }
 
-    public static final void goNoticeList(){
-        goActivity(null, NewspaperListActivity.class);
+    public static final void goNoticeList(Context mContext){
+        goActivity(mContext,null, NewspaperListActivity.class);
     }
 
-    public static final void goReplayList(){
-        goActivity(null, ReplayListActivity.class);
+    public static final void goReplayList(Context mContext){
+        goActivity(mContext,null, ReplayListActivity.class);
     }
+
+
+    /**
+     *  跳转策略详情页面
+     * */
+    public static final void goStrategiesDetailActivity(Context mContext){
+        goActivity(mContext,null, StrategiesDetailActivity.class);
+    }
+
     /**
      * 跳转界面
      * @param bundle 传递数据，为NULL不传递
      * @param cls 跳转的界面
      */
-    public static void goActivity(Bundle bundle, Class<?> cls){
-        Context context=StockApplication.getBaseApplication();
+    public static void goActivity(Context mContext,Bundle bundle, Class<?> cls){
+//        Context context=StockApplication.getBaseApplication();
         Intent intent=new Intent();
-        intent.setClass(context,cls);
+        intent.setClass(mContext,cls);
         if (bundle!=null) {
             intent.putExtras(bundle);
         }
-        context.startActivity(intent);
+        mContext.startActivity(intent);
     }
 }

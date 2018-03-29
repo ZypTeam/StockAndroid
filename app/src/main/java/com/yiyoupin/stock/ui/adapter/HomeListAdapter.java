@@ -8,8 +8,11 @@ import android.widget.TextView;
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
+import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.io.Serializable;
 
@@ -26,6 +29,13 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
     public static int TYPE_FORM = 3;// 技术形态
     public static int TYPE_FORM_LIST = 4;// 技术形态列表
 
+    public static int TYPE_STRATEGIES_MORE = 5;// 选个策略更多
+
+    public static int TYPE_FEATURED_MORE = 6;// 买点精选
+
+    public static int TYPE_STRATEGIES_DETAIL = 7;// 策略详情 列表
+
+
     private int type = 1;
 
     public HomeListAdapter(Context context) {
@@ -34,15 +44,23 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
     @Override
     public int getLayoutResId(int viewType) {
-        if (viewType == 1) {
+
+        if (viewType == TYPE_STRATEGIES) {
             return R.layout.item_strategies;
-        } else if (viewType == 2) {
+        } else if (viewType == TYPE_FEATURED) {
             return R.layout.item_featured;
-        } else if (viewType == 3) {
+        } else if (viewType == TYPE_FORM) {
             return R.layout.item_from;
-        } else if (viewType == 4) {
+        } else if (viewType == TYPE_FORM_LIST) {
             return R.layout.item_from_list;
+        } else if (viewType == TYPE_STRATEGIES_MORE) {
+            return R.layout.item_featured_more;
+        } else if (viewType == TYPE_FEATURED_MORE) {
+            return R.layout.item_featured_more;
+        } else if (viewType == TYPE_STRATEGIES_DETAIL) {
+            return R.layout.item_strategies_detail;
         }
+
         return 0;
     }
 
@@ -56,7 +74,14 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             return new FromViewHolder(view, context);
         } else if (viewType == TYPE_FORM_LIST) {
             return new FromListViewHolder(view, context);
+        } else if (viewType == TYPE_STRATEGIES_MORE) {
+            return new FeaturedMoreViewHolder(view, context);
+        } else if (viewType == TYPE_FEATURED_MORE) {
+            return new FeaturedMoreViewHolder(view, context);
+        } else if (viewType == TYPE_STRATEGIES_DETAIL) {
+            return new FeaturedViewHolder(view, context);
         }
+
         return new StrategiesViewHolder(view, context);
     }
 
@@ -84,6 +109,12 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
         public void update(Serializable model) {
             textTitle.setText("战神归来");
             textCount.setText("+3.93%");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UiUtils.goStrategiesDetailActivity(mContext);
+                }
+            });
         }
 
         private void initView(View rootView) {
@@ -114,6 +145,12 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             textCount1.setText("+3.93%");
             textCount2.setText("+3.93%");
             textId.setText("0816");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UiUtils.goStrategiesDetailActivity(mContext);
+                }
+            });
         }
 
         private void initView(View rootView) {
@@ -144,7 +181,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent  = new Intent(mContext, FromListActivity.class);
+                    Intent intent = new Intent(mContext, FromListActivity.class);
                     mContext.startActivity(intent);
                 }
             });
@@ -163,7 +200,7 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
         protected TextView textTitle;
         protected TextView textId;
-        protected TextView newText,gainsText,fallText;
+        protected TextView newText, gainsText, fallText;
 
 
         public FromListViewHolder(View itemView, Context mContext) {
@@ -178,6 +215,14 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             newText.setText("3.9");
             gainsText.setText("+3.93%");
             fallText.setText("2.01");
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, StockShowActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         private void initView(View rootView) {
@@ -188,6 +233,50 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             fallText = (TextView) rootView.findViewById(R.id.text_fall);
 
 
+        }
+    }
+
+
+    /**
+     * 买点精选 更多
+     */
+    public class FeaturedMoreViewHolder extends BaseViewHolder {
+
+
+        protected TextView textCount;
+        protected TextView textId;
+        protected TextView textName;
+        protected TextView textFrom;
+        protected TextView textDes;
+        protected TextView textType;
+
+        public FeaturedMoreViewHolder(View itemView, Context mContext) {
+            super(itemView, mContext);
+            initView(itemView);
+        }
+
+        @Override
+        public void update(Serializable model) {
+            textCount.setText("+90%");
+            textName.setText("新牛奔腾");
+            textFrom.setText("VIP 服务器推送");
+            textDes.setText("新牛奔腾新牛奔腾新牛奔腾新牛奔腾");
+            textType.setText("买入");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UiUtils.goStrategiesDetailActivity(mContext);
+                }
+            });
+        }
+
+        private void initView(View rootView) {
+            textCount = (TextView) rootView.findViewById(R.id.text_count);
+            textId = (TextView) rootView.findViewById(R.id.text_id);
+            textName = (TextView) rootView.findViewById(R.id.text_name);
+            textFrom = (TextView) rootView.findViewById(R.id.text_from);
+            textDes = (TextView) rootView.findViewById(R.id.text_des);
+            textType = (TextView) rootView.findViewById(R.id.text_type);
         }
     }
 
