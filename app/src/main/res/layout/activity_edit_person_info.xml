@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.yiyoupin.stock.ui.view.BackTitleView
+        android:id="@+id/title_view"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/txt_head"
+        android:text="头像"
+        android:background="#1e1e1e"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/title_view"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="@+id/txt_head"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_head"
+        app:layout_constraintLeft_toLeftOf="@+id/txt_head"
+        android:layout_marginLeft="125dp"
+        android:id="@+id/icon_head"
+        android:layout_width="45dp"
+        android:layout_height="45dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_head"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_phone"
+        android:text="手机号"
+        android:background="#1e1e1e"
+        app:layout_constraintTop_toBottomOf="@+id/txt_head"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_phone"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_code"
+        android:text="验证码"
+        app:layout_constraintTop_toBottomOf="@+id/txt_phone"
+        android:gravity="center_vertical"
+        android:background="#1e1e1e"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_code"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_phone_code"
+        android:text="手机验证码"
+        app:layout_constraintTop_toBottomOf="@+id/txt_code"
+        android:gravity="center_vertical"
+        android:background="#1e1e1e"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_phone_code"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_username"
+        android:text="用户名"
+        android:background="#1e1e1e"
+        app:layout_constraintTop_toBottomOf="@+id/txt_phone_code"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_username"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_nickname"
+        android:text="昵称"
+        android:background="#1e1e1e"
+        app:layout_constraintTop_toBottomOf="@+id/txt_username"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_nickname"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_email"
+        android:text="EMAIL"
+        android:background="#1e1e1e"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nickname"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_email"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/txt_wechart"
+        android:text="微信号"
+        android:background="#1e1e1e"
+        app:layout_constraintTop_toBottomOf="@+id/txt_email"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#d3d3d3"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@color/line_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_wechart"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/submit"
+        android:background="@drawable/bg_login_btn"
+        android:text="确定"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_wechart"
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp" />
+
+</android.support.constraint.ConstraintLayout>
