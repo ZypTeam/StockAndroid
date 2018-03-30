@@ -1,8 +1,7 @@
 package com.yiyoupin.stock.model;
 
-import com.zaihuishou.expandablerecycleradapter.model.ExpandableListItem;
+import com.yiyoupin.stock.expandablerecycleradapter.model.ExpandableListItem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

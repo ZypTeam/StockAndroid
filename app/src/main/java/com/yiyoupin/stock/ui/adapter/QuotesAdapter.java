@@ -3,19 +3,17 @@ package com.yiyoupin.stock.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.jusfoun.baselibrary.Util.LogUtil;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.expandablerecycleradapter.adapter.BaseExpandableAdapter;
+import com.yiyoupin.stock.expandablerecycleradapter.viewholder.AbstractAdapterItem;
+import com.yiyoupin.stock.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 import com.yiyoupin.stock.model.QuotesItemModel;
 import com.yiyoupin.stock.model.QuotesModel;
-import com.zaihuishou.expandablerecycleradapter.adapter.BaseExpandableAdapter;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractAdapterItem;
-import com.zaihuishou.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -108,7 +106,8 @@ public class QuotesAdapter extends BaseExpandableAdapter {
 
         @Override
         public void onUpdateViews(Object model, int position) {
-            if (position == 0) {
+            LogUtil.e("child","position=="+position);
+            if (position == 1||position==7||position==13||position==19||position==25) {
                 title.setVisibility(View.VISIBLE);
             } else {
                 title.setVisibility(View.GONE);
