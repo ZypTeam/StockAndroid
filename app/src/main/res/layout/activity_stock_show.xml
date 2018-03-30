@@ -93,7 +93,6 @@
 
 
         <RelativeLayout
-            android:id="@+id/layout_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -106,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/layout_quotes"
+            android:id="@+id/layout_remind"
             android:background="@color/home_bottom_btn_normal">
 
             <LinearLayout
@@ -117,14 +116,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/img_quotes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/stock_zips" />
 
                 <TextView
-                    android:id="@+id/text_remind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -138,7 +135,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/layout_optional"
+            android:id="@+id/layout_add"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -152,14 +149,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/img_optional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/stock_add" />
 
                 <TextView
-                    android:id="@+id/text_optional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -175,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/layout_my"
+            android:id="@+id/layout_delete"
             android:background="@color/home_bottom_btn_normal">
 
             <LinearLayout
@@ -186,14 +181,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/img_my"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/stock_delete" />
 
                 <TextView
-                    android:id="@+id/text_my"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

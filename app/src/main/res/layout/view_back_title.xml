@@ -36,6 +36,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:textColor="#333"
-        android:textSize="14sp" />
+        android:textColor="#d2d2d2"
+        android:textSize="16sp" />
 </RelativeLayout>

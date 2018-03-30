@@ -4,10 +4,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
+import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.kline.FiveDayChartFragment;
 import com.yiyoupin.stock.ui.view.kline.KLineChartFragment;
@@ -29,6 +33,9 @@ public class StockShowActivity extends BaseStockActivity {
     protected ViewPager viewpagerNews;
     protected TabLayout tabNews;
     protected CoordinatorLayout coordinatorLayout;
+    protected RelativeLayout layoutRemind;
+    protected RelativeLayout layoutAdd;
+    protected RelativeLayout layoutDelete;
     private NewsAdapter newsAdapter;
 
     @Override
@@ -49,6 +56,9 @@ public class StockShowActivity extends BaseStockActivity {
         viewpagerNews = (ViewPager) findViewById(R.id.viewpager_news);
         tabNews = (TabLayout) findViewById(R.id.tab_news);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        layoutRemind = (RelativeLayout) findViewById(R.id.layout_remind);
+        layoutAdd = (RelativeLayout) findViewById(R.id.layout_add);
+        layoutDelete = (RelativeLayout) findViewById(R.id.layout_delete);
 
     }
 
@@ -73,11 +83,31 @@ public class StockShowActivity extends BaseStockActivity {
 //        });
 
 
-
         tabNews.setTabTextColors(0xffe2e2e2, mContext.getResources().getColor(R.color.color_red));
         tabNews.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
 
         viewpagerNews.setAdapter(newsAdapter);
         tabNews.setupWithViewPager(viewpagerNews);
+
+
+        layoutRemind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                UiUtils.goRemindActivity(StockShowActivity.this);
+            }
+        });
+        layoutAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "已添加至自选股", Toast.LENGTH_SHORT).show();
+            }
+        });
+        layoutDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

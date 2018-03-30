@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1e1e1e"
+    android:orientation="vertical">
+
+    <com.yiyoupin.stock.ui.view.BackTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titlebar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/line_color_black" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_zhang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_die"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_rizhang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_ridie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_gonggao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_buy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_mai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.yiyoupin.stock.ui.view.RemindView
+                android:id="@+id/view_vip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
