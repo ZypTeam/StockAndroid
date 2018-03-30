@@ -6,18 +6,28 @@ import android.os.Bundle;
 
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.model.UserModel;
+import com.yiyoupin.stock.ui.activity.AboutUsActivity;
+import com.yiyoupin.stock.ui.activity.AuthChangePassActivity;
 import com.yiyoupin.stock.ui.activity.AuthPhoneCodeActivity;
+import com.yiyoupin.stock.ui.activity.ChangePassActivity;
+import com.yiyoupin.stock.ui.activity.ChartsDetailActivity;
 import com.yiyoupin.stock.ui.activity.ChartsListActivity;
 import com.yiyoupin.stock.ui.activity.ForgetPassActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.activity.MainActivity;
+import com.yiyoupin.stock.ui.activity.MsgListActivity;
 import com.yiyoupin.stock.ui.activity.NewspaperListActivity;
+import com.yiyoupin.stock.ui.activity.NoticeListActivity;
+import com.yiyoupin.stock.ui.activity.PayListActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
 import com.yiyoupin.stock.ui.activity.RemindActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
 import com.yiyoupin.stock.ui.activity.SearchActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
+import com.yiyoupin.stock.ui.activity.WebViewActivity;
+
+import java.net.URI;
 
 /**
  * @author wangcc
@@ -30,6 +40,9 @@ public class UiUtils {
     public static final String PHONE="phone";
     public static final String WORD="word";
     public static final String USER_INFO="user_info";
+    public static final String TITLE="title";
+    public static final String WEB_URL="web_url";
+    public static final String PASSWORD="password";
     public static final void goAuthPhone(Context mContext,String phone){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);
@@ -54,6 +67,17 @@ public class UiUtils {
         goActivity(mContext,null, ForgetPassActivity.class);
     }
 
+    public static final void goChangePass(Context mContext){
+        goActivity(mContext,null, ChangePassActivity.class);
+    }
+
+    public static final void goAuthChangePass(String password,Context mContext){
+        Bundle bundle=new Bundle();
+        bundle.putString(PASSWORD,password);
+        goActivity(mContext,bundle, AuthChangePassActivity.class);
+    }
+
+
     public static final void goUpdatePass(Context mContext,String phone){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);
@@ -75,13 +99,35 @@ public class UiUtils {
     }
 
     public static final void goNoticeList(Context mContext){
-        goActivity(mContext,null, NewspaperListActivity.class);
+        goActivity(mContext,null, NoticeListActivity.class);
     }
 
     public static final void goReplayList(Context mContext){
         goActivity(mContext,null, ReplayListActivity.class);
     }
 
+    public static final void goChartsDetails(Context context){
+        goActivity(context,null,ChartsDetailActivity.class);
+    }
+
+    public static final void goAboutUs(Context context){
+        goActivity(context,null,AboutUsActivity.class);
+    }
+
+    public static final void goPayList(Context context){
+        goActivity(context,null,PayListActivity.class);
+    }
+
+    public static final void goMsgList(Context context){
+        goActivity(context,null,MsgListActivity.class);
+    }
+
+    public static final void goWebActivity(Context context,String title,String url){
+        Bundle bundle=new Bundle();
+        bundle.putString(TITLE,title);
+        bundle.putString(WEB_URL,url);
+        goActivity(context,bundle, WebViewActivity.class);
+    }
 
     /**
      *  跳转策略详情页面
@@ -113,4 +159,6 @@ public class UiUtils {
         }
         mContext.startActivity(intent);
     }
+
+
 }

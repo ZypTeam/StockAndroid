@@ -4,43 +4,39 @@ import android.content.Context;
 import android.view.View;
 
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.NewspaperModel;
+import com.yiyoupin.stock.model.MsgModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
-import com.yiyoupin.stock.ui.util.UiUtils;
 
 /**
  * @author wangcc
- * @date 2018/3/24
+ * @date 2018/3/31
  * @describe
  */
 
-public class NewspaperAdapter extends BaseAdapter<NewspaperModel> {
-    public NewspaperAdapter(Context context) {
+public class MsgAdapter extends BaseAdapter<MsgModel> {
+    public MsgAdapter(Context context) {
         super(context);
     }
 
     @Override
     public int getLayoutResId(int viewType) {
-        return R.layout.item_newspaper_list;
+        return R.layout.item_msg;
     }
 
     @Override
     protected BaseViewHolder getViewHolder(int viewType, View view) {
-        return new ViewHolder(view, context);
+        return new ViewHolder(view,context);
     }
 
-    class ViewHolder extends BaseViewHolder<NewspaperModel> {
-
+    class ViewHolder extends BaseViewHolder<MsgModel> {
         public ViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
         }
 
         @Override
-        public void update(NewspaperModel model) {
-            itemView.setOnClickListener(v -> {
-                UiUtils.goWebActivity(context, "公告详情", "http://www.baidu.com");
-            });
+        public void update(MsgModel model) {
+
         }
     }
 }

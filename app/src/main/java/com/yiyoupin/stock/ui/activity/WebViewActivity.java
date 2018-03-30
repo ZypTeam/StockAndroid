@@ -1,11 +1,16 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.graphics.Bitmap;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.ui.util.UiUtils;
+import com.yiyoupin.stock.ui.view.BackTitleView;
 
 /**
  * @author zhaoyapeng
@@ -14,7 +19,11 @@ import com.yiyoupin.stock.R;
  * @Description ${TODO}
  */
 public class WebViewActivity extends BaseTakeActivity {
+    public static final String TITLE = "title";
+    public static final String WEB_URL = "web_url";
     protected WebView webView;
+    protected BackTitleView titleView;
+    private String title, url;
 
     @Override
     public int getLayoutResId() {
@@ -23,7 +32,8 @@ public class WebViewActivity extends BaseTakeActivity {
 
     @Override
     public void initDatas() {
-
+        title = getIntent().getExtras().getString(UiUtils.TITLE);
+        url = getIntent().getExtras().getString(UiUtils.WEB_URL);
     }
 
     @Override
@@ -43,11 +53,33 @@ public class WebViewActivity extends BaseTakeActivity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.setWebChromeClient(chromeClient);
+        titleView = (BackTitleView) findViewById(R.id.title_view);
     }
 
     @Override
     public void initAction() {
-        webView.loadUrl("http://www.51purse.com/pdf/web/viewer.html?name=b.pdf");
+        titleView.setTitle(title);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                showLoadDialog();
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                hideLoadDialog();
+            }
+        });
+        webView.loadUrl(url);
+//        webView.loadUrl("http://www.51purse.com/pdf/web/viewer.html?name=b.pdf");
     }
 
     WebChromeClient chromeClient = new WebChromeClient() {

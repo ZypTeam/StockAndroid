@@ -1,9 +1,11 @@
 package com.yiyoupin.stock.ui.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
 
@@ -14,6 +16,7 @@ import com.yiyoupin.stock.R;
  */
 
 public class QuotesTitleView extends ConstraintLayout {
+    private TextView more;
     public QuotesTitleView(Context context) {
         this(context, null);
     }
@@ -29,5 +32,10 @@ public class QuotesTitleView extends ConstraintLayout {
 
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_quotes_title, this);
+        more=findViewById(R.id.more);
+    }
+
+    public void setMoreIcon(Drawable drawable){
+
     }
 }

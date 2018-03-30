@@ -26,10 +26,10 @@ public class SearchAdapter extends BaseAdapter<SearchModel> {
 
     @Override
     protected BaseViewHolder getViewHolder(int viewType, View view) {
-        return new SearchViewHolder(view,context);
+        return new SearchViewHolder(view, context);
     }
 
-    class SearchViewHolder extends BaseViewHolder<SearchModel>{
+    class SearchViewHolder extends BaseViewHolder<SearchModel> {
 
         public SearchViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
@@ -38,6 +38,23 @@ public class SearchAdapter extends BaseAdapter<SearchModel> {
         @Override
         public void update(SearchModel model) {
 
+            itemView.setOnClickListener(v -> {
+                if (callBack != null) {
+                    callBack.callBack();
+                }
+            });
+
         }
     }
+
+    private CallBack callBack;
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
+
+    public interface CallBack {
+        void callBack();
+    }
+
 }

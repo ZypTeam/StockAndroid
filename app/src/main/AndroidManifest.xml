@@ -108,6 +108,41 @@
             android:name=".ui.activity.RemindActivity"
             android:screenOrientation="portrait" />
 
+        <!--webview页面-->
+        <activity
+            android:name=".ui.activity.WebViewActivity"
+            android:screenOrientation="portrait" />
+
+        <!--龙虎榜详情页面-->
+        <activity
+            android:name=".ui.activity.ChartsDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--关于我们-->
+        <activity
+            android:name=".ui.activity.AboutUsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--缴费记录-->
+        <activity
+            android:name=".ui.activity.PayListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--消息列表-->
+        <activity
+            android:name=".ui.activity.MsgListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--修改密码-->
+        <activity
+            android:name=".ui.activity.ChangePassActivity"
+            android:screenOrientation="portrait" />
+
+        <!--验证修改密码-->
+        <activity
+            android:name=".ui.activity.AuthChangePassActivity"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

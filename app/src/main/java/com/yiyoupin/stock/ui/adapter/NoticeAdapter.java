@@ -7,6 +7,7 @@ import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.NoticeModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.yiyoupin.stock.ui.util.UiUtils;
 
 /**
  * @author wangcc
@@ -37,7 +38,9 @@ public class NoticeAdapter extends BaseAdapter<NoticeModel> {
 
         @Override
         public void update(NoticeModel model) {
-
+            itemView.setOnClickListener(v -> {
+                UiUtils.goWebActivity(context,"公告详情","http://www.baidu.com");
+            });
         }
     }
 }

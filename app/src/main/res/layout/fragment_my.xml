@@ -220,6 +220,34 @@
         android:layout_width="0dp"
         android:layout_height="50dp" />
 
+    <View
+        android:background="#313131"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/about_us"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/msg_list"
+        android:text="消息列表"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableRight="@mipmap/tactics_right_arrow"
+        android:drawableLeft="@mipmap/login_icon_password"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/about_us"
+        android:background="#1e1e1e"
+        android:textColor="#d3d3d3"
+        android:textSize="15sp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp" />
+
     <TextView
         android:layout_marginTop="10dp"
         android:id="@+id/exit"
@@ -230,7 +258,7 @@
         android:textSize="15sp"
         android:textColor="#d3d3d3"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/about_us"
+        app:layout_constraintTop_toBottomOf="@+id/msg_list"
         android:layout_width="0dp"
         android:layout_height="50dp" />
 

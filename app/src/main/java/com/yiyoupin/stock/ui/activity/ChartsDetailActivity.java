@@ -4,8 +4,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.QuotesModel;
-import com.yiyoupin.stock.ui.adapter.ChartsAdapter;
+import com.yiyoupin.stock.model.ChartsModel;
+import com.yiyoupin.stock.ui.adapter.ChartsDetailAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
@@ -14,23 +14,23 @@ import java.util.List;
 
 /**
  * @author wangcc
- * @date 2018/3/24
- * @describe 龙虎榜 列表
+ * @date 2018/3/30
+ * @describe
  */
 
-public class ChartsListActivity extends BaseStockActivity {
+public class ChartsDetailActivity extends BaseStockActivity {
     protected BackTitleView titleView;
     protected RecyclerView list;
-    private ChartsAdapter adapter;
+    private ChartsDetailAdapter adapter;
 
     @Override
     public int getLayoutResId() {
-        return R.layout.activity_chart_list;
+        return R.layout.activity_chart_detail;
     }
 
     @Override
     public void initDatas() {
-        adapter = new ChartsAdapter(mContext);
+        adapter=new ChartsDetailAdapter(mContext);
     }
 
     @Override
@@ -42,24 +42,15 @@ public class ChartsListActivity extends BaseStockActivity {
 
     @Override
     public void initAction() {
+
+        titleView.setTitle("龙虎榜详情");
         list.setLayoutManager(new LinearLayoutManager(mContext));
         list.setAdapter(adapter);
-        titleView.setTitle("龙虎榜");
-        titleView.setRightIcon(R.mipmap.icon_search);
-        refresh(true,true);
-    }
 
-    private void refresh(boolean showLoading,boolean refresh){
-        List list=new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            QuotesModel model=new QuotesModel();
-            if (i==0){
-                model.setExpanded(true);
-            }else {
-                model.setExpanded(false);
-            }
-            list.add(model);
+        List<ChartsModel> list=new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(new ChartsModel());
         }
-        adapter.updateData(list);
+        adapter.refreshList(list);
     }
 }

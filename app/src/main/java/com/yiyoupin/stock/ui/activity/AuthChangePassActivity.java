@@ -1,17 +1,15 @@
 package com.yiyoupin.stock.ui.activity;
 
-import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jph.takephoto.model.CropOptions;
-import com.jusfoun.baselibrary.Util.IOUtil;
-import com.jusfoun.baselibrary.Util.PhoneUtil;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
-import com.yiyoupin.stock.ui.util.ImageLoderUtil;
+import com.yiyoupin.stock.ui.view.BackTitleView;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -23,21 +21,26 @@ import rx.schedulers.Schedulers;
 
 /**
  * @author wangcc
- * @date 2018/3/25
+ * @date 2018/3/31
  * @describe
  */
 
-public class EditPersonInfoActivity extends BaseTakeActivity {
-
-    private TextView head;
-    private ImageView iconHead;
-
-    private Subscription timer;
+public class AuthChangePassActivity extends BaseStockActivity {
+    protected BackTitleView titleView;
+    protected TextView code;
+    protected ImageView image;
+    protected EditText inputCode;
+    protected TextView phone;
+    protected EditText inputPhone;
+    protected TextView phoneCode;
     protected TextView timerTxt;
+    protected EditText inputPhoneCode;
+    protected TextView submit;
+    private Subscription timer;
 
     @Override
     public int getLayoutResId() {
-        return R.layout.activity_edit_person_info;
+        return R.layout.activity_auth_change_pass;
     }
 
     @Override
@@ -47,15 +50,26 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
 
     @Override
     public void initView() {
-        head = findViewById(R.id.txt_head);
-        iconHead = findViewById(R.id.icon_head);
+        titleView = (BackTitleView) findViewById(R.id.title_view);
+        code = (TextView) findViewById(R.id.code);
+        image = (ImageView) findViewById(R.id.image);
+        inputCode = (EditText) findViewById(R.id.input_code);
+        phone = (TextView) findViewById(R.id.phone);
+        inputPhone = (EditText) findViewById(R.id.input_phone);
+        phoneCode = (TextView) findViewById(R.id.phone_code);
         timerTxt = (TextView) findViewById(R.id.timer);
+        inputPhoneCode = (EditText) findViewById(R.id.input_phone_code);
+        submit = (TextView) findViewById(R.id.submit);
+
     }
 
     @Override
     public void initAction() {
+        titleView.setTitle("修改密码验证");
+        submit.setOnClickListener(v -> {
+            onBackPressed();
+        });
 
-        ImageLoderUtil.loadCircleImage(mContext,iconHead,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522439396278&di=25e6651bf56bc21ebaaf4c3df36f2502&imgtype=0&src=http%3A%2F%2Fpic38.nipic.com%2F20140306%2F251960_125327345000_2.jpg",R.mipmap.ic_launcher_round);
         timerTxt.setOnClickListener(v ->{
             timer = Observable.interval(1, TimeUnit.SECONDS)
                     .take(120)
@@ -88,15 +102,24 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                         }
                     });
         });
-        head.setOnClickListener(v -> {
-            CropOptions cropOptions = new CropOptions.Builder()
-                    .setAspectX(1)
-                    .setAspectY(1)
-                    .setOutputX(PhoneUtil.dip2px(mContext,200))
-                    .setOutputY(PhoneUtil.dip2px(mContext,200))
-                    .setWithOwnCrop(true)
-                    .create();
-            takePhoto.onPickFromGallery();
+
+        inputPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()>0){
+                    submit.setEnabled(true);
+                }
+            }
         });
     }
 

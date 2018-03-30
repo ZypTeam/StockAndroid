@@ -70,13 +70,14 @@ public class QuotesFrgament extends BaseStockFragment {
         chuangye.setText(getZhishu("创业板\n","3422.02\n","+52.53% +12.3%"));
 
         titleView.setTitle("行情");
-        titleView.setRightIcon(R.mipmap.icon_search);
+        titleView.setLeftGone();
+        /*titleView.setRightIcon(R.mipmap.icon_search);
         titleView.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        });*/
     }
 
     @Override

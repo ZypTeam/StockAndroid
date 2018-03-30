@@ -107,8 +107,12 @@ public class StringUtil {
      * 字符串是否相等。
      */
     public static boolean equals(String str1, String str2) {
+        if (TextUtils.isEmpty(str1))
+        {
+            return false;
+        }
         if (str1 == null || str2 == null) {
-            return (str1 == str2);
+            return false;
         }
         return str2.equals(str1);
     }
