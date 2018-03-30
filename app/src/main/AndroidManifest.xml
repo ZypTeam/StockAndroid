@@ -103,6 +103,11 @@
             android:name=".ui.activity.StockShowActivity"
             android:screenOrientation="portrait" />
 
+        <!--提醒页面-->
+        <activity
+            android:name=".ui.activity.RemindActivity"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

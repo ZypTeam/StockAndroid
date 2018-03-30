@@ -13,6 +13,7 @@ import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.activity.MainActivity;
 import com.yiyoupin.stock.ui.activity.NewspaperListActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
+import com.yiyoupin.stock.ui.activity.RemindActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
 import com.yiyoupin.stock.ui.activity.SearchActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
@@ -88,6 +89,15 @@ public class UiUtils {
     public static final void goStrategiesDetailActivity(Context mContext){
         goActivity(mContext,null, StrategiesDetailActivity.class);
     }
+
+    /**
+     *  跳转提醒
+     * */
+    public static final void goRemindActivity(Context mContext){
+        goActivity(mContext,null, RemindActivity.class);
+    }
+
+
 
     /**
      * 跳转界面
