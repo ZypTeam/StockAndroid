@@ -2,28 +2,25 @@ package com.yiyoupin.stock.ui.view.kline;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.guoziwei.klinelib.chart.TimeLineView;
 import com.guoziwei.klinelib.model.HisData;
+import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.ui.adapter.DetailsFragmentAdapter;
+import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
 import java.util.List;
 
 
-public class TimeLineChartFragment extends Fragment {
+public class TimeLineChartFragment extends BaseStockFragment {
 
 
+    protected ViewPager viewpager;
     private TimeLineView mTimeLineView;
     private int mType;
 
-    public TimeLineChartFragment() {
-        // Required empty public constructor
-    }
 
     public static TimeLineChartFragment newInstance(int type) {
         TimeLineChartFragment fragment = new TimeLineChartFragment();
@@ -33,27 +30,34 @@ public class TimeLineChartFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutResId() {
+        return R.layout.fragment_time_sharing;
+    }
+
+    @Override
+    public void initDatas() {
         mType = getArguments().getInt("type");
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mTimeLineView = new TimeLineView(getContext());
+    public void initView(View rootView) {
+        mTimeLineView = (TimeLineView) rootView.findViewById(R.id.time_line_view);
         mTimeLineView.setDateFormat("HH:mm");
         int count = 241;
         mTimeLineView.setCount(count, count, count);
-        initData();
-        return mTimeLineView;
+//        initData();
+        viewpager = (ViewPager) rootView.findViewById(R.id.viewpager);
+    }
+
+    @Override
+    public void initAction() {
+        viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager()));
     }
 
     protected void initData() {
-        final List<HisData> hisData = Util.get1Day(getContext());
-        mTimeLineView.setLastClose(hisData.get(0).getClose());
-        mTimeLineView.initData(hisData);
+
 
         /*new Timer().schedule(new TimerTask() {
             @Override
@@ -91,4 +95,10 @@ public class TimeLineChartFragment extends Fragment {
         }, 1000, 1000);*/
     }
 
+    @Override
+    protected void refreshData() {
+        final List<HisData> hisData = Util.get1Day(getContext());
+        mTimeLineView.setLastClose(hisData.get(0).getClose());
+        mTimeLineView.initData(hisData);
+    }
 }

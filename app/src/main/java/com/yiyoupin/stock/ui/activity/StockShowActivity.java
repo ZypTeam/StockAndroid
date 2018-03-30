@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -109,5 +110,6 @@ public class StockShowActivity extends BaseStockActivity {
                 Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }
