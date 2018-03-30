@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.zaihuishou:expandablerecycleradapter:1.0.3'
     implementation 'com.jph.takephoto:takephoto_library:4.0.3'
     compile project(':baselibrary')
+    implementation project(':klinelib')
 }
