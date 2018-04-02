@@ -1,9 +1,11 @@
 package com.yiyoupin.stock.ui.adapter;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.jusfoun.baselibrary.Util.LogUtil;
 import com.yiyoupin.stock.R;
@@ -24,6 +26,9 @@ import java.util.ArrayList;
 
 public class QuotesAdapter extends BaseExpandableAdapter {
 
+    private ImageView mArrow;
+
+    private View view;
 
     public QuotesAdapter(Context ctx) {
         super(new ArrayList());
@@ -58,7 +63,6 @@ public class QuotesAdapter extends BaseExpandableAdapter {
         public void onExpansionToggled(boolean expanded) {
 
             //TODO 展开动画
-            Log.e("adapter", expanded + "");
         }
 
         @Override
@@ -68,6 +72,8 @@ public class QuotesAdapter extends BaseExpandableAdapter {
 
         @Override
         public void onBindViews(View root) {
+            mArrow = (ImageView) root.findViewById(R.id.arrow);
+            view=root.findViewById(R.id.line);
             root.setOnClickListener(v -> {
                 doExpandOrUnexpand();
             });
@@ -75,13 +81,19 @@ public class QuotesAdapter extends BaseExpandableAdapter {
 
         @Override
         public void onSetViews() {
-            Log.e("adapter",   "");
+            mArrow.setImageResource(R.mipmap.longhubang_right_arrow);
         }
 
         @Override
         public void onUpdateViews(Object model, int position) {
             super.onUpdateViews(model, position);
+            onSetViews();
             onExpansionToggled(getExpandableListItem().isExpanded());
+            if (position==0||position==6){
+                view.setVisibility(View.VISIBLE);
+            }else {
+                view.setVisibility(View.GONE);
+            }
         }
     }
 
