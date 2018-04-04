@@ -79,7 +79,7 @@ public class WebViewActivity extends BaseTakeActivity {
             }
         });
         webView.loadUrl(url);
-//        webView.loadUrl("http://www.51purse.com/pdf/web/viewer.html?name=b.pdf");
+//        webView.loadUrl("http://www.sse.com.cn/disclosure/listedinfo/announcement/c/2018-04-04/600109_20180404_1.pdf");
     }
 
     WebChromeClient chromeClient = new WebChromeClient() {

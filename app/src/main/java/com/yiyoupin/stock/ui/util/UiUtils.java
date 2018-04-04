@@ -23,6 +23,7 @@ import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
 import com.yiyoupin.stock.ui.activity.RemindActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
 import com.yiyoupin.stock.ui.activity.SearchActivity;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
 import com.yiyoupin.stock.ui.activity.WebViewActivity;
@@ -141,6 +142,13 @@ public class UiUtils {
      * */
     public static final void goRemindActivity(Context mContext){
         goActivity(mContext,null, RemindActivity.class);
+    }
+
+    /**
+     *  个股页面
+     * */
+    public static final void goStockShowActivity(Context mContext){
+        goActivity(mContext,null, StockShowActivity.class);
     }
 
 
