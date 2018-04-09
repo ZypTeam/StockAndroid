@@ -18,17 +18,18 @@
             android:id="@+id/img_head"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_launcher" />
 
         <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_weight="1"
             android:background="@drawable/bg_home_search"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
@@ -44,10 +45,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@null"
-                android:text="搜索股票代码/名称/简拼"
                 android:gravity="center_vertical"
-                android:textColor="#6b6b6b"
                 android:paddingLeft="6dp"
+                android:text="搜索股票代码/名称/简拼"
+                android:textColor="#6b6b6b"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/img_home_comment"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <View
@@ -92,7 +93,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="选股策略"
-                        android:textColor="#ff4b36" />
+                        android:textColor="#ff4b36"
+                        android:textSize="15sp" />
 
                     <View
                         android:id="@+id/line_celue"
@@ -114,7 +116,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="买点精选"
-                        android:textColor="@color/write" />
+                        android:textColor="@color/write"
+                        android:textSize="15sp" />
 
                     <View
                         android:id="@+id/line_jingxuan"
@@ -137,7 +140,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="技术形态"
-                        android:textColor="@color/write" />
+                        android:textColor="@color/write"
+                        android:textSize="15sp" />
 
                     <View
                         android:id="@+id/line_xingtai"
@@ -152,8 +156,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-              />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text_more"

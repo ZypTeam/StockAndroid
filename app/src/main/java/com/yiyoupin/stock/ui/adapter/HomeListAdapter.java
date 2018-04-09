@@ -15,6 +15,7 @@ import com.yiyoupin.stock.ui.base.BaseViewHolder;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author zhaoyapeng
@@ -148,7 +149,11 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    UiUtils.goStrategiesDetailActivity(mContext);
+                    if(type== TYPE_STRATEGIES_DETAIL) {
+                        UiUtils.goStockShowActivity(mContext);
+                    }else{
+                        UiUtils.goStrategiesDetailActivity(mContext);
+                    }
                 }
             });
         }

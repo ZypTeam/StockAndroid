@@ -11,12 +11,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.jusfoun.baselibrary.base.BaseModel;
+import com.jusfoun.baselibrary.widget.GlideCircleTransform;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.activity.HomeMoreActivity;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
+import com.yiyoupin.stock.ui.util.ImageLoderUtil;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.HomeBottomQuotesView;
 
@@ -204,6 +208,15 @@ public class HomeFrgament extends BaseStockFragment {
                 goActivity(bundle,HomeMoreActivity.class);
             }
         });
+
+
+        Glide.with(mContext)
+                .load(R.mipmap.logo)
+                .transform(new CenterCrop(mContext),new GlideCircleTransform(mContext))
+               /* .placeholder(errorResId)
+                .error(errorResId)*/
+                .crossFade()
+                .into(imgHead);
 
         List<BaseModel> list = new ArrayList<>();
         list.add(new HomeListModel());
