@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.ChartItemModel;
 import com.yiyoupin.stock.model.ChartsModel;
 import com.yiyoupin.stock.ui.adapter.ChartsDetailAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
@@ -47,9 +48,9 @@ public class ChartsDetailActivity extends BaseStockActivity {
         list.setLayoutManager(new LinearLayoutManager(mContext));
         list.setAdapter(adapter);
 
-        List<ChartsModel> list=new ArrayList<>();
+        List<ChartItemModel> list=new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            list.add(new ChartsModel());
+            list.add(new ChartItemModel());
         }
         adapter.refreshList(list);
     }

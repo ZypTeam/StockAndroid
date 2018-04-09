@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -60,6 +61,10 @@ public class AppUtil {
             msg = appInfo.metaData.getString("UMENG_CHANNEL");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        }finally {
+            if (TextUtils.isEmpty(msg)){
+                msg="stock";
+            }
         }
         return msg;
     }

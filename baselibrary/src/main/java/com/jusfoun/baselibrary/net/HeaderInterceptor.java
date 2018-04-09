@@ -41,6 +41,7 @@ public class HeaderInterceptor implements Interceptor {
     private String APIVersion = "version_name";
     private String ContentType="";
     private String SEAVER_TOKEN="Seaver-Token";
+    private String USER_ID="user_id";
     public HeaderInterceptor(Context mContext) {
         this.mContext=mContext.getApplicationContext();
     }

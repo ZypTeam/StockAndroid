@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.ChartItemModel;
 import com.yiyoupin.stock.model.ChartsModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
@@ -15,7 +16,7 @@ import com.yiyoupin.stock.ui.view.FormView;
  * @describe
  */
 
-public class ChartsDetailAdapter extends BaseAdapter<ChartsModel> {
+public class ChartsDetailAdapter extends BaseAdapter<ChartItemModel> {
     public ChartsDetailAdapter(Context context) {
         super(context);
     }
@@ -30,7 +31,7 @@ public class ChartsDetailAdapter extends BaseAdapter<ChartsModel> {
         return new ViewHolder(view,context);
     }
 
-    class ViewHolder extends BaseViewHolder<ChartsModel> {
+    class ViewHolder extends BaseViewHolder<ChartItemModel> {
         private FormView formView;
         public ViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
@@ -38,7 +39,7 @@ public class ChartsDetailAdapter extends BaseAdapter<ChartsModel> {
         }
 
         @Override
-        public void update(ChartsModel model) {
+        public void update(ChartItemModel model) {
             if (getAdapterPosition()==getItemCount()-1){
                 formView.setBottomLine(true);
             }else {
