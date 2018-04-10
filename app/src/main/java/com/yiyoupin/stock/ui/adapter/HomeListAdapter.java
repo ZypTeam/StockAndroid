@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.HomeModel;
+import com.yiyoupin.stock.model.StrategiesMoreModel;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
@@ -266,17 +267,19 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textCount.setText("+90%");
-            textName.setText("新牛奔腾");
-            textFrom.setText("VIP 服务器推送");
-            textDes.setText("新牛奔腾新牛奔腾新牛奔腾新牛奔腾");
-            textType.setText("买入");
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UiUtils.goStrategiesDetailActivity(mContext);
-                }
-            });
+            if(model instanceof StrategiesMoreModel.StrategiesItemModel) {
+                textCount.setText("+"+((StrategiesMoreModel.StrategiesItemModel) model).yield_rate+"%");
+                textName.setText(((StrategiesMoreModel.StrategiesItemModel) model).tactics_name);
+                textFrom.setText("VIP 服务器推送");
+                textDes.setText(((StrategiesMoreModel.StrategiesItemModel) model).description);
+                textType.setText("买入");
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UiUtils.goStrategiesDetailActivity(mContext);
+                    }
+                });
+            }
         }
 
         private void initView(View rootView) {
