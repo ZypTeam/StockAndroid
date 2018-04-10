@@ -219,17 +219,17 @@ public class HomeMoreActivity extends BaseStockActivity {
                         if (model.getCode() == 0) {
                             if (model.data != null) {
                                 if(page_index==1) {
-                                    adapter.refreshList(model.data.rows);
+                                    adapter.refreshList(model.data);
                                 }else{
-                                    adapter.addList(model.data.rows);
+                                    adapter.addList(model.data);
                                 }
-
-                                if(adapter.getItemCount()<model.data.total_number){
-                                    recyclerView.setLoadingMoreEnabled(true);
-                                    page_index++;
-                                }else{
-                                    recyclerView.setLoadingMoreEnabled(false);
-                                }
+//
+//                                if(adapter.getItemCount()<model.data.total_number){
+//                                    recyclerView.setLoadingMoreEnabled(true);
+//                                    page_index++;
+//                                }else{
+//                                    recyclerView.setLoadingMoreEnabled(false);
+//                                }
 
                             }
                         }

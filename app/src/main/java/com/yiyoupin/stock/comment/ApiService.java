@@ -76,7 +76,7 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @GET("/stock/home/technology/stock_list.do")
+    @GET("/stock/technology/list.do")
     Observable<TechnologyMoreModel> getTechnologyNet(@QueryMap Map<String,String> params);
 
 

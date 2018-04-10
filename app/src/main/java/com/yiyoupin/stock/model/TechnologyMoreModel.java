@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TechnologyMoreModel extends BaseModel implements Serializable {
 
-    public StrategiesDataModel data;
+     public List<HomeModel.TechnologyItemModel> data;
 
     public class  StrategiesDataModel extends BaseModel implements Serializable{
         public String page_index;
