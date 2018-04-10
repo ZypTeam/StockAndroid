@@ -4,15 +4,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.jusfoun.baselibrary.base.BaseModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.model.SearchListModel;
+import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -33,7 +41,7 @@ public class OptionalFrgament extends BaseStockFragment {
 
     @Override
     protected void refreshData() {
-
+        refreshList();
     }
 
     @Override
@@ -44,6 +52,8 @@ public class OptionalFrgament extends BaseStockFragment {
     @Override
     public void initDatas() {
         adapter = new HomeListAdapter(mContext);
+        adapter.setType(HomeListAdapter.TYPE_FORM_LIST);
+
     }
 
     @Override
@@ -59,17 +69,31 @@ public class OptionalFrgament extends BaseStockFragment {
         titlebar.setLeftGone();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
+    }
 
-        List<BaseModel> list = new ArrayList<>();
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        adapter.setType(HomeListAdapter.TYPE_FORM_LIST);
-        adapter.refreshList(list);
+    private void refreshList(){
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap();
+        params.put(Constant.PAGE_PARAMS, Constant.PAGE_SIZE);
+        params.put(Constant.PAGE_INDEX, "1");
+        addNetwork(Api.getInstance().getService(ApiService.class).optionalList(params)
+                , new Action1<HomeListModel>() {
+                    @Override
+                    public void call(HomeListModel model) {
+                        hideLoadDialog();
+                        if (model.getCode() == 0) {
+                            List<BaseModel> list=new ArrayList<>();
+                            for (StockModel stockModel : model.getData().getStock_list()) {
+                                list.add(stockModel);
+                            }
+                            adapter.refreshList(list);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
     }
 }

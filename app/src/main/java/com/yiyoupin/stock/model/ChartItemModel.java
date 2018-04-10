@@ -1,5 +1,8 @@
 package com.yiyoupin.stock.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
@@ -8,7 +11,7 @@ import java.io.Serializable;
  * @describe
  */
 
-public class ChartItemModel implements Serializable {
+public class ChartItemModel implements Parcelable,Serializable{
 
 
     /**
@@ -32,6 +35,30 @@ public class ChartItemModel implements Serializable {
     private String stock_code;
     private String offset_size;
     private String trade_date;
+
+    protected ChartItemModel(Parcel in) {
+        yc_end_date = in.readString();
+        yc_start_date = in.readString();
+        stock_name = in.readString();
+        trade_amount = in.readString();
+        trade_volumn = in.readString();
+        detail_id = in.readString();
+        stock_code = in.readString();
+        offset_size = in.readString();
+        trade_date = in.readString();
+    }
+
+    public static final Creator<ChartItemModel> CREATOR = new Creator<ChartItemModel>() {
+        @Override
+        public ChartItemModel createFromParcel(Parcel in) {
+            return new ChartItemModel(in);
+        }
+
+        @Override
+        public ChartItemModel[] newArray(int size) {
+            return new ChartItemModel[size];
+        }
+    };
 
     public String getYc_end_date() {
         return yc_end_date;
@@ -103,5 +130,23 @@ public class ChartItemModel implements Serializable {
 
     public void setTrade_date(String trade_date) {
         this.trade_date = trade_date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(yc_end_date);
+        dest.writeString(yc_start_date);
+        dest.writeString(stock_name);
+        dest.writeString(trade_amount);
+        dest.writeString(trade_volumn);
+        dest.writeString(detail_id);
+        dest.writeString(stock_code);
+        dest.writeString(offset_size);
+        dest.writeString(trade_date);
     }
 }

@@ -1,5 +1,7 @@
 package com.yiyoupin.stock.model;
 
+import com.jusfoun.baselibrary.base.BaseModel;
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.yiyoupin.stock.expandablerecycleradapter.model.ExpandableListItem;
 
 import java.io.Serializable;
@@ -12,24 +14,17 @@ import java.util.List;
  * @describe
  */
 
-public class ChartsModel implements ExpandableListItem {
-    private boolean expanded=false;
+public class ChartsModel extends ExpandableGroup {
     private String name;
     private String id;
     private List<ChartItemModel> list;
-    @Override
-    public List<?> getChildItemList() {
+
+    public ChartsModel(String title, List items) {
+        super(title, items);
+    }
+
+    public List<ChartItemModel> getList() {
         return this.list;
-    }
-
-    @Override
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    @Override
-    public void setExpanded(boolean isExpanded) {
-        expanded=isExpanded;
     }
 
     public String getName() {
@@ -46,5 +41,20 @@ public class ChartsModel implements ExpandableListItem {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public List getItems() {
+        return list;
+    }
+
+    @Override
+    public String getTitle() {
+        return name;
+    }
+
+    @Override
+    public int getItemCount() {
+        return list==null?0:list.size();
     }
 }

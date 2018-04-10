@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':klinelib', ':MPChartLib'
+include ':app', ':baselibrary', ':klinelib', ':MPChartLib', ':expandablerecyclerview'

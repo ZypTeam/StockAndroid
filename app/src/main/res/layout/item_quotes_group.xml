@@ -20,6 +20,7 @@
 
     <com.yiyoupin.stock.ui.view.QuotesTitleView
         android:background="#202020"
+        android:id="@+id/content_view"
         app:layout_constraintTop_toBottomOf="@+id/line"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"

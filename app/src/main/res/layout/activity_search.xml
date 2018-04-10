@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true"
     android:background="#1e1e1e">
 
     <com.yiyoupin.stock.ui.view.BackTitleView
@@ -17,10 +16,9 @@
         android:id="@+id/search"
         android:layout_width="0dp"
         android:layout_height="35dp"
+        android:focusable="false"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:background="@drawable/bg_home_search"
         android:drawableLeft="@drawable/img_home_search"
         android:drawablePadding="5dp"

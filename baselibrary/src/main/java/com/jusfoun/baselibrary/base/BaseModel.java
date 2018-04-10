@@ -1,6 +1,7 @@
 package com.jusfoun.baselibrary.base;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by wang on 2016/11/8.

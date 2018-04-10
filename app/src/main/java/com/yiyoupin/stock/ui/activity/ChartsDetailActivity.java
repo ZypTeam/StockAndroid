@@ -50,7 +50,7 @@ public class ChartsDetailActivity extends BaseStockActivity {
 
         List<ChartItemModel> list=new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            list.add(new ChartItemModel());
+//            list.add(new ChartItemModel());
         }
         adapter.refreshList(list);
     }

@@ -1,8 +1,10 @@
 package com.yiyoupin.stock.ui;
 
 import com.jusfoun.baselibrary.base.BaseModel;
+import com.yiyoupin.stock.model.StockModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zhaoyapeng
@@ -11,4 +13,26 @@ import java.io.Serializable;
  * @Description ${TODO}
  */
 public class HomeListModel extends BaseModel implements Serializable {
+
+    private HomeData data;
+
+    public HomeData getData() {
+        return data;
+    }
+
+    public void setData(HomeData data) {
+        this.data = data;
+    }
+
+    public class HomeData{
+        private List<StockModel> stock_list;
+
+        public List<StockModel> getStock_list() {
+            return stock_list;
+        }
+
+        public void setStock_list(List<StockModel> stock_list) {
+            this.stock_list = stock_list;
+        }
+    }
 }

@@ -75,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView
         app:layout_constraintTop_toBottomOf="@+id/date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

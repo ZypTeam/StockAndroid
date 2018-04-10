@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
@@ -215,10 +216,13 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("只会农业");
-            textId.setText("0816");
-            newText.setText("3.9");
-            gainsText.setText("+3.93%");
+
+            StockModel item= (StockModel) model;
+
+            textTitle.setText(item.getStock_name());
+            textId.setText(item.getStock_code());
+            newText.setText(""+item.getStock_price());
+            gainsText.setText("+"+item.getOffset_size()+"");
             fallText.setText("2.01");
 
             itemView.setOnClickListener(new View.OnClickListener() {

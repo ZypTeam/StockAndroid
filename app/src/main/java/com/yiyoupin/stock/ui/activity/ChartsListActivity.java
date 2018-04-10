@@ -10,7 +10,6 @@ import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.model.ChartsListModel;
 import com.yiyoupin.stock.model.ChartsModel;
-import com.yiyoupin.stock.model.QuotesModel;
 import com.yiyoupin.stock.ui.adapter.ChartsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
@@ -29,11 +28,11 @@ import rx.functions.Action1;
 
 public class ChartsListActivity extends BaseStockActivity {
     protected BackTitleView titleView;
-    protected XRecyclerView list;
+    protected RecyclerView list;
     private ChartsAdapter adapter;
 
     private int page = 0;
-
+    private List<ChartsModel> models=new ArrayList<>();
 
     @Override
     public int getLayoutResId() {
@@ -42,35 +41,23 @@ public class ChartsListActivity extends BaseStockActivity {
 
     @Override
     public void initDatas() {
-        adapter = new ChartsAdapter(mContext);
+
     }
 
     @Override
     public void initView() {
         titleView = (BackTitleView) findViewById(R.id.title_view);
-        list = (XRecyclerView) findViewById(R.id.list);
+        list = (RecyclerView) findViewById(R.id.list);
 
     }
 
     @Override
     public void initAction() {
         list.setLayoutManager(new LinearLayoutManager(mContext));
-        list.setAdapter(adapter);
+
         titleView.setTitle("龙虎榜");
-        titleView.setRightIcon(R.mipmap.icon_search);
-
-        list.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                refresh(false, true);
-            }
-
-            @Override
-            public void onLoadMore() {
-                refresh(false, false);
-            }
-        });
         refresh(true, true);
+
     }
 
     private void refresh(boolean showLoading, boolean refresh) {
@@ -80,24 +67,27 @@ public class ChartsListActivity extends BaseStockActivity {
         }
         HashMap<String, String> params = new HashMap();
         params.put(Constant.PAGE_PARAMS, Constant.PAGE_SIZE);
-        params.put(Constant.PAGE_INDEX, refresh ? "0" : (page + 1) + "");
+        params.put(Constant.PAGE_INDEX, refresh ? "1" : (page + 1) + "");
         addNetwork(Api.getInstance().getService(ApiService.class).chartsList(params)
                 , new Action1<ChartsListModel>() {
                     @Override
                     public void call(ChartsListModel model) {
                         hideLoadDialog();
                         if (model.getCode() == 0) {
-                            List list = new ArrayList<>();
-                            for (ChartsModel quotesModel : model.getData().getTopcharts()) {
-                                list.add(quotesModel);
+                            if (refresh){
+                                refreshList(model.getData().getTopcharts());
+                            }else {
+                                addList(model.getData().getTopcharts());
                             }
-                            adapter.updateData(list);
-
+                            adapter = new ChartsAdapter(mContext,models);
+                            list.setAdapter(adapter);
                             if (refresh){
                                 page=0;
                             }else {
                                 page+=1;
                             }
+
+
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -107,5 +97,20 @@ public class ChartsListActivity extends BaseStockActivity {
                     }
                 });
 
+    }
+
+    public void refreshList(List<ChartsModel> models){
+        if (models==null){
+            models=new ArrayList<>();
+        }
+        this.models.clear();
+        this.models.addAll(models);
+    }
+
+    public void addList(List<ChartsModel> models){
+        if (models==null){
+            models=new ArrayList<>();
+        }
+        this.models.addAll(models);
     }
 }

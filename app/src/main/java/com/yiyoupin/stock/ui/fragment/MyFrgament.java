@@ -4,11 +4,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.delegate.UserInfoDelegate;
+import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.ui.activity.EditPersonInfoActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 import com.yiyoupin.stock.ui.util.UiUtils;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -93,8 +102,47 @@ public class MyFrgament extends BaseStockFragment {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                exitLogin();
                 UiUtils.goLoginActivity(mContext);
             }
         });
+
+        getUserInfo();
+    }
+
+    private void exitLogin(){
+        showLoadDialog();
+        addNetwork(Api.getInstance().getService(ApiService.class).loginOut()
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel userDataModel) {
+                        hideLoadDialog();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+    }
+
+
+    private void getUserInfo(){
+        showLoadDialog();
+        addNetwork(Api.getInstance().getService(ApiService.class).getUserInfo(new HashMap<>())
+                , new Action1<UserDataModel>() {
+                    @Override
+                    public void call(UserDataModel userDataModel) {
+                        hideLoadDialog();
+                        if (userDataModel.getCode()==0){
+                            UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
     }
 }

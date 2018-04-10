@@ -1,21 +1,24 @@
 package com.yiyoupin.stock.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.jusfoun.baselibrary.Util.LogUtil;
+import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
+import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
+import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.expandablerecycleradapter.adapter.BaseExpandableAdapter;
-import com.yiyoupin.stock.expandablerecycleradapter.viewholder.AbstractAdapterItem;
-import com.yiyoupin.stock.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
 import com.yiyoupin.stock.model.QuotesItemModel;
 import com.yiyoupin.stock.model.QuotesModel;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
 
 /**
@@ -24,106 +27,116 @@ import java.util.ArrayList;
  * @describe
  */
 
-public class QuotesAdapter extends BaseExpandableAdapter {
+public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.QuotesGroupViewHolder,QuotesAdapter.QuotesChildViewHolder> {
 
-    private ImageView mArrow;
-
-    private View view;
-
-    public QuotesAdapter(Context ctx) {
-        super(new ArrayList());
-    }
-
-
-    @NonNull
-    @Override
-    public AbstractAdapterItem<Object> getItemView(Object type) {
-        int itemType = (int) type;
-        if (itemType == 0) {
-            return new GroupViewHolder();
-        } else {
-            return new ChildViewHolder();
-        }
+    private Context context;
+    private LayoutInflater inflater;
+    public QuotesAdapter(Context ctx,List<QuotesModel> list) {
+        super(list);
+        this.context=ctx;
+        inflater=LayoutInflater.from(ctx);
     }
 
     @Override
-    public Object getItemViewType(Object t) {
-        if (t instanceof QuotesModel) {
-            return 0;
-        }
-        if (t instanceof QuotesItemModel) {
-            return 1;
-        }
-        return super.getItemViewType(t);
+    public QuotesGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+        View v = inflater.inflate(R.layout.item_quotes_group, parent, false);
+        return new QuotesGroupViewHolder(v);
     }
 
-    class GroupViewHolder extends AbstractExpandableAdapterItem {
+    @Override
+    public QuotesChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+        View v = inflater.inflate(R.layout.item_quotes_child, parent, false);
+        return new QuotesChildViewHolder(v);
+    }
 
-        @Override
-        public void onExpansionToggled(boolean expanded) {
+    @Override
+    public void onBindChildViewHolder(QuotesChildViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
+        holder.update(((QuotesModel)group).getStock_list().get(childIndex),group,childIndex);
+    }
 
-            //TODO 展开动画
+    @Override
+    public void onBindGroupViewHolder(QuotesGroupViewHolder holder, int flatPosition, ExpandableGroup group) {
+        holder.update((QuotesModel) group,flatPosition);
+    }
+
+    class QuotesGroupViewHolder extends GroupViewHolder {
+
+        private View line;
+        private ImageView mArrow;
+        private TextView name;
+        public QuotesGroupViewHolder(View itemView) {
+            super(itemView);
+            mArrow = (ImageView) itemView.findViewById(R.id.arrow);
+            name=itemView.findViewById(R.id.name);
+            line=itemView.findViewById(R.id.line);
+
         }
 
-        @Override
-        public int getLayoutResId() {
-            return R.layout.item_quotes_group;
-        }
-
-        @Override
-        public void onBindViews(View root) {
-            mArrow = (ImageView) root.findViewById(R.id.arrow);
-            view=root.findViewById(R.id.line);
-            root.setOnClickListener(v -> {
-                doExpandOrUnexpand();
-            });
-        }
-
-        @Override
-        public void onSetViews() {
-            mArrow.setImageResource(R.mipmap.longhubang_right_arrow);
-        }
-
-        @Override
-        public void onUpdateViews(Object model, int position) {
-            super.onUpdateViews(model, position);
-            onSetViews();
-            onExpansionToggled(getExpandableListItem().isExpanded());
-            if (position==0||position==6){
-                view.setVisibility(View.VISIBLE);
+        public void update(QuotesModel model, int position) {
+            name.setText(model.getName());
+            if (position==0){
+                line.setVisibility(View.VISIBLE);
             }else {
-                view.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
             }
         }
+
+        @Override
+        public void expand() {
+            animateExpand();
+        }
+
+        @Override
+        public void collapse() {
+            animateCollapse();
+        }
+
+        private void animateExpand() {
+            RotateAnimation rotate =
+                    new RotateAnimation(0, 90, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
+            rotate.setDuration(300);
+            rotate.setFillAfter(true);
+            mArrow.setAnimation(rotate);
+        }
+
+        private void animateCollapse() {
+            RotateAnimation rotate =
+                    new RotateAnimation(90, 0, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
+            rotate.setDuration(300);
+            rotate.setFillAfter(true);
+            mArrow.setAnimation(rotate);
+        }
     }
 
-    class ChildViewHolder extends AbstractAdapterItem {
+    class QuotesChildViewHolder extends ChildViewHolder {
 
-        private View title;
+        private View title,bottomLine;
+        private TextView name,code,cur_price;
 
-        @Override
-        public int getLayoutResId() {
-            return R.layout.item_quotes_child;
+        public QuotesChildViewHolder(View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.title);
+            name = itemView.findViewById(R.id.name);
+            code = itemView.findViewById(R.id.code);
+            cur_price = itemView.findViewById(R.id.cur_price);
+            bottomLine=itemView.findViewById(R.id.bottom_line);
         }
 
-        @Override
-        public void onBindViews(View root) {
-            title = root.findViewById(R.id.title);
-        }
-
-        @Override
-        public void onSetViews() {
-
-        }
-
-        @Override
-        public void onUpdateViews(Object model, int position) {
-            LogUtil.e("child","position=="+position);
-            if (position == 1||position==7||position==13||position==19||position==25) {
+        public void update(QuotesItemModel model,ExpandableGroup group, int position) {
+            if (position==0){
                 title.setVisibility(View.VISIBLE);
-            } else {
+            }else {
                 title.setVisibility(View.GONE);
             }
+
+            if (position==group.getItemCount()-1){
+                bottomLine.setVisibility(View.VISIBLE);
+            }else {
+                bottomLine.setVisibility(View.GONE);
+            }
+            name.setText(model.getStock_name());
+            code.setText(model.getStock_code());
+            cur_price.setText(model.getOffset_size());
         }
     }
 }

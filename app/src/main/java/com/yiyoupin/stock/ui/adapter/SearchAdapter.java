@@ -2,6 +2,7 @@ package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.SearchModel;
@@ -15,6 +16,7 @@ import com.yiyoupin.stock.ui.base.BaseViewHolder;
  */
 
 public class SearchAdapter extends BaseAdapter<SearchModel> {
+
     public SearchAdapter(Context context) {
         super(context);
     }
@@ -31,8 +33,15 @@ public class SearchAdapter extends BaseAdapter<SearchModel> {
 
     class SearchViewHolder extends BaseViewHolder<SearchModel> {
 
+        protected TextView code;
+        protected TextView name;
+        protected TextView shortName;
+
         public SearchViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
+            code = (TextView) itemView.findViewById(R.id.code);
+            name = (TextView) itemView.findViewById(R.id.name);
+            shortName = (TextView) itemView.findViewById(R.id.short_name);
         }
 
         @Override
@@ -40,9 +49,13 @@ public class SearchAdapter extends BaseAdapter<SearchModel> {
 
             itemView.setOnClickListener(v -> {
                 if (callBack != null) {
-                    callBack.callBack();
+                    callBack.callBack(model);
                 }
             });
+
+            code.setText(model.getStock_code());
+            name.setText(model.getStock_name());
+            shortName.setText(model.getStock_code());
 
         }
     }
@@ -54,7 +67,7 @@ public class SearchAdapter extends BaseAdapter<SearchModel> {
     }
 
     public interface CallBack {
-        void callBack();
+        void callBack(SearchModel model);
     }
 
 }
