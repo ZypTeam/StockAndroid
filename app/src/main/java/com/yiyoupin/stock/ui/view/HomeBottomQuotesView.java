@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.ui.base.BaseView;
 
 /**
@@ -58,10 +59,10 @@ public class HomeBottomQuotesView extends BaseView {
         textBaifenbi = (TextView) rootView.findViewById(R.id.text_baifenbi);
     }
 
-    public void setData(){
-        textTitle.setText("上证指数");
-        textCount.setText("3422.18");
-        textAdd.setText("+51.53");
-        textBaifenbi.setText("1.53%");
+    public void setData(HomeModel.PlateindexItemModel model){
+        textTitle.setText(model.plate_name);
+        textCount.setText(model.plate_index);
+        textAdd.setText("+"+model.plate_growth);
+        textBaifenbi.setText(model.plate_growth_rate+"%");
     }
 }

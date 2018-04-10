@@ -3,6 +3,7 @@ package com.yiyoupin.stock.model;
 import com.jusfoun.baselibrary.base.BaseModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zhaoyapeng
@@ -13,11 +14,14 @@ import java.io.Serializable;
 public class HomeModel extends BaseModel implements Serializable {
 
 
+    public HomeDataModel data;
+
+
     public class HomeDataModel extends BaseModel implements Serializable{
-        public PlateindexItemModel plateindex;
-        public StocktacticsItemModel stocktactics;
-        public BuyselectionItemModel buyselection;
-        public TechnologyItemModel technology;
+        public List<PlateindexItemModel> plateindex;
+        public List<StocktacticsItemModel> stocktactics;
+        public List<BuyselectionItemModel> buyselection;
+        public List<TechnologyItemModel> technology;
 
     }
 

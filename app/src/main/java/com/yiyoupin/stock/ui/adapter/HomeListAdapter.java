@@ -7,15 +7,14 @@ import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
-import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author zhaoyapeng
@@ -23,7 +22,7 @@ import java.util.Map;
  * @Email zyp@jusfoun.com
  * @Description ${首页 选股策略 买点精选 技术形态 adapter}
  */
-public class HomeListAdapter extends BaseAdapter<BaseModel> {
+public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
     public static int TYPE_STRATEGIES = 1;// 选个策略
     public static int TYPE_FEATURED = 2;// 买点精选
@@ -108,14 +107,16 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("战神归来");
-            textCount.setText("+3.93%");
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UiUtils.goStrategiesDetailActivity(mContext);
-                }
-            });
+            if (model instanceof HomeModel.StocktacticsItemModel) {
+                textTitle.setText(((HomeModel.StocktacticsItemModel) model).tactics_name);
+                textCount.setText(((HomeModel.StocktacticsItemModel) model).yield_rate);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UiUtils.goStrategiesDetailActivity(mContext);
+                    }
+                });
+            }
         }
 
         private void initView(View rootView) {
@@ -142,20 +143,22 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("智慧");
-            textCount1.setText("+3.93%");
-            textCount2.setText("+3.93%");
-            textId.setText("0816");
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(type== TYPE_STRATEGIES_DETAIL) {
-                        UiUtils.goStockShowActivity(mContext);
-                    }else{
-                        UiUtils.goStrategiesDetailActivity(mContext);
+            if (model instanceof HomeModel.BuyselectionItemModel) {
+                textTitle.setText(((HomeModel.BuyselectionItemModel) model).choiceness_name);
+                textCount1.setText(((HomeModel.BuyselectionItemModel) model).yield_rate);
+                textCount2.setText(((HomeModel.BuyselectionItemModel) model).yield_rate);
+                textId.setText(((HomeModel.BuyselectionItemModel) model).choiceness_id);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (type == TYPE_STRATEGIES_DETAIL) {
+                            UiUtils.goStockShowActivity(mContext);
+                        } else {
+                            UiUtils.goStrategiesDetailActivity(mContext);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         private void initView(View rootView) {
@@ -181,7 +184,8 @@ public class HomeListAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("战神归来");
+            if (model instanceof HomeModel.TechnologyItemModel)
+                textTitle.setText(((HomeModel.TechnologyItemModel) model).technology_name);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

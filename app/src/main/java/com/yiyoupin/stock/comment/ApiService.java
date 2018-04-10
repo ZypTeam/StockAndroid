@@ -2,6 +2,7 @@ package com.yiyoupin.stock.comment;
 
 import com.yiyoupin.stock.model.ChartsListModel;
 import com.yiyoupin.stock.model.ChartsModel;
+import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.model.QuotesModel;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
@@ -39,4 +40,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/stock/login/login_password.do")
     Observable<UserDataModel> login(@FieldMap Map<String,String> params);
+
+    /**
+     * 首页
+     * @param params
+     * @return
+     */
+    @GET("/stock/home/home.do")
+    Observable<HomeModel> getHomeNet();
 }

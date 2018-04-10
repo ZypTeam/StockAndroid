@@ -3,29 +3,25 @@ package com.yiyoupin.stock.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.jusfoun.baselibrary.base.BaseModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.widget.GlideCircleTransform;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.ui.HomeListModel;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.ui.activity.HomeMoreActivity;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
-import com.yiyoupin.stock.ui.util.ImageLoderUtil;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.HomeBottomQuotesView;
 
-import java.util.ArrayList;
-import java.util.List;
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -53,9 +49,11 @@ public class HomeFrgament extends BaseStockFragment {
     protected HomeBottomQuotesView viewShangzheng;
     protected HomeBottomQuotesView viewShenzheng;
     protected HomeBottomQuotesView viewChuangye;
-    private View newspaper,charts,notice,replay;
+    private View newspaper, charts, notice, replay;
 
     private HomeListAdapter adapter;
+
+    private HomeModel.HomeDataModel homeDataModel;
 
     public static HomeFrgament getInstance() {
         HomeFrgament fragment = new HomeFrgament();
@@ -99,10 +97,10 @@ public class HomeFrgament extends BaseStockFragment {
         viewShenzheng = (HomeBottomQuotesView) rootView.findViewById(R.id.view_shenzheng);
         viewChuangye = (HomeBottomQuotesView) rootView.findViewById(R.id.view_chuangye);
 
-        newspaper=rootView.findViewById(R.id.newspaper);
-        charts=rootView.findViewById(R.id.charts);
-        notice=rootView.findViewById(R.id.notice);
-        replay=rootView.findViewById(R.id.replay);
+        newspaper = rootView.findViewById(R.id.newspaper);
+        charts = rootView.findViewById(R.id.charts);
+        notice = rootView.findViewById(R.id.notice);
+        replay = rootView.findViewById(R.id.replay);
 
     }
 
@@ -123,8 +121,12 @@ public class HomeFrgament extends BaseStockFragment {
                 lineJingxuan.setVisibility(View.GONE);
                 lineXingtai.setVisibility(View.GONE);
 
-                adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
-                adapter.notifyDataSetChanged();
+                if (homeDataModel != null) {
+                    adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
+                    adapter.refreshList(homeDataModel.stocktactics);
+                    adapter.notifyDataSetChanged();
+
+                }
 
             }
         });
@@ -156,8 +158,12 @@ public class HomeFrgament extends BaseStockFragment {
                 lineJingxuan.setVisibility(View.VISIBLE);
                 lineXingtai.setVisibility(View.GONE);
 
-                adapter.setType(HomeListAdapter.TYPE_FEATURED);
-                adapter.notifyDataSetChanged();
+
+                if (homeDataModel != null) {
+                    adapter.setType(HomeListAdapter.TYPE_FEATURED);
+                    adapter.refreshList(homeDataModel.buyselection);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -179,7 +185,7 @@ public class HomeFrgament extends BaseStockFragment {
         editSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UiUtils.goSearch(mContext,editSearch.getText().toString());
+                UiUtils.goSearch(mContext, editSearch.getText().toString());
             }
         });
 
@@ -195,8 +201,12 @@ public class HomeFrgament extends BaseStockFragment {
                 lineJingxuan.setVisibility(View.GONE);
                 lineXingtai.setVisibility(View.VISIBLE);
 
-                adapter.setType(HomeListAdapter.TYPE_FORM);
-                adapter.notifyDataSetChanged();
+                if (homeDataModel != null) {
+                    adapter.setType(HomeListAdapter.TYPE_FORM);
+                    adapter.refreshList(homeDataModel.technology);
+                    adapter.notifyDataSetChanged();
+                }
+
             }
         });
 
@@ -204,31 +214,65 @@ public class HomeFrgament extends BaseStockFragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(HomeMoreActivity.TYPE,adapter.getType());
-                goActivity(bundle,HomeMoreActivity.class);
+                bundle.putInt(HomeMoreActivity.TYPE, adapter.getType());
+                goActivity(bundle, HomeMoreActivity.class);
             }
         });
 
 
         Glide.with(mContext)
                 .load(R.mipmap.logo)
-                .transform(new CenterCrop(mContext),new GlideCircleTransform(mContext))
+                .transform(new CenterCrop(mContext), new GlideCircleTransform(mContext))
                /* .placeholder(errorResId)
                 .error(errorResId)*/
                 .crossFade()
                 .into(imgHead);
 
-        List<BaseModel> list = new ArrayList<>();
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
-        adapter.refreshList(list);
-
-        viewShangzheng.setData();
-        viewShenzheng.setData();
-        viewChuangye.setData();
+        getListHome();
     }
+
+
+    private void getListHome() {
+        showLoadDialog();
+        addNetwork(Api.getInstance().getService(ApiService.class).getHomeNet()
+                , new Action1<HomeModel>() {
+                    @Override
+                    public void call(HomeModel model) {
+                        hideLoadDialog();
+                        if (model.getCode() == 0) {
+                            adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
+                            if (model.data != null) {
+                                homeDataModel = model.data;
+                                adapter.refreshList(model.data.stocktactics);
+
+                                if (model.data.plateindex != null) {
+                                    if (model.data.plateindex.size() >= 1) {
+                                        viewShangzheng.setVisibility(View.VISIBLE);
+                                        viewShangzheng.setData(model.data.plateindex.get(0));
+                                    }
+
+                                    if (model.data.plateindex.size() >= 2) {
+                                        viewShenzheng.setVisibility(View.VISIBLE);
+                                        viewShenzheng.setData(model.data.plateindex.get(1));
+                                    }
+
+                                    if (model.data.plateindex.size() >= 3) {
+                                        viewChuangye.setVisibility(View.VISIBLE);
+                                        viewChuangye.setData(model.data.plateindex.get(2));
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+
+    }
+
+
 }
