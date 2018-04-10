@@ -1,7 +1,11 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.Manifest;
 import android.text.TextUtils;
 
+import com.jusfoun.baselibrary.permissiongen.PermissionFail;
+import com.jusfoun.baselibrary.permissiongen.PermissionGen;
+import com.jusfoun.baselibrary.permissiongen.PermissionSuccess;
 import com.jusfoun.baselibrary.task.WeakHandler;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
@@ -40,8 +44,27 @@ public class SplashActivity extends BaseStockActivity {
 
     @Override
     public void initAction() {
+        if (PermissionGen.checkPermissions(mContext,new String[]{Manifest.permission.READ_PHONE_STATE})){
+            handler.postDelayed(task,2000);
+        }else {
+            PermissionGen.with(this)
+                    .permissions(new String[]{Manifest.permission.READ_PHONE_STATE})
+                    .addRequestCode(100)
+                    .request();
+        }
+
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void perFail(){
+        showToast("获取权限失败");
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void perSuc(){
         handler.postDelayed(task,2000);
     }
+
 
     private void goNextActivity(){
 //        if (UserInfoDelegate.getInstance().getUserInfo()!=null){

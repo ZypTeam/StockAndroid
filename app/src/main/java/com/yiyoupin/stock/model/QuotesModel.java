@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.model;
 
+import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.expandablerecycleradapter.model.ExpandableListItem;
 
 import java.util.ArrayList;
@@ -11,8 +12,11 @@ import java.util.List;
  * @describe
  */
 
-public class QuotesModel implements ExpandableListItem {
+public class QuotesModel extends BaseModel implements ExpandableListItem {
     private boolean expanded=false;
+    private String name;
+    private String id;
+    private List<QuotesItemModel> list;
     @Override
     public List<?> getChildItemList() {
         List<QuotesItemModel> list=new ArrayList<>();
@@ -30,5 +34,21 @@ public class QuotesModel implements ExpandableListItem {
     @Override
     public void setExpanded(boolean isExpanded) {
         expanded=isExpanded;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -4,14 +4,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
-import com.jusfoun.baselibrary.Util.LogUtil;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.expandablerecycleradapter.adapter.BaseExpandableAdapter;
 import com.yiyoupin.stock.expandablerecycleradapter.viewholder.AbstractAdapterItem;
 import com.yiyoupin.stock.expandablerecycleradapter.viewholder.AbstractExpandableAdapterItem;
-import com.yiyoupin.stock.model.QuotesItemModel;
-import com.yiyoupin.stock.model.QuotesModel;
+import com.yiyoupin.stock.model.ChartItemModel;
+import com.yiyoupin.stock.model.ChartsModel;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.CustomQuotesView;
 
@@ -46,10 +46,10 @@ public class ChartsAdapter extends BaseExpandableAdapter {
 
     @Override
     public Object getItemViewType(Object t) {
-        if (t instanceof QuotesModel) {
+        if (t instanceof ChartsModel) {
             return 0;
         }
-        if (t instanceof QuotesItemModel) {
+        if (t instanceof ChartItemModel) {
             return 1;
         }
         return super.getItemViewType(t);
@@ -57,6 +57,7 @@ public class ChartsAdapter extends BaseExpandableAdapter {
 
     class GroupViewHolder extends AbstractExpandableAdapterItem {
 
+        private TextView name;
         @Override
         public void onExpansionToggled(boolean expanded) {
 
@@ -71,6 +72,7 @@ public class ChartsAdapter extends BaseExpandableAdapter {
 
         @Override
         public void onBindViews(View root) {
+            name=root.findViewById(R.id.name);
             root.setOnClickListener(v -> {
                 doExpandOrUnexpand();
             });
@@ -85,12 +87,14 @@ public class ChartsAdapter extends BaseExpandableAdapter {
         public void onUpdateViews(Object model, int position) {
             super.onUpdateViews(model, position);
             onExpansionToggled(getExpandableListItem().isExpanded());
+            name.setText(((ChartsModel)model).getName());
         }
     }
 
     class ChildViewHolder extends AbstractAdapterItem {
 
         private View title;
+        private TextView name,code,cur_price;
         private CustomQuotesView  item;
 
         @Override
@@ -101,6 +105,9 @@ public class ChartsAdapter extends BaseExpandableAdapter {
         @Override
         public void onBindViews(View root) {
             title = root.findViewById(R.id.title);
+            name = root.findViewById(R.id.name);
+            code = root.findViewById(R.id.code);
+            cur_price = root.findViewById(R.id.cur_price);
             root.setOnClickListener(v ->{
                 UiUtils.goChartsDetails(context);
             });
@@ -115,7 +122,10 @@ public class ChartsAdapter extends BaseExpandableAdapter {
         public void onUpdateViews(Object model, int position) {
            title.setVisibility(View.GONE);
 
-
+            ChartItemModel itemModel= (ChartItemModel) model;
+            name.setText(itemModel.getStock_name());
+            code.setText(itemModel.getStock_code());
+            cur_price.setText(itemModel.getOffset_size());
         }
     }
 }

@@ -8,11 +8,20 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.Util.RegularUtils;
+import com.jusfoun.baselibrary.Util.StringUtil;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
+import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author wangcc
@@ -57,15 +66,46 @@ public class LoginActivity extends BaseStockActivity {
             login();
         });
 
-        forgetPassword.setOnClickListener(v ->{
+        forgetPassword.setOnClickListener(v -> {
             UiUtils.goForgetPass(LoginActivity.this);
         });
     }
 
-    private void login(){
-//        UserInfoDelegate.getInstance().saveUserInfo(new UserModel());
-        UiUtils.goHomeActivity(LoginActivity.this);
-        finish();
+    private void login() {
+        if (!RegularUtils.checkPhone(phone.getText().toString())) {
+            showToast("手机号不正确");
+            return;
+        }
+        if (StringUtil.isEmpty(password.getText().toString())) {
+            showToast("密码不能为空");
+            return;
+        }
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("phone", phone.getText().toString());
+        params.put("password", password.getText().toString());
+        addNetwork(Api.getInstance().getService(ApiService.class).login(params)
+                , new Action1<UserDataModel>() {
+                    @Override
+                    public void call(UserDataModel userDataModel) {
+
+                        hideLoadDialog();
+                        if (userDataModel.getCode() == 0) {
+                            UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
+                            UiUtils.goHomeActivity(LoginActivity.this);
+                            finish();
+                        } else {
+                            showToast(userDataModel.getMsg());
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+
+
     }
 
     public SpannableStringBuilder getText(String txt1, String txt2) {

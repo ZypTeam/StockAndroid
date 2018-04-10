@@ -1,7 +1,11 @@
 package com.jusfoun.baselibrary.net;
 
 import android.content.Context;
+
+import com.jusfoun.baselibrary.Util.AppUtil;
 import com.jusfoun.baselibrary.Util.LogUtil;
+import com.jusfoun.baselibrary.Util.PhoneUtil;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
@@ -31,12 +35,13 @@ public class HeaderInterceptor implements Interceptor {
     private String Version = "Version";
     private String VersionCode = "VersionCode";
     private String AppType = "AppType";
-    private String Channel = "Channel";
-    private String Deviceid = "Deviceid";
+    private String Channel = "channel";
+    private String Deviceid = "equipment_id";
     private String AccessToken = "AccessToken";
-    private String APIVersion = "APIVersion";
+    private String APIVersion = "version_name";
     private String ContentType="";
     private String SEAVER_TOKEN="Seaver-Token";
+    private String USER_ID="user_id";
     public HeaderInterceptor(Context mContext) {
         this.mContext=mContext.getApplicationContext();
     }
@@ -48,9 +53,9 @@ public class HeaderInterceptor implements Interceptor {
 //                .addHeader(Version, AppUtil.getVersionName(mContext))
 //                .addHeader(VersionCode, AppUtil.getVersionCode(mContext) + "")
 //                .addHeader(AppType, "0")
-////                .addHeader(Channel, AppUtil.getChannelName(mContext))
-//                .addHeader(Deviceid, PhoneUtil.getIMEI(mContext))
-                .addHeader(APIVersion, "1.0")
+                .addHeader(Channel, AppUtil.getChannelName(mContext))
+                .addHeader(Deviceid, PhoneUtil.getIMEI(mContext))
+                .addHeader(APIVersion, AppUtil.getVersionName(mContext) )
 //                .addHeader(SEAVER_TOKEN, "d6115638dbf7d1b4a63513fc50d573d3")
                 .build();
 

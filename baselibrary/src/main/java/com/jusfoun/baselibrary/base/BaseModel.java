@@ -7,11 +7,11 @@ import java.io.Serializable;
  */
 
 public abstract class BaseModel implements Serializable {
-    protected int code;
+    protected int rescode;
 
     protected int result;
 
-    protected String msg;
+    protected String resmsg;
 
     protected String message;
 
@@ -20,11 +20,11 @@ public abstract class BaseModel implements Serializable {
     public int total;
 
     public int getCode() {
-        return code;
+        return rescode;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        this.rescode = code;
     }
 
     public int getResult() {
@@ -36,11 +36,11 @@ public abstract class BaseModel implements Serializable {
     }
 
     public String getMsg() {
-        return msg;
+        return resmsg;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        this.resmsg = msg;
     }
 
     public String getError() {
