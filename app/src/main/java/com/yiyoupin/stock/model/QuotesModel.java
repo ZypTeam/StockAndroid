@@ -1,10 +1,7 @@
 package com.yiyoupin.stock.model;
 
-import com.jusfoun.baselibrary.base.BaseModel;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
-import com.yiyoupin.stock.expandablerecycleradapter.model.ExpandableListItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

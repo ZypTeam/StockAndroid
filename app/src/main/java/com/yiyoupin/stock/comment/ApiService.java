@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.comment;
 
 import com.jusfoun.baselibrary.base.NoDataModel;
+import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartsListModel;
 import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.model.NoticeListModel;
@@ -9,6 +10,11 @@ import com.yiyoupin.stock.model.QuotesListModel;
 import com.yiyoupin.stock.model.ReplayListModel;
 import com.yiyoupin.stock.model.SearchListModel;
 import com.yiyoupin.stock.model.UploadDataModel;
+import com.yiyoupin.stock.model.ChartsModel;
+import com.yiyoupin.stock.model.HomeModel;
+import com.yiyoupin.stock.model.QuotesModel;
+import com.yiyoupin.stock.model.StrategiesMoreModel;
+import com.yiyoupin.stock.model.TechnologyMoreModel;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.ui.HomeListModel;
 
@@ -200,4 +206,43 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/stock/user/modify_info.do")
     Observable<NoDataModel> editInfo(@FieldMap Map<String,String> params);
+
+    /**
+     * 首页
+     * @param params
+     * @return
+     */
+    @GET("/stock/home/home.do")
+    Observable<HomeModel> getHomeNet();
+
+
+    /**
+     * 选股策略更多
+     * @param params
+     * @return
+     */
+    @GET("/stock/securityselection/list.do")
+    Observable<StrategiesMoreModel> getStrategiesNet(@QueryMap Map<String,String> params);
+
+    /**
+     * 买点精选更多
+     * @param params
+     * @return
+     */
+    @GET("/stock/buyselection/list.do")
+    Observable<BuySelectionMoreModel> getBuyselectionNet(@QueryMap Map<String,String> params);
+
+
+
+    /**
+     * 选股策略更多
+     * @param params
+     * @return
+     */
+    @GET("/stock/technology/list.do")
+    Observable<TechnologyMoreModel> getTechnologyNet(@QueryMap Map<String,String> params);
+
+
+
+
 }

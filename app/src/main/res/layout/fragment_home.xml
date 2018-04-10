@@ -315,20 +315,23 @@
                     android:id="@+id/view_shangzheng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
 
                 <com.yiyoupin.stock.ui.view.HomeBottomQuotesView
                     android:id="@+id/view_shenzheng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
 
                 <com.yiyoupin.stock.ui.view.HomeBottomQuotesView
                     android:id="@+id/view_chuangye"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <View
