@@ -6,16 +6,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
+import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -37,6 +43,7 @@ public class AuthChangePassActivity extends BaseStockActivity {
     protected EditText inputPhoneCode;
     protected TextView submit;
     private Subscription timer;
+    private String password;
 
     @Override
     public int getLayoutResId() {
@@ -46,6 +53,7 @@ public class AuthChangePassActivity extends BaseStockActivity {
     @Override
     public void initDatas() {
 
+        password=getIntent().getExtras().getString(UiUtils.PASSWORD);
     }
 
     @Override
@@ -121,6 +129,38 @@ public class AuthChangePassActivity extends BaseStockActivity {
                 }
             }
         });
+
+        submit.setOnClickListener(v -> {
+            auth();
+        });
+    }
+
+    private void auth(){
+        showLoadDialog();
+        HashMap<String,String> params=new HashMap<>();
+        params.put("phone",inputPhone.getText().toString());
+        params.put("password",password);
+        addNetwork(Api.getInstance().getService(ApiService.class).bindPhone(params)
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel noDataModel) {
+
+                        hideLoadDialog();
+                        if (noDataModel.getCode()==0){
+                            showToast("绑定手机号成功");
+                            UiUtils.goHomeActivity(mContext);
+                            return;
+                        }
+                        showToast("绑定手机号失败");
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                        hideLoadDialog();
+                        showToast("绑定手机号失败");
+                    }
+                });
     }
 
     @Override

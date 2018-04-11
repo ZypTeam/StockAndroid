@@ -13,6 +13,7 @@ import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.ui.activity.EditPersonInfoActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
+import com.yiyoupin.stock.ui.util.ImageLoderUtil;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.util.HashMap;
@@ -136,6 +137,10 @@ public class MyFrgament extends BaseStockFragment {
                         hideLoadDialog();
                         if (userDataModel.getCode()==0){
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
+                            username.setText(userDataModel.getData().getName());
+                            ImageLoderUtil.loadCircleImage(mContext, iconHead, userDataModel.getData().getUser_picture(), R.mipmap.ic_launcher_round);
+
+
                         }
                     }
                 }, new Action1<Throwable>() {

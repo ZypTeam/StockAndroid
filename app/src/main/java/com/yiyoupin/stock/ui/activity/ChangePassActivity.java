@@ -9,10 +9,17 @@ import android.widget.Toast;
 
 import com.jusfoun.baselibrary.Util.StringUtil;
 import com.jusfoun.baselibrary.base.BaseActivity;
+import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author wangcc
@@ -124,6 +131,13 @@ public class ChangePassActivity extends BaseStockActivity {
     }
 
     private void submit(){
+
+        if (StringUtil.isEmpty(inputLastPass.getText().toString())
+                ||inputLastPass.getText().toString().length()<6){
+            Toast.makeText(mContext,"密码长度必须大于6",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (StringUtil.isEmpty(inputPassword.getText().toString())
                 ||inputPassword.getText().toString().length()<6){
             Toast.makeText(mContext,"密码长度必须大于6",Toast.LENGTH_SHORT).show();
@@ -135,6 +149,31 @@ public class ChangePassActivity extends BaseStockActivity {
             return;
         }
 
-        UiUtils.goAuthChangePass(inputPassword.getText().toString(),mContext);
+        showLoadDialog();
+        HashMap<String,String> params=new HashMap<>();
+        params.put("old_password",inputLastPass.getText().toString());
+        params.put("new_password",inputPassword.getText().toString());
+        addNetwork(Api.getInstance().getService(ApiService.class).editPassword(params)
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel noDataModel) {
+
+                        hideLoadDialog();
+                        if (noDataModel.getCode()==0){
+                            UiUtils.goAuthChangePass(inputPassword.getText().toString(),mContext);
+                            return;
+                        }
+                        showToast("修改失败");
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                        hideLoadDialog();
+                        showToast("修改失败");
+                    }
+                });
+
+
     }
 }

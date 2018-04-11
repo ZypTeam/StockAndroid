@@ -10,6 +10,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.Util.PhoneUtil;
+import com.jusfoun.baselibrary.Util.TouchUtil;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
@@ -67,16 +69,21 @@ public class ChartsAdapter extends ExpandableRecyclerViewAdapter<ChartsAdapter.C
 
     class ChartGroupViewHolder extends GroupViewHolder {
 
-        private TextView name;
+        private TextView name,more;
         private ImageView arrow;
 
         public ChartGroupViewHolder(View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
+            more=itemView.findViewById(R.id.more);
             arrow=itemView.findViewById(R.id.arrow);
+            TouchUtil.createTouchDelegate(more, PhoneUtil.dip2px(context,10));
         }
 
         public void update(ChartsModel model,int position) {
+            more.setOnClickListener(v -> {
+                UiUtils.goChartsDetails(context,model.getId());
+            });
             name.setText(model.getName());
         }
 
@@ -119,9 +126,7 @@ public class ChartsAdapter extends ExpandableRecyclerViewAdapter<ChartsAdapter.C
             name = itemView.findViewById(R.id.name);
             code = itemView.findViewById(R.id.code);
             cur_price = itemView.findViewById(R.id.cur_price);
-            itemView.setOnClickListener(v ->{
-                UiUtils.goChartsDetails(context);
-            });
+
         }
 
         public void update(ChartItemModel model,int position) {

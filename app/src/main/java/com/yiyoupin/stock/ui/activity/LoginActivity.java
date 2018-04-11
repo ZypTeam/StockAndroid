@@ -5,13 +5,16 @@ import android.provider.Contacts;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jusfoun.baselibrary.Util.RegularUtils;
 import com.jusfoun.baselibrary.Util.StringUtil;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
@@ -88,12 +91,11 @@ public class LoginActivity extends BaseStockActivity {
                 , new Action1<UserDataModel>() {
                     @Override
                     public void call(UserDataModel userDataModel) {
-
                         hideLoadDialog();
                         if (userDataModel.getCode() == 0) {
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
                             UiUtils.goHomeActivity(LoginActivity.this);
-                            finish();
+                            onBackPressed();
                         } else {
                             showToast(userDataModel.getMsg());
                         }
@@ -114,5 +116,23 @@ public class LoginActivity extends BaseStockActivity {
         builder.setSpan(new ForegroundColorSpan(Color.parseColor("#666666")), 0, txt1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new ForegroundColorSpan(Color.parseColor("#e93030")), txt1.length(), txt1.length() + txt2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
+    }
+
+    private long mLastTime;
+    /**
+     * 退出程序
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mLastTime > 0 && System.currentTimeMillis() - mLastTime <= 2000) {
+                StockApplication.getBaseApplication().removeAll();
+            } else {
+                Toast.makeText(mContext, R.string.app_exit_string, Toast.LENGTH_SHORT).show();
+                mLastTime = System.currentTimeMillis();
+            }
+            return true;
+        }
+        return false;
     }
 }

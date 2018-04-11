@@ -2,6 +2,7 @@ package com.yiyoupin.stock.comment;
 
 import com.jusfoun.baselibrary.base.NoDataModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
+import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
 import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.model.NoticeListModel;
@@ -113,6 +114,14 @@ public interface ApiService {
      */
     @GET("/stock/topcharts/list.do")
     Observable<ChartsListModel> chartsList(@QueryMap Map<String,String> params);
+
+    /**
+     * 龙虎榜 详情
+     * @param params
+     * @return
+     */
+    @GET("/stock/topcharts/detail.do")
+    Observable<ChartDetailModel> chartsDetail(@QueryMap Map<String,String> params);
 
     /**
      * 公告列表
@@ -231,8 +240,6 @@ public interface ApiService {
      */
     @GET("/stock/buyselection/list.do")
     Observable<BuySelectionMoreModel> getBuyselectionNet(@QueryMap Map<String,String> params);
-
-
 
     /**
      * 选股策略更多

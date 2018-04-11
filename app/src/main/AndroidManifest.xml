@@ -27,6 +27,7 @@
         <!--首页-->
         <activity
             android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--登录-->
@@ -139,6 +140,11 @@
         <!--修改密码-->
         <activity
             android:name=".ui.activity.ChangePassActivity"
+            android:screenOrientation="portrait" />
+
+        <!--注册-->
+        <activity
+            android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <!--验证修改密码-->

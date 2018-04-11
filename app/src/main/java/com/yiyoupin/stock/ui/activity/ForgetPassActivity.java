@@ -6,12 +6,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jusfoun.baselibrary.Util.RegularUtils;
+import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -94,6 +98,11 @@ public class ForgetPassActivity extends BaseStockActivity {
         });
 
         code.setOnClickListener(v -> {
+            if (!RegularUtils.checkMobile(inputPhone.getText().toString())){
+                showToast("输入正确的手机号");
+                return;
+            }
+            getCode();
             timer = Observable.interval(1, TimeUnit.SECONDS)
                     .take(120)
                     .map(new Func1<Long, Long>() {
@@ -154,7 +163,7 @@ public class ForgetPassActivity extends BaseStockActivity {
         });
 
         next.setOnClickListener(v -> {
-            UiUtils.goUpdatePass(ForgetPassActivity.this,inputPhone.getText().toString());
+            UiUtils.goUpdatePass(ForgetPassActivity.this,inputPhone.getText().toString(),inputCode.getText().toString());
         });
     }
 
@@ -164,5 +173,30 @@ public class ForgetPassActivity extends BaseStockActivity {
         if (timer != null && timer.isUnsubscribed()) {
             timer.unsubscribe();
         }
+    }
+
+    private void getCode(){
+        showLoadDialog();
+        HashMap<String,String> params=new HashMap<>();
+        params.put("phone",inputPhone.getText().toString());
+        params.put("type","1");
+        addNetwork(Api.getInstance().getService(ApiService.class).getPhoneCode(params)
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel noDataModel) {
+                        hideLoadDialog();
+                        if (noDataModel.getCode()==0) {
+                            return;
+                        }
+                        showToast("获取失败");
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                        showToast("获取失败");
+                    }
+                });
     }
 }

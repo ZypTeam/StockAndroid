@@ -50,13 +50,9 @@ public class HeaderInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request().newBuilder()
                 /**********添加头文件**********/
-//                .addHeader(Version, AppUtil.getVersionName(mContext))
-//                .addHeader(VersionCode, AppUtil.getVersionCode(mContext) + "")
-//                .addHeader(AppType, "0")
                 .addHeader(Channel, AppUtil.getChannelName(mContext))
                 .addHeader(Deviceid, PhoneUtil.getIMEI(mContext))
                 .addHeader(APIVersion, AppUtil.getVersionName(mContext) )
-//                .addHeader(SEAVER_TOKEN, "d6115638dbf7d1b4a63513fc50d573d3")
                 .build();
 
         String requestContent = bodyToString(request);

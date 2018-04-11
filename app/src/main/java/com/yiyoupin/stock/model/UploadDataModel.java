@@ -9,13 +9,13 @@ import com.jusfoun.baselibrary.base.BaseModel;
  */
 
 public class UploadDataModel extends BaseModel {
-    private UploadModel data;
+    private String data;
 
-    public UploadModel getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(UploadModel data) {
+    public void setData(String data) {
         this.data = data;
     }
 }

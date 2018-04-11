@@ -31,9 +31,9 @@ public class UserModel implements Serializable {
     private String equipment_id;
     private String nick_name;
     private String phone;
-    private int open_id;
+    private String open_id;
     private String user_picture;
-    private int sex;
+    private String sex;
     private String birthday;
     private String email;
     private int is_set_login_password;
@@ -79,11 +79,11 @@ public class UserModel implements Serializable {
         this.phone = phone;
     }
 
-    public int getOpen_id() {
+    public String getOpen_id() {
         return open_id;
     }
 
-    public void setOpen_id(int open_id) {
+    public void setOpen_id(String open_id) {
         this.open_id = open_id;
     }
 
@@ -95,11 +95,11 @@ public class UserModel implements Serializable {
         this.user_picture = user_picture;
     }
 
-    public int getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

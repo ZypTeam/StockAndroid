@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.yiyoupin.stock.StockApplication;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.activity.AboutUsActivity;
 import com.yiyoupin.stock.ui.activity.AuthChangePassActivity;
@@ -19,6 +20,7 @@ import com.yiyoupin.stock.ui.activity.MsgListActivity;
 import com.yiyoupin.stock.ui.activity.NewspaperListActivity;
 import com.yiyoupin.stock.ui.activity.NoticeListActivity;
 import com.yiyoupin.stock.ui.activity.PayListActivity;
+import com.yiyoupin.stock.ui.activity.RegisterActivity;
 import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
 import com.yiyoupin.stock.ui.activity.RemindActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
@@ -40,10 +42,12 @@ public class UiUtils {
 
     public static final String PHONE="phone";
     public static final String WORD="word";
+    public static final String PHONE_CODE="phone_code";
     public static final String USER_INFO="user_info";
     public static final String TITLE="title";
     public static final String WEB_URL="web_url";
     public static final String PASSWORD="password";
+    public static final String DETAIL_ID="detail_id";
     public static final void goAuthPhone(Context mContext,String phone){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);
@@ -78,10 +82,18 @@ public class UiUtils {
         goActivity(mContext,bundle, AuthChangePassActivity.class);
     }
 
-
-    public static final void goUpdatePass(Context mContext,String phone){
+    public static final void goRegister(String phone, String code, Context context){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);
+        bundle.putString(PHONE_CODE,code);
+        goActivity(context,bundle, RegisterActivity.class);
+    }
+
+
+    public static final void goUpdatePass(Context mContext,String phone,String code){
+        Bundle bundle=new Bundle();
+        bundle.putString(PHONE,phone);
+        bundle.putString(PHONE_CODE,code);
         goActivity(mContext,bundle, UpdatePassActivity.class);
     }
 
@@ -107,8 +119,10 @@ public class UiUtils {
         goActivity(mContext,null, ReplayListActivity.class);
     }
 
-    public static final void goChartsDetails(Context context){
-        goActivity(context,null,ChartsDetailActivity.class);
+    public static final void goChartsDetails(Context context,String detail_id){
+        Bundle bundle=new Bundle();
+        bundle.putString(DETAIL_ID,detail_id);
+        goActivity(context,bundle,ChartsDetailActivity.class);
     }
 
     public static final void goAboutUs(Context context){

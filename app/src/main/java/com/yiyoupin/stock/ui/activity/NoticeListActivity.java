@@ -80,6 +80,7 @@ public class NoticeListActivity extends BaseStockActivity {
         HashMap<String, String> params = new HashMap();
         params.put(Constant.PAGE_PARAMS, Constant.PAGE_SIZE);
         params.put(Constant.PAGE_INDEX, refresh ? "1" : (page + 1) + "");
+        params.put("type","2");
         addNetwork(Api.getInstance().getService(ApiService.class).newsList(params)
                 , new Action1<NoticeListModel>() {
                     @Override

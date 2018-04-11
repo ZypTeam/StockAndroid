@@ -208,6 +208,7 @@
     <EditText
         android:id="@+id/input_name"
         android:background="#00000000"
+        android:textColor="#d3d3d3"
         app:layout_constraintTop_toTopOf="@+id/txt_username"
         app:layout_constraintLeft_toLeftOf="@+id/txt_username"
         app:layout_constraintRight_toRightOf="@+id/txt_username"
@@ -243,6 +244,7 @@
     <EditText
         android:id="@+id/input_nickname"
         android:background="#00000000"
+        android:textColor="#d3d3d3"
         app:layout_constraintTop_toTopOf="@+id/txt_nickname"
         app:layout_constraintLeft_toLeftOf="@+id/txt_nickname"
         app:layout_constraintRight_toRightOf="@+id/txt_nickname"
@@ -278,6 +280,7 @@
     <EditText
         android:id="@+id/input_email"
         android:background="#00000000"
+        android:textColor="#d3d3d3"
         app:layout_constraintTop_toTopOf="@+id/txt_email"
         app:layout_constraintLeft_toLeftOf="@+id/txt_email"
         app:layout_constraintRight_toRightOf="@+id/txt_email"
@@ -313,6 +316,7 @@
     <EditText
         android:id="@+id/input_wechar"
         android:background="#00000000"
+        android:textColor="#d3d3d3"
         app:layout_constraintTop_toTopOf="@+id/txt_wechart"
         app:layout_constraintLeft_toLeftOf="@+id/txt_wechart"
         app:layout_constraintRight_toRightOf="@+id/txt_wechart"

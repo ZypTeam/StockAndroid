@@ -167,8 +167,9 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
 
                         hideLoadDialog();
                         if (uploadDataModel.getCode()==0){
-                            userModel.setUser_picture(uploadDataModel.getData().getPicture());
+                            userModel.setUser_picture(uploadDataModel.getData());
                             UserInfoDelegate.getInstance().saveUserInfo(userModel);
+                            ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -184,7 +185,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
             ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
             inputName.setText(userModel.getName());
             inputNickname.setText(userModel.getNick_name());
-            inputEmail.setText(userModel.getNick_name());
+            inputEmail.setText(userModel.getEmail());
 
         }
     }
@@ -192,9 +193,9 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
     private void updateData(){
         showLoadDialog();
         HashMap<String,String> params=new HashMap<>();
-        params.put("",inputName.getText().toString());
-        params.put("",inputNickname.getText().toString());
-        params.put("",inputEmail.getText().toString());
+        params.put("name",inputName.getText().toString());
+        params.put("nick_name",inputNickname.getText().toString());
+        params.put("email",inputEmail.getText().toString());
         params.put("sex","1");
         params.put("birthday","1990");
         addNetwork(Api.getInstance().getService(ApiService.class).editInfo(params)
@@ -207,7 +208,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                             userModel.setName(inputName.getText().toString());
                             userModel.setNick_name(inputNickname.getText().toString());
                             userModel.setEmail(inputEmail.getText().toString());
-                            userModel.setSex(1);
+                            userModel.setSex("1");
                             userModel.setBirthday("1990");
                             UserInfoDelegate.getInstance().saveUserInfo(userModel);
                             updateView();

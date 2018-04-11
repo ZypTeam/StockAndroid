@@ -6,18 +6,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.delegate.UserInfoDelegate;
+import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -116,13 +123,14 @@ public class AuthPhoneCodeActivity extends BaseStockActivity {
         });
 
         next.setOnClickListener(v -> {
-            UiUtils.goRegisterName(AuthPhoneCodeActivity.this,new UserModel());
-            onBackPressed();
+            UiUtils.goRegister(phoneNum,inputPhone.getText().toString(),mContext);
         });
 
         inputPhone.setFocusable(true);
         inputPhone.requestFocus();
     }
+
+
 
     @Override
     protected void onDestroy() {

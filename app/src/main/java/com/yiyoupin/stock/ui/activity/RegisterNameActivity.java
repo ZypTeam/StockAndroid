@@ -5,12 +5,19 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author wangcc
@@ -34,7 +41,7 @@ public class RegisterNameActivity extends BaseStockActivity {
 
     @Override
     public void initDatas() {
-        userModel= (UserModel) getIntent().getExtras().getSerializable(UiUtils.USER_INFO);
+        userModel= UserInfoDelegate.getInstance().getUserInfo();
     }
 
     @Override
@@ -85,8 +92,30 @@ public class RegisterNameActivity extends BaseStockActivity {
     }
 
     private void updateName(String name){
-        UserInfoDelegate.getInstance().saveUserInfo(userModel);
-        UiUtils.goHomeActivity(RegisterNameActivity.this);
-        onBackPressed();
+        showLoadDialog();
+        HashMap<String,String> params=new HashMap<>();
+        params.put("name",name);
+        addNetwork(Api.getInstance().getService(ApiService.class).editInfo(params)
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel noDataModel) {
+
+                        hideLoadDialog();
+                        if (noDataModel.getCode()==0){
+                            userModel.setName(name);
+                            UserInfoDelegate.getInstance().saveUserInfo(userModel);
+                            UiUtils.goHomeActivity(RegisterNameActivity.this);
+                            onBackPressed();
+                            return;
+                        }
+                        showToast("修改失败");
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                        showToast("修改失败");
+                    }
+                });
     }
 }

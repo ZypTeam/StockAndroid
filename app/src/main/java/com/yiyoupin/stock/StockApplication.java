@@ -5,6 +5,7 @@ import android.os.Build;
 import com.jusfoun.baselibrary.BaseApplication;
 import com.jusfoun.baselibrary.Util.SharePrefenceUtils;
 import com.jusfoun.baselibrary.net.Api;
+import com.yiyoupin.stock.delegate.HeaderStockInterceptor;
 
 /**
  * @author zhaoyapeng
@@ -18,6 +19,8 @@ public class StockApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         SharePrefenceUtils.getInstance().register(this, BuildConfig.APPLICATION_ID);
-        Api.getInstance().register(this,getString(R.string.url)).build();
+        Api.getInstance().register(this,getString(R.string.url))
+                .addInterceptro(new HeaderStockInterceptor())
+                .build();
     }
 }
