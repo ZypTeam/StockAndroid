@@ -196,6 +196,9 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, FromListActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FromListActivity.TECHNOLOGY_ID,((HomeModel.TechnologyItemModel) model).technology_id);
+                    intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }
             });

@@ -260,6 +260,12 @@ public interface ApiService {
     Observable<StrategiesDetailModel> getStrategiesDetailNet(@QueryMap Map<String,String> params);
 
 
-
+    /**
+     * 技术形态股票列表
+     * @param params
+     * @return
+     */
+    @GET("/stock/technology/stock_list.do")
+    Observable<HomeListModel> getJiShuXingtAINet(@QueryMap Map<String,String> params);
 
 }

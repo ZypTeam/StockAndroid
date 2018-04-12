@@ -24,13 +24,13 @@ public class HomeListModel extends BaseModel implements Serializable {
         this.data = data;
     }
 
-    public class HomeData{
+    public class HomeData extends BaseModel implements Serializable{
+        public int total_number;
         private List<StockModel> stock_list;
-
+        public List<StockModel> rows;
         public List<StockModel> getStock_list() {
             return stock_list;
         }
-
         public void setStock_list(List<StockModel> stock_list) {
             this.stock_list = stock_list;
         }
