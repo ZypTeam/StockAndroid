@@ -108,6 +108,8 @@ public class SearchActivity extends BaseStockActivity {
             @Override
             public void callBack(SearchModel model) {
                 searchKey=model.getStock_name();
+                search.setText(searchKey);
+                refresh(true,true);
             }
         });
 
@@ -115,6 +117,8 @@ public class SearchActivity extends BaseStockActivity {
             @Override
             public void callBack(SearchModel model) {
                 searchKey=model.getStock_name();
+                search.setText(searchKey);
+                refresh(true,true);
             }
         });
 
