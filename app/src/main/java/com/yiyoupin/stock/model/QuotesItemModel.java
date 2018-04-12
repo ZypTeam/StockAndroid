@@ -3,6 +3,8 @@ package com.yiyoupin.stock.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.jusfoun.baselibrary.base.BaseModel;
+
 import java.io.Serializable;
 
 /**
@@ -11,7 +13,7 @@ import java.io.Serializable;
  * @describe
  */
 
-public class QuotesItemModel implements Parcelable,Serializable {
+public class QuotesItemModel extends BaseModel implements Parcelable,Serializable {
 
     private String stock_name;
     private String stock_price;

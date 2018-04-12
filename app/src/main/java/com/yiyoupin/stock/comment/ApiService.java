@@ -10,6 +10,7 @@ import com.yiyoupin.stock.model.PayListModel;
 import com.yiyoupin.stock.model.QuotesListModel;
 import com.yiyoupin.stock.model.ReplayListModel;
 import com.yiyoupin.stock.model.SearchListModel;
+import com.yiyoupin.stock.model.StrategiesDetailModel;
 import com.yiyoupin.stock.model.UploadDataModel;
 import com.yiyoupin.stock.model.ChartsModel;
 import com.yiyoupin.stock.model.HomeModel;
@@ -248,6 +249,15 @@ public interface ApiService {
      */
     @GET("/stock/technology/list.do")
     Observable<TechnologyMoreModel> getTechnologyNet(@QueryMap Map<String,String> params);
+
+
+    /**
+     * 策略详情
+     * @param params
+     * @return
+     */
+    @GET("/stock/buyselection/detail.do")
+    Observable<StrategiesDetailModel> getStrategiesDetailNet(@QueryMap Map<String,String> params);
 
 
 

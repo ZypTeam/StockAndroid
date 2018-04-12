@@ -2,17 +2,20 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.jusfoun.baselibrary.base.BaseModel;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.ui.HomeListModel;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.StrategiesDetailModel;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -33,6 +36,9 @@ public class StrategiesDetailActivity extends BaseStockActivity {
 
     private HomeListAdapter todayAdapter, phoneAdapter, hisAdapter;
 
+    public static String CHOICENESS_ID = "choiceness_id";
+    private String choiceness_id = "";
+
 
     @Override
     public int getLayoutResId() {
@@ -44,6 +50,8 @@ public class StrategiesDetailActivity extends BaseStockActivity {
         todayAdapter = new HomeListAdapter(mContext);
         phoneAdapter = new HomeListAdapter(mContext);
         hisAdapter = new HomeListAdapter(mContext);
+
+        choiceness_id = getIntent().getStringExtra(CHOICENESS_ID);
     }
 
     @Override
@@ -72,9 +80,6 @@ public class StrategiesDetailActivity extends BaseStockActivity {
         recyclerHis.setAdapter(hisAdapter);
 
 
-
-
-
         recyclerToday.setHasFixedSize(true);
         recyclerToday.setNestedScrollingEnabled(false);
 
@@ -84,22 +89,51 @@ public class StrategiesDetailActivity extends BaseStockActivity {
         recyclerHis.setHasFixedSize(true);
         recyclerHis.setNestedScrollingEnabled(false);
 
-        List<BaseModel> list = new ArrayList<>();
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
-        list.add(new HomeListModel());
         todayAdapter.setType(HomeListAdapter.TYPE_STRATEGIES_DETAIL);
-        todayAdapter.refreshList(list);
 
         phoneAdapter.setType(HomeListAdapter.TYPE_STRATEGIES_DETAIL);
-        phoneAdapter.refreshList(list);
 
         hisAdapter.setType(HomeListAdapter.TYPE_STRATEGIES_DETAIL);
-        hisAdapter.refreshList(list);
 
 
-        textTitle.setText("新牛奔腾");
-        textDes.setText("新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾新牛奔腾");
+        getTechnologyNet();
+    }
 
+
+    /**
+     * 策略详情
+     */
+    private void getTechnologyNet() {
+        showLoadDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("choiceness_id", choiceness_id);
+        addNetwork(Api.getInstance().getService(ApiService.class).getStrategiesDetailNet(map)
+                , new Action1<StrategiesDetailModel>() {
+                    @Override
+                    public void call(StrategiesDetailModel model) {
+                        hideLoadDialog();
+                        if (model.getCode() == 0) {
+                            if (model.data != null) {
+                                todayAdapter.refreshList(model.data.today_stock);
+                                phoneAdapter.refreshList(model.data.to_phone_stock);
+                                hisAdapter.refreshList(model.data.history_stock);
+                                if (model.data.buyselection != null) {
+                                    if (!TextUtils.isEmpty(model.data.buyselection.choiceness_name)) {
+                                        textTitle.setText(model.data.buyselection.choiceness_name);
+                                    }
+
+                                    if (!TextUtils.isEmpty(model.data.buyselection.description)) {
+                                        textDes.setText(model.data.buyselection.description);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
     }
 }
