@@ -77,7 +77,7 @@ public class SharePrefenceUtils {
         checkShare();
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putStringSet(key,value);
-        editor.commit();
+        editor.apply();
     }
 
     private void checkShare(){
