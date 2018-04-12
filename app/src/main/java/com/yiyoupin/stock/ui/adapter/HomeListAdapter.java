@@ -2,16 +2,19 @@ package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.model.HomeModel;
+import com.yiyoupin.stock.model.QuotesItemModel;
+import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.model.StrategiesMoreModel;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
+import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
 import com.yiyoupin.stock.ui.util.UiUtils;
@@ -33,7 +36,7 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
     public static int TYPE_STRATEGIES_MORE = 5;// 选个策略更多
 
-    public static int TYPE_FEATURED_MORE = 6;// 买点精选
+    public static int TYPE_FEATURED_MORE = 6;// 买点精选更多
 
     public static int TYPE_STRATEGIES_DETAIL = 7;// 策略详情 列表
 
@@ -81,7 +84,7 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
         } else if (viewType == TYPE_FEATURED_MORE) {
             return new FeaturedMoreViewHolder(view, context);
         } else if (viewType == TYPE_STRATEGIES_DETAIL) {
-            return new FeaturedViewHolder(view, context);
+            return new StrategiesDetailViewHolder(view, context);
         }
 
         return new StrategiesViewHolder(view, context);
@@ -115,7 +118,9 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        UiUtils.goStrategiesDetailActivity(mContext);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID,((HomeModel.StocktacticsItemModel) model).tactics_id);
+                        UiUtils.goStrategiesDetailActivity(bundle,mContext);
                     }
                 });
             }
@@ -153,11 +158,9 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (type == TYPE_STRATEGIES_DETAIL) {
-                            UiUtils.goStockShowActivity(mContext);
-                        } else {
-                            UiUtils.goStrategiesDetailActivity(mContext);
-                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID,((HomeModel.BuyselectionItemModel) model).choiceness_id);
+                        UiUtils.goStrategiesDetailActivity(bundle,mContext);
                     }
                 });
             }
@@ -222,12 +225,12 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
         @Override
         public void update(Serializable model) {
 
-            StockModel item= (StockModel) model;
+            StockModel item = (StockModel) model;
 
             textTitle.setText(item.getStock_name());
             textId.setText(item.getStock_code());
-            newText.setText(""+item.getStock_price());
-            gainsText.setText("+"+item.getOffset_size()+"");
+            newText.setText("" + item.getStock_price());
+            gainsText.setText("+" + item.getOffset_size() + "");
             fallText.setText("2.01");
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -271,8 +274,8 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            if(model instanceof StrategiesMoreModel.StrategiesItemModel) {
-                textCount.setText("+"+((StrategiesMoreModel.StrategiesItemModel) model).yield_rate+"%");
+            if (model instanceof StrategiesMoreModel.StrategiesItemModel) {
+                textCount.setText("+" + ((StrategiesMoreModel.StrategiesItemModel) model).yield_rate + "%");
                 textName.setText(((StrategiesMoreModel.StrategiesItemModel) model).tactics_name);
                 textFrom.setText("VIP 服务器推送");
                 textDes.setText(((StrategiesMoreModel.StrategiesItemModel) model).description);
@@ -280,7 +283,9 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        UiUtils.goStrategiesDetailActivity(mContext);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID,((StrategiesMoreModel.StrategiesItemModel) model).tactics_id);
+                        UiUtils.goStrategiesDetailActivity(bundle,mContext);
                     }
                 });
             }
@@ -295,6 +300,47 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
             textType = (TextView) rootView.findViewById(R.id.text_type);
         }
     }
+
+
+    /**
+     * 今日股票
+     */
+    public class StrategiesDetailViewHolder extends BaseViewHolder {
+
+        protected TextView textTitle;
+        protected TextView textId;
+        protected TextView textCount1;
+        protected TextView textCount2;
+
+        public StrategiesDetailViewHolder(View itemView, Context mContext) {
+            super(itemView, mContext);
+            initView(itemView);
+        }
+
+        @Override
+        public void update(Serializable model) {
+            if (model instanceof QuotesItemModel) {
+                textTitle.setText(((QuotesItemModel) model).getStock_name());
+                textCount1.setText(((QuotesItemModel) model).getStock_price());
+                textCount2.setText(((QuotesItemModel) model).getOffset_size());
+                textId.setText(((QuotesItemModel) model).getStock_code());
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UiUtils.goStockShowActivity(mContext);
+                    }
+                });
+            }
+        }
+
+        private void initView(View rootView) {
+            textTitle = (TextView) rootView.findViewById(R.id.text_title);
+            textId = (TextView) rootView.findViewById(R.id.text_id);
+            textCount1 = (TextView) rootView.findViewById(R.id.text_count1);
+            textCount2 = (TextView) rootView.findViewById(R.id.text_count2);
+        }
+    }
+
 
     public void setType(int type) {
         this.type = type;

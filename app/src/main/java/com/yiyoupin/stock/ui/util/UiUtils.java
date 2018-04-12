@@ -147,8 +147,8 @@ public class UiUtils {
     /**
      *  跳转策略详情页面
      * */
-    public static final void goStrategiesDetailActivity(Context mContext){
-        goActivity(mContext,null, StrategiesDetailActivity.class);
+    public static final void goStrategiesDetailActivity(Bundle bundle,Context mContext){
+        goActivity(mContext,bundle, StrategiesDetailActivity.class);
     }
 
     /**
