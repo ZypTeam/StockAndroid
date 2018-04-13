@@ -268,4 +268,20 @@ public interface ApiService {
     @GET("/stock/technology/stock_list.do")
     Observable<HomeListModel> getJiShuXingtAINet(@QueryMap Map<String,String> params);
 
+    /**
+     * 添加自选
+     * @param params
+     * @return
+     */
+    @POST("/stock/optional/add_stock.do")
+    Observable<HomeListModel> addZiXun(@QueryMap Map<String,String> params);
+
+    /**
+     * 添加自选
+     * @param params
+     * @return
+     */
+    @POST("/stock/optional/delete_stock.doo")
+    Observable<HomeListModel> deleteZiXun(@QueryMap Map<String,String> params);
+
 }

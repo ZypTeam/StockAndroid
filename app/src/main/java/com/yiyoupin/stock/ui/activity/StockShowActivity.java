@@ -9,7 +9,11 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
@@ -19,6 +23,10 @@ import com.yiyoupin.stock.ui.view.kline.KLineChartFragment;
 import com.yiyoupin.stock.ui.view.kline.SimpleFragmentPagerAdapter;
 import com.yiyoupin.stock.ui.view.kline.TimeLineChartFragment;
 import com.yiyoupin.stock.ui.view.kline.view.NoTouchScrollViewpager;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -39,6 +47,9 @@ public class StockShowActivity extends BaseStockActivity {
     protected RelativeLayout layoutDelete;
     private NewsAdapter newsAdapter;
 
+    public static String ID="id";
+    private String stockCode="";
+
     @Override
     public int getLayoutResId() {
         return R.layout.activity_stock_show;
@@ -47,6 +58,8 @@ public class StockShowActivity extends BaseStockActivity {
     @Override
     public void initDatas() {
         newsAdapter = new NewsAdapter(getSupportFragmentManager());
+        stockCode = getIntent().getStringExtra(ID);
+
     }
 
     @Override
@@ -101,15 +114,68 @@ public class StockShowActivity extends BaseStockActivity {
         layoutAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "已添加至自选股", Toast.LENGTH_SHORT).show();
+                addZiX();
+//                Toast.makeText(mContext, "已添加至自选股", Toast.LENGTH_SHORT).show();
             }
         });
         layoutDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
+                deleteZiXun();
+//                Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+
+    private void addZiX(){
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap();
+        params.put("stock_code", stockCode);
+
+
+        addNetwork(Api.getInstance().getService(ApiService.class).addZiXun(params)
+                , new Action1<HomeListModel>() {
+                    @Override
+                    public void call(HomeListModel model) {
+                        hideLoadDialog();
+                        if(model.getCode()==0){
+                            Toast.makeText(mContext, "已添加至自选股", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(mContext, model.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+    }
+
+    private void deleteZiXun(){
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap();
+        params.put("stock_code", stockCode);
+
+
+        addNetwork(Api.getInstance().getService(ApiService.class).deleteZiXun(params)
+                , new Action1<HomeListModel>() {
+                    @Override
+                    public void call(HomeListModel model) {
+                        hideLoadDialog();
+                        if(model.getCode()==0){
+                            Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(mContext, model.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
     }
 }

@@ -233,13 +233,14 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
             textTitle.setText(item.getStock_name());
             textId.setText(item.getStock_code());
             newText.setText("" + item.getStock_price());
-            gainsText.setText("+" + item.getOffset_size() + "");
+            gainsText.setText(item.getOffset_size() + "");
             fallText.setText("2.01");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, StockShowActivity.class);
+                    intent.putExtra(StockShowActivity.ID,((StockModel) model).getStock_code());
                     mContext.startActivity(intent);
                 }
             });
