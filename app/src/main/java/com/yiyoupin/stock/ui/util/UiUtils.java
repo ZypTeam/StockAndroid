@@ -13,6 +13,7 @@ import com.yiyoupin.stock.ui.activity.AuthPhoneCodeActivity;
 import com.yiyoupin.stock.ui.activity.ChangePassActivity;
 import com.yiyoupin.stock.ui.activity.ChartsDetailActivity;
 import com.yiyoupin.stock.ui.activity.ChartsListActivity;
+import com.yiyoupin.stock.ui.activity.EditPersonInfoActivity;
 import com.yiyoupin.stock.ui.activity.ForgetPassActivity;
 import com.yiyoupin.stock.ui.activity.GetPhoneCodeActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
@@ -76,6 +77,10 @@ public class UiUtils {
 
     public static final void goForgetPass(Context mContext){
         goActivity(mContext,null, ForgetPassActivity.class);
+    }
+
+    public static final void goEditInfo(Context mContext){
+        goActivity(mContext,null, EditPersonInfoActivity.class);
     }
 
     public static final void goChangePass(Context mContext){
