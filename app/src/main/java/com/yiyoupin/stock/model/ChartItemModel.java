@@ -35,6 +35,7 @@ public class ChartItemModel implements Parcelable,Serializable{
     private String stock_code;
     private String offset_size;
     private String trade_date;
+    private int type;
 
     protected ChartItemModel(Parcel in) {
         yc_end_date = in.readString();
@@ -130,6 +131,14 @@ public class ChartItemModel implements Parcelable,Serializable{
 
     public void setTrade_date(String trade_date) {
         this.trade_date = trade_date;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override

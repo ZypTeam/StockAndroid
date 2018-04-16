@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.jusfoun.baselibrary.net.Api;
+import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.comment.Constant;
@@ -15,6 +16,7 @@ import com.yiyoupin.stock.ui.adapter.ChartsDetailAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+import com.yiyoupin.stock.ui.view.ChartsDetailHeaderView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +32,11 @@ import rx.functions.Action1;
 
 public class ChartsDetailActivity extends BaseStockActivity {
     protected BackTitleView titleView;
-    protected RecyclerView list;
+    protected XRecyclerView list;
     private ChartsDetailAdapter adapter;
     private int page;
     private String detailId;
+    private ChartsDetailHeaderView headerView;
 
     @Override
     public int getLayoutResId() {
@@ -49,7 +52,8 @@ public class ChartsDetailActivity extends BaseStockActivity {
     @Override
     public void initView() {
         titleView = (BackTitleView) findViewById(R.id.title_view);
-        list = (RecyclerView) findViewById(R.id.list);
+        list = (XRecyclerView) findViewById(R.id.list);
+        headerView=new ChartsDetailHeaderView(mContext);
 
     }
 
@@ -59,6 +63,9 @@ public class ChartsDetailActivity extends BaseStockActivity {
         titleView.setTitle("龙虎榜详情");
         list.setLayoutManager(new LinearLayoutManager(mContext));
         list.setAdapter(adapter);
+        list.addHeaderView(headerView);
+        list.setLoadingMoreEnabled(false);
+        list.setPullRefreshEnabled(false);
 
         refresh(true,true);
     }

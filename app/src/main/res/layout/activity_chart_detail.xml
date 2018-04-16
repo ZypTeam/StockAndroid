@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView
         android:id="@+id/list"
         android:background="#202020"
         app:layout_constraintTop_toBottomOf="@+id/title_view"

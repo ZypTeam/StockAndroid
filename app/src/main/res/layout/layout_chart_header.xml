@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <TextView
+        android:id="@+id/time"
+        android:text="2018年04月16日"
+        android:textSize="14sp"
+        android:textColor="#fff"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/zhangfu"
+        android:text="涨幅"
+        android:textSize="14sp"
+        android:textColor="#fff"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toRightOf="@+id/time"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:text="股价"
+        android:textSize="14sp"
+        android:textColor="#fff"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toRightOf="@+id/zhangfu"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+    <View
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/line_color"
+        android:layout_width="0dp"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:id="@+id/liyou"
+        android:text="上榜理由"
+        android:textSize="14sp"
+        android:textColor="#fff"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+</android.support.constraint.ConstraintLayout>
