@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.model.SearchModel;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.activity.AboutUsActivity;
 import com.yiyoupin.stock.ui.activity.AuthChangePassActivity;
@@ -27,6 +28,7 @@ import com.yiyoupin.stock.ui.activity.RegisterNameActivity;
 import com.yiyoupin.stock.ui.activity.RemindActivity;
 import com.yiyoupin.stock.ui.activity.ReplayListActivity;
 import com.yiyoupin.stock.ui.activity.SearchActivity;
+import com.yiyoupin.stock.ui.activity.SearchResultActivity;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
 import com.yiyoupin.stock.ui.activity.UpdatePassActivity;
@@ -50,6 +52,15 @@ public class UiUtils {
     public static final String WEB_URL="web_url";
     public static final String PASSWORD="password";
     public static final String DETAIL_ID="detail_id";
+
+    public static final String SEARCH_MODLE="search_modle";
+    public static final String SEARCH_KEY="search_key";
+
+    public static final void goSearchResult(Context context, String searchKey){
+        Bundle bundle=new Bundle();
+        bundle.putString(SEARCH_KEY,searchKey);
+        goActivity(context,bundle, SearchResultActivity.class);
+    }
     public static final void goAuthPhone(Context mContext,String phone){
         Bundle bundle=new Bundle();
         bundle.putString(PHONE,phone);

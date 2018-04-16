@@ -30,7 +30,6 @@ import rx.functions.Action1;
  */
 public class MyFrgament extends BaseStockFragment {
 
-
     protected LoginView loginView;
     protected MyInfoView myInfoView;
 
