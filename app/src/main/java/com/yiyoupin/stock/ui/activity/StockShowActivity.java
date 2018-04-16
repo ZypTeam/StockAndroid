@@ -88,9 +88,11 @@ public class StockShowActivity extends BaseStockActivity {
         Fragment[] fragments = {TimeLineChartFragment.newInstance(1), FiveDayChartFragment.newInstance(),
                 KLineChartFragment.newInstance(1), KLineChartFragment.newInstance(7),
                 KLineChartFragment.newInstance(30)};
+
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
-        viewPager.setOffscreenPageLimit(fragments.length);
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
+        viewPager.setOffscreenPageLimit(fragments.length);
+
         tab.setupWithViewPager(viewPager);
 //        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
 //            @Override

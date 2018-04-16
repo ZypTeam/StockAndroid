@@ -101,4 +101,9 @@ public class TimeLineChartFragment extends BaseStockFragment {
         mTimeLineView.setLastClose(hisData.get(0).getClose());
         mTimeLineView.initData(hisData);
     }
+
+    public void setData(List<HisData> hisData){
+        mTimeLineView.setLastClose(hisData.get(0).getClose());
+        mTimeLineView.initData(hisData);
+    }
 }
