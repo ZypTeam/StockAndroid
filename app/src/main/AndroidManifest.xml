@@ -26,6 +26,7 @@
 
         <!--首页-->
         <activity
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

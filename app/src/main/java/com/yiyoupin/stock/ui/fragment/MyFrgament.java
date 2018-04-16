@@ -1,25 +1,22 @@
 package com.yiyoupin.stock.ui.fragment;
 
-import android.content.Context;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.animation.LinearInterpolator;
 
-import com.jusfoun.baselibrary.base.NoDataModel;
-import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.comment.FragmentCallback;
+import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.comment.FlipListener;
+import com.yiyoupin.stock.comment.ViewLoadingListener;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
-import com.yiyoupin.stock.model.UserDataModel;
-import com.yiyoupin.stock.ui.activity.EditPersonInfoActivity;
-import com.yiyoupin.stock.ui.activity.LoginActivity;
-import com.yiyoupin.stock.ui.activity.MainActivity;
+import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
-import com.yiyoupin.stock.ui.util.ImageLoderUtil;
-import com.yiyoupin.stock.ui.util.UiUtils;
-
-import java.util.HashMap;
+import com.yiyoupin.stock.ui.view.LoginView;
+import com.yiyoupin.stock.ui.view.MyInfoView;
 
 import rx.functions.Action1;
 
@@ -31,19 +28,13 @@ import rx.functions.Action1;
  */
 public class MyFrgament extends BaseStockFragment {
 
-    private FragmentCallback callback;
 
-    protected TextView username;
-    protected TextView consume;
-    protected TextView balance;
-    protected TextView editPassword;
-    protected TextView payInfo;
-    protected TextView checkUpdate;
-    protected TextView aboutUs;
-    protected TextView msgList;
-    protected TextView exit;
-    private ImageView iconHead;
-    private TextView editPersion;
+    protected LoginView loginView;
+    protected MyInfoView myInfoView;
+
+    private ValueAnimator valueAnimator1, valueAnimator2, valueAnimator3, valueAnimator4;
+    private UserModel userModel;
+
 
     public static MyFrgament getInstance() {
         MyFrgament fragment = new MyFrgament();
@@ -51,16 +42,16 @@ public class MyFrgament extends BaseStockFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof FragmentCallback){
-            callback= (FragmentCallback) context;
-        }
-    }
-
-    @Override
     protected void refreshData() {
-        getUserInfo();
+        if (userModel==null){
+            loginView.setVisibility(View.VISIBLE);
+            myInfoView.setVisibility(View.INVISIBLE);
+        }else {
+            loginView.setVisibility(View.INVISIBLE);
+            myInfoView.setVisibility(View.VISIBLE);
+            myInfoView.getUserInfo();
+        }
+
     }
 
     @Override
@@ -70,101 +61,118 @@ public class MyFrgament extends BaseStockFragment {
 
     @Override
     public void initDatas() {
-
+        userModel=UserInfoDelegate.getInstance().getUserInfo();
+        rxManage.on(Constant.REGISTER_SUC, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                userModel= UserInfoDelegate.getInstance().getUserInfo();
+                loginView.postDelayed(()->{
+                    valueAnimator1.start();
+                },1000);
+            }
+        });
     }
 
     @Override
     public void initView(View rootView) {
-        iconHead = rootView.findViewById(R.id.icon_head);
-        editPersion = rootView.findViewById(R.id.edit_info);
-        username = (TextView) rootView.findViewById(R.id.username);
-        consume = (TextView) rootView.findViewById(R.id.consume);
-        balance = (TextView) rootView.findViewById(R.id.balance);
-        editPassword = (TextView) rootView.findViewById(R.id.edit_password);
-        payInfo = (TextView) rootView.findViewById(R.id.pay_info);
-        checkUpdate = (TextView) rootView.findViewById(R.id.check_update);
-        aboutUs = (TextView) rootView.findViewById(R.id.about_us);
-        msgList = (TextView) rootView.findViewById(R.id.msg_list);
-        exit = (TextView) rootView.findViewById(R.id.exit);
+        loginView = (LoginView) rootView.findViewById(R.id.login_view);
+        myInfoView = (MyInfoView) rootView.findViewById(R.id.my_info_view);
+
     }
 
     @Override
     public void initAction() {
-        iconHead.setOnClickListener(v -> {
-            goActivity(null, LoginActivity.class);
-        });
 
-        editPersion.setOnClickListener(v -> {
-            goActivity(null, EditPersonInfoActivity.class);
-        });
+        valueAnimator1 = ObjectAnimator.ofFloat(loginView, "rotationY", 0, 90f);
+        valueAnimator2 = ObjectAnimator.ofFloat(myInfoView, "rotationY", -90, 0f);
+        valueAnimator3 = ObjectAnimator.ofFloat(loginView, "rotationY", 90f, 0f);
+        valueAnimator4 = ObjectAnimator.ofFloat(myInfoView, "rotationY", 0f, -90f);
 
-        aboutUs.setOnClickListener(v -> {
-            UiUtils.goAboutUs(mContext);
-        });
-
-        payInfo.setOnClickListener(v -> {
-            UiUtils.goPayList(mContext);
-        });
-
-        editPassword.setOnClickListener(v -> {
-            UiUtils.goChangePass(mContext);
-        });
-
-        msgList.setOnClickListener(v -> {
-            UiUtils.goMsgList(mContext);
-        });
-        exit.setOnClickListener(new View.OnClickListener() {
+        valueAnimator2.setInterpolator(new LinearInterpolator());
+        valueAnimator2.setDuration(500);
+        valueAnimator2.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View v) {
-                if (callback!=null){
-                    callback.onCallback(MyFrgament.this);
-                }
-                UserInfoDelegate.getInstance().clearUser();
-//                exitLogin();
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                myInfoView.postDelayed(() -> {
+                    myInfoView.getUserInfo();
+                },100);
             }
         });
 
+        valueAnimator1.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                loginView.setVisibility(View.GONE);
+                myInfoView.setVisibility(View.VISIBLE);
+                valueAnimator2.start();
+            }
+        });
+        valueAnimator1.setInterpolator(new LinearInterpolator());
+        valueAnimator1.setDuration(500);
 
-    }
+        valueAnimator3.setInterpolator(new LinearInterpolator());
+        valueAnimator3.setDuration(500);
+        valueAnimator3.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
 
-    private void exitLogin(){
-        showLoadDialog();
-        addNetwork(Api.getInstance().getService(ApiService.class).loginOut()
-                , new Action1<NoDataModel>() {
-                    @Override
-                    public void call(NoDataModel userDataModel) {
-                        hideLoadDialog();
-                        UserInfoDelegate.getInstance().clearUser();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideLoadDialog();
-                    }
-                });
-    }
+            }
+        });
 
+        valueAnimator4.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
 
-    private void getUserInfo(){
-        showLoadDialog();
-        addNetwork(Api.getInstance().getService(ApiService.class).getUserInfo(new HashMap<>())
-                , new Action1<UserDataModel>() {
-                    @Override
-                    public void call(UserDataModel userDataModel) {
-                        hideLoadDialog();
-                        if (userDataModel.getCode()==0){
-                            UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
-                            username.setText(userDataModel.getData().getName());
-                            ImageLoderUtil.loadCircleImage(mContext, iconHead, userDataModel.getData().getUser_picture(), R.mipmap.ic_launcher_round);
+                loginView.setVisibility(View.VISIBLE);
+                myInfoView.setVisibility(View.GONE);
+                valueAnimator3.start();
+            }
+        });
 
+        valueAnimator4.setInterpolator(new LinearInterpolator());
+        valueAnimator4.setDuration(500);
 
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideLoadDialog();
-                    }
-                });
+        myInfoView.setFlipListener(new FlipListener() {
+            @Override
+            public void flip(boolean flip) {
+                valueAnimator4.start();
+            }
+        });
+
+        myInfoView.setLoadingListener(new ViewLoadingListener() {
+            @Override
+            public void showLoading() {
+                showLoadDialog();
+            }
+
+            @Override
+            public void hideLoading() {
+                hideLoadDialog();
+            }
+        });
+
+        loginView.setFlipListener(new FlipListener() {
+            @Override
+            public void flip(boolean flip) {
+                valueAnimator1.start();
+            }
+        });
+
+        loginView.setLoadingListener(new ViewLoadingListener() {
+            @Override
+            public void showLoading() {
+                showLoadDialog();
+            }
+
+            @Override
+            public void hideLoading() {
+                hideLoadDialog();
+            }
+        });
+
     }
 }

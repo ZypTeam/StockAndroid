@@ -24,16 +24,17 @@ public abstract class BaseFragment extends Fragment {
     protected RxManage rxManage;
     private View rootView;
     private LoadingDialog loadingDialog;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rxManage=new RxManage();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext=context;
+        rxManage=new RxManage();
         initDatas();
     }
 

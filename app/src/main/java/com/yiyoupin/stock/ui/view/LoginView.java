@@ -118,10 +118,13 @@ public class LoginView extends ConstraintLayout {
                         }
                         if (userDataModel.getCode() == 0) {
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
+                            Toast.makeText(mContext,"登录成功",Toast.LENGTH_SHORT).show();
                             if (flipListener!=null){
                                 flipListener.flip(true);
                             }
 
+                        }else {
+                            Toast.makeText(mContext,userDataModel.getMsg(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -130,6 +133,7 @@ public class LoginView extends ConstraintLayout {
                         if (loadingListener!=null){
                             loadingListener.hideLoading();
                         }
+                        Toast.makeText(mContext,"登录失败",Toast.LENGTH_SHORT).show();
                     }
                 });
 
