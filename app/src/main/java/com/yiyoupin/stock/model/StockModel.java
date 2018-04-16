@@ -22,7 +22,7 @@ public class StockModel extends BaseModel implements Serializable {
      */
 
     private int user_id;
-    private int stock_id;
+    private String stock_id;
     private String stock_name;
     private String stock_code;
     private double stock_price;
@@ -36,11 +36,11 @@ public class StockModel extends BaseModel implements Serializable {
         this.user_id = user_id;
     }
 
-    public int getStock_id() {
+    public String getStock_id() {
         return stock_id;
     }
 
-    public void setStock_id(int stock_id) {
+    public void setStock_id(String stock_id) {
         this.stock_id = stock_id;
     }
 
