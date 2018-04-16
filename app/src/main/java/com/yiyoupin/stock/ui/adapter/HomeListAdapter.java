@@ -239,9 +239,11 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, StockShowActivity.class);
-                    intent.putExtra(StockShowActivity.ID,((StockModel) model).getStock_code());
-                    mContext.startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StockShowActivity.ID,((StockModel) model).getStock_id());
+                    bundle.putString(StockShowActivity.CODE,((StockModel) model).getStock_code());
+                    UiUtils.goStockShowActivity(mContext,bundle);
                 }
             });
         }
@@ -331,7 +333,11 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        UiUtils.goStockShowActivity(mContext);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(StockShowActivity.ID,((QuotesItemModel) model).getStock_id());
+                        bundle.putString(StockShowActivity.CODE,((QuotesItemModel) model).getStock_code());
+                        UiUtils.goStockShowActivity(mContext,bundle);
                     }
                 });
             }

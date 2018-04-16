@@ -284,4 +284,22 @@ public interface ApiService {
     @POST("/stock/optional/delete_stock.doo")
     Observable<HomeListModel> deleteZiXun(@QueryMap Map<String,String> params);
 
+    /**
+     * 股票详情新闻列表
+     * @param params
+     * @return
+     */
+    @GET("/stock/news_detail.do")
+    Observable<HomeListModel> getNewsList(@QueryMap Map<String,String> params);
+
+
+
+    /**
+     * 股票详情
+     * @param params
+     * @return
+     */
+    @GET("/stock/detail.do")
+    Observable<HomeListModel> getStockDetails(@QueryMap Map<String,String> params);
+
 }

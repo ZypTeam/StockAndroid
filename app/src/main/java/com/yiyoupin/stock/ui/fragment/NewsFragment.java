@@ -4,13 +4,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.model.SearchModel;
+import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.NewsItemAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -61,4 +68,7 @@ public class NewsFragment extends BaseStockFragment {
         adapter.refreshList(list);
 
     }
+
+
+
 }

@@ -161,8 +161,8 @@ public class UiUtils {
     /**
      *  个股页面
      * */
-    public static final void goStockShowActivity(Context mContext){
-        goActivity(mContext,null, StockShowActivity.class);
+    public static final void goStockShowActivity(Context mContext,Bundle bundle){
+        goActivity(mContext,bundle, StockShowActivity.class);
     }
 
 
