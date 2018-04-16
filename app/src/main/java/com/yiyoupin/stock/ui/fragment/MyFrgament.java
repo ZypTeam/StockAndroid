@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 
 import com.yiyoupin.stock.R;
@@ -174,5 +176,9 @@ public class MyFrgament extends BaseStockFragment {
             }
         });
 
+        WindowManager window = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        int screenWidth = window.getDefaultDisplay().getWidth();
+        loginView.setCameraDistance(10 * screenWidth);
+        myInfoView.setCameraDistance(10 * screenWidth);
     }
 }
