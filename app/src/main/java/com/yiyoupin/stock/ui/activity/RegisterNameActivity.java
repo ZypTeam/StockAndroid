@@ -9,6 +9,7 @@ import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
@@ -57,7 +58,7 @@ public class RegisterNameActivity extends BaseStockActivity {
         titleView.setTitle("注册成功");
         titleView.setRightText("跳过",v -> {
             UserInfoDelegate.getInstance().saveUserInfo(userModel);
-            UiUtils.goHomeActivity(RegisterNameActivity.this);
+            rxManage.post(Constant.REGISTER_SUC,"");
             onBackPressed();
         });
         editName.addTextChangedListener(new TextWatcher() {
@@ -104,11 +105,10 @@ public class RegisterNameActivity extends BaseStockActivity {
                         if (noDataModel.getCode()==0){
                             userModel.setName(name);
                             UserInfoDelegate.getInstance().saveUserInfo(userModel);
-                            UiUtils.goHomeActivity(RegisterNameActivity.this);
+                            rxManage.post(Constant.REGISTER_SUC,"");
+                            showToast("修改成功");
                             onBackPressed();
-                            return;
                         }
-                        showToast("修改失败");
                     }
                 }, new Action1<Throwable>() {
                     @Override

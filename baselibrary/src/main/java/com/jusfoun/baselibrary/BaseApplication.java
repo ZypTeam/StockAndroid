@@ -21,7 +21,7 @@ public class BaseApplication extends Application {
      */
     private boolean playServiceForceDestroy = false;
 
-    private static BaseApplication mApp;
+    protected static BaseApplication mApp;
 
     @Override
     public void onCreate() {

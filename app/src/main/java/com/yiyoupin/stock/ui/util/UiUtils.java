@@ -14,6 +14,7 @@ import com.yiyoupin.stock.ui.activity.ChangePassActivity;
 import com.yiyoupin.stock.ui.activity.ChartsDetailActivity;
 import com.yiyoupin.stock.ui.activity.ChartsListActivity;
 import com.yiyoupin.stock.ui.activity.ForgetPassActivity;
+import com.yiyoupin.stock.ui.activity.GetPhoneCodeActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
 import com.yiyoupin.stock.ui.activity.MainActivity;
 import com.yiyoupin.stock.ui.activity.MsgListActivity;
@@ -54,6 +55,7 @@ public class UiUtils {
         goActivity(mContext,bundle, AuthPhoneCodeActivity.class);
     }
 
+
     public static final void goRegisterName(Context mContext,UserModel userModel){
         Bundle bundle=new Bundle();
         bundle.putSerializable(USER_INFO,userModel);
@@ -62,6 +64,10 @@ public class UiUtils {
 
     public static final void goLoginActivity(Context mContext){
         goActivity(mContext,null, LoginActivity.class);
+    }
+
+    public static final void goPhoneCodeActivity(Context mContext){
+        goActivity(mContext,null, GetPhoneCodeActivity.class);
     }
 
     public static final void goHomeActivity(Context mContext){

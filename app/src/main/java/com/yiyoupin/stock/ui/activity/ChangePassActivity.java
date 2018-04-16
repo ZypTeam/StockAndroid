@@ -78,8 +78,8 @@ public class ChangePassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (StringUtil.equals(inputComfir.getText().toString(),inputPassword.toString())
-                        &&!StringUtil.isEmpty(lastPass.getText().toString())){
+                if (StringUtil.equals(inputComfir.getText().toString(), inputPassword.toString())
+                        && !StringUtil.isEmpty(lastPass.getText().toString())) {
                     submit.setEnabled(true);
                 }
             }
@@ -98,8 +98,8 @@ public class ChangePassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (StringUtil.equals(inputComfir.getText().toString(),inputPassword.toString())
-                        &&!StringUtil.isEmpty(lastPass.getText().toString())){
+                if (StringUtil.equals(inputComfir.getText().toString(), inputPassword.toString())
+                        && !StringUtil.isEmpty(lastPass.getText().toString())) {
                     submit.setEnabled(true);
                 }
             }
@@ -118,8 +118,8 @@ public class ChangePassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (StringUtil.equals(inputComfir.getText().toString(),inputPassword.toString())
-                        &&!StringUtil.isEmpty(lastPass.getText().toString())){
+                if (StringUtil.equals(inputComfir.getText().toString(), inputPassword.toString())
+                        && !StringUtil.isEmpty(lastPass.getText().toString())) {
                     submit.setEnabled(true);
                 }
             }
@@ -130,40 +130,40 @@ public class ChangePassActivity extends BaseStockActivity {
         });
     }
 
-    private void submit(){
+    private void submit() {
 
         if (StringUtil.isEmpty(inputLastPass.getText().toString())
-                ||inputLastPass.getText().toString().length()<6){
-            Toast.makeText(mContext,"密码长度必须大于6",Toast.LENGTH_SHORT).show();
+                || inputLastPass.getText().toString().length() < 6) {
+            Toast.makeText(mContext, "密码长度必须大于6", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (StringUtil.isEmpty(inputPassword.getText().toString())
-                ||inputPassword.getText().toString().length()<6){
-            Toast.makeText(mContext,"密码长度必须大于6",Toast.LENGTH_SHORT).show();
+                || inputPassword.getText().toString().length() < 6) {
+            Toast.makeText(mContext, "密码长度必须大于6", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!StringUtil.equals(inputComfir.getText().toString(),inputPassword.getText().toString())){
-            Toast.makeText(mContext,"两次输入的密码不匹配",Toast.LENGTH_SHORT).show();
+        if (!StringUtil.equals(inputComfir.getText().toString(), inputPassword.getText().toString())) {
+            Toast.makeText(mContext, "两次输入的密码不匹配", Toast.LENGTH_SHORT).show();
             return;
         }
 
         showLoadDialog();
-        HashMap<String,String> params=new HashMap<>();
-        params.put("old_password",inputLastPass.getText().toString());
-        params.put("new_password",inputPassword.getText().toString());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("old_password", inputLastPass.getText().toString());
+        params.put("new_password", inputPassword.getText().toString());
         addNetwork(Api.getInstance().getService(ApiService.class).editPassword(params)
                 , new Action1<NoDataModel>() {
                     @Override
                     public void call(NoDataModel noDataModel) {
 
                         hideLoadDialog();
-                        if (noDataModel.getCode()==0){
-                            UiUtils.goAuthChangePass(inputPassword.getText().toString(),mContext);
-                            return;
+                        if (noDataModel.getCode() == 0) {
+                            showToast("修改成功");
+                            UiUtils.goAuthChangePass(inputPassword.getText().toString(), mContext);
                         }
-                        showToast("修改失败");
+
                     }
                 }, new Action1<Throwable>() {
                     @Override

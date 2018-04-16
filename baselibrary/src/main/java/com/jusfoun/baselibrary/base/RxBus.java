@@ -76,7 +76,7 @@ public class RxBus {
 
     public void post(@NonNull Object evnet){
         if (evnet==null){
-                throw  new IllegalArgumentException("event not null");
+            throw  new IllegalArgumentException("event not null");
         }
         for (Map.Entry<Object, List<Subject>> objectListEntry : subjectMapper.entrySet()) {
             Object object=objectListEntry.getKey();

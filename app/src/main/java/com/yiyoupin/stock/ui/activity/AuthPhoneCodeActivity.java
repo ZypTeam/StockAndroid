@@ -10,6 +10,7 @@ import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
@@ -52,6 +53,12 @@ public class AuthPhoneCodeActivity extends BaseStockActivity {
     @Override
     public void initDatas() {
         phoneNum = getIntent().getExtras().getString(UiUtils.PHONE);
+        rxManage.on(Constant.REGISTER_SUC, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

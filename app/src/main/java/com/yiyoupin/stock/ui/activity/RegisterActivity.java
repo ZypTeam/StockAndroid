@@ -88,13 +88,11 @@ public class RegisterActivity extends BaseStockActivity {
                     public void call(UserDataModel userDataModel) {
                         hideLoadDialog();
                         if (userDataModel.getCode()==0) {
+                            showToast("注册成功");
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
                             UiUtils.goRegisterName(mContext,userDataModel.getData());
                             onBackPressed();
-                            return;
                         }
-                        showToast("注册失败");
-
                     }
                 }, new Action1<Throwable>() {
                     @Override
