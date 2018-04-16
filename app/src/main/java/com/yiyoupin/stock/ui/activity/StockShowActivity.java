@@ -4,15 +4,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
@@ -47,8 +46,11 @@ public class StockShowActivity extends BaseStockActivity {
     protected RelativeLayout layoutDelete;
     private NewsAdapter newsAdapter;
 
-    public static String ID="id";
-    private String stockCode="";
+    public static String ID = "id";
+    public static String CODE = "code";
+    private String stockCode = "";
+    private String stockID = "";
+    private boolean fromSeach = false;
 
     @Override
     public int getLayoutResId() {
@@ -58,7 +60,8 @@ public class StockShowActivity extends BaseStockActivity {
     @Override
     public void initDatas() {
         newsAdapter = new NewsAdapter(getSupportFragmentManager());
-        stockCode = getIntent().getStringExtra(ID);
+        stockCode = getIntent().getStringExtra(CODE);
+        stockID = getIntent().getStringExtra(ID);
 
     }
 
@@ -125,11 +128,13 @@ public class StockShowActivity extends BaseStockActivity {
 //                Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
             }
         });
+        getDetailsNet();
+
 
     }
 
 
-    private void addZiX(){
+    private void addZiX() {
         showLoadDialog();
         HashMap<String, String> params = new HashMap();
         params.put("stock_code", stockCode);
@@ -140,9 +145,9 @@ public class StockShowActivity extends BaseStockActivity {
                     @Override
                     public void call(HomeListModel model) {
                         hideLoadDialog();
-                        if(model.getCode()==0){
+                        if (model.getCode() == 0) {
                             Toast.makeText(mContext, "已添加至自选股", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             Toast.makeText(mContext, model.getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -154,7 +159,7 @@ public class StockShowActivity extends BaseStockActivity {
                 });
     }
 
-    private void deleteZiXun(){
+    private void deleteZiXun() {
         showLoadDialog();
         HashMap<String, String> params = new HashMap();
         params.put("stock_code", stockCode);
@@ -165,9 +170,9 @@ public class StockShowActivity extends BaseStockActivity {
                     @Override
                     public void call(HomeListModel model) {
                         hideLoadDialog();
-                        if(model.getCode()==0){
+                        if (model.getCode() == 0) {
                             Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             Toast.makeText(mContext, model.getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -178,4 +183,59 @@ public class StockShowActivity extends BaseStockActivity {
                     }
                 });
     }
+
+
+    private void getDetailsNet() {
+        if (TextUtils.isEmpty(stockID)) {
+            return;
+        }
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap();
+        params.put("stock_id", stockID);
+        params.put("tactics_id", stockID);
+        if (fromSeach)
+            params.put("fromSeach", "true");
+
+
+        addNetwork(Api.getInstance().getService(ApiService.class).getStockDetails(params)
+                , new Action1<HomeListModel>() {
+                    @Override
+                    public void call(HomeListModel model) {
+                        hideLoadDialog();
+                        getNewsList();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                        getNewsList();
+                    }
+                });
+    }
+
+
+    private void getNewsList() {
+        if (TextUtils.isEmpty(stockID)) {
+            return;
+        }
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap();
+        params.put("stock_id", stockID);
+
+
+        addNetwork(Api.getInstance().getService(ApiService.class).getNewsList(params)
+                , new Action1<HomeListModel>() {
+                    @Override
+                    public void call(HomeListModel model) {
+                        hideLoadDialog();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+    }
+
+
 }
