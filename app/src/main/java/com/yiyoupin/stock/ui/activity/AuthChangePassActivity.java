@@ -151,7 +151,6 @@ public class AuthChangePassActivity extends BaseStockActivity {
                             UiUtils.goHomeActivity(mContext);
                             return;
                         }
-                        showToast("绑定手机号失败");
                     }
                 }, new Action1<Throwable>() {
                     @Override

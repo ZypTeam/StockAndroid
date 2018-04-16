@@ -95,10 +95,7 @@ public class UpdatePassActivity extends BaseStockActivity {
                             UiUtils.goLoginActivity(mContext);
                             showToast("找回成功");
                             onBackPressed();
-                            return;
                         }
-                        showToast("找回失败");
-
                     }
                 }, new Action1<Throwable>() {
                     @Override

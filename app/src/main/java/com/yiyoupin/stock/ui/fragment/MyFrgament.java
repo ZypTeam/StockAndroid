@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.fragment;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,10 +9,12 @@ import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.FragmentCallback;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.ui.activity.EditPersonInfoActivity;
 import com.yiyoupin.stock.ui.activity.LoginActivity;
+import com.yiyoupin.stock.ui.activity.MainActivity;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 import com.yiyoupin.stock.ui.util.ImageLoderUtil;
 import com.yiyoupin.stock.ui.util.UiUtils;
@@ -27,6 +30,8 @@ import rx.functions.Action1;
  * @Description ${我的}
  */
 public class MyFrgament extends BaseStockFragment {
+
+    private FragmentCallback callback;
 
     protected TextView username;
     protected TextView consume;
@@ -46,8 +51,16 @@ public class MyFrgament extends BaseStockFragment {
     }
 
     @Override
-    protected void refreshData() {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentCallback){
+            callback= (FragmentCallback) context;
+        }
+    }
 
+    @Override
+    protected void refreshData() {
+        getUserInfo();
     }
 
     @Override
@@ -103,12 +116,15 @@ public class MyFrgament extends BaseStockFragment {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                exitLogin();
-                UiUtils.goLoginActivity(mContext);
+                if (callback!=null){
+                    callback.onCallback(MyFrgament.this);
+                }
+                UserInfoDelegate.getInstance().clearUser();
+//                exitLogin();
             }
         });
 
-        getUserInfo();
+
     }
 
     private void exitLogin(){
@@ -118,6 +134,7 @@ public class MyFrgament extends BaseStockFragment {
                     @Override
                     public void call(NoDataModel userDataModel) {
                         hideLoadDialog();
+                        UserInfoDelegate.getInstance().clearUser();
                     }
                 }, new Action1<Throwable>() {
                     @Override

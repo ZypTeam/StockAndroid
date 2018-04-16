@@ -18,6 +18,7 @@ public class StockApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        mApp=this;
         SharePrefenceUtils.getInstance().register(this, BuildConfig.APPLICATION_ID);
         Api.getInstance().register(this,getString(R.string.url))
                 .addInterceptro(new HeaderStockInterceptor())

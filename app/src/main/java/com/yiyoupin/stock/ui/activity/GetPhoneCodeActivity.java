@@ -12,6 +12,7 @@ import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
@@ -42,6 +43,12 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
     @Override
     public void initDatas() {
 
+        rxManage.on(Constant.REGISTER_SUC, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -100,9 +107,8 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
                         if (noDataModel.getCode()==0) {
                             UiUtils.goAuthPhone(GetPhoneCodeActivity.this, phoneNum);
 //                        onBackPressed();
-                            return;
+                            showToast("获取成功");
                         }
-                        showToast("获取失败");
 
                     }
                 }, new Action1<Throwable>() {

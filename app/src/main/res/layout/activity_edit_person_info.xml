@@ -46,7 +46,6 @@
 
     <TextView
         android:id="@+id/phone"
-        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/txt_head"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -75,7 +74,7 @@
         android:gravity="center_vertical"
         android:textSize="16sp"
         android:textColor="#d3d3d3"
-        android:inputType="number"
+        android:inputType="phone"
         android:background="@color/transparent"
         app:layout_constraintLeft_toLeftOf="@+id/phone"
         app:layout_constraintTop_toTopOf="@+id/phone"
@@ -85,6 +84,7 @@
         android:layout_height="0dp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/code"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -100,6 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/phone" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/image"
         app:layout_constraintTop_toTopOf="@+id/code"
         app:layout_constraintBottom_toBottomOf="@+id/code"
@@ -112,6 +113,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:visibility="gone"
         android:background="@color/transparent"
         android:id="@+id/input_code"
         android:layout_marginLeft="85dp"
@@ -119,7 +121,7 @@
         android:textSize="16sp"
         android:textColor="#d3d3d3"
         android:maxLength="6"
-        android:inputType="number"
+        android:inputType="phone"
         android:layout_marginRight="100dp"
         app:layout_constraintLeft_toLeftOf="@+id/code"
         app:layout_constraintTop_toTopOf="@+id/code"
@@ -174,7 +176,7 @@
         android:layout_marginRight="100dp"
         android:textColor="#d3d3d3"
         android:maxLength="6"
-        android:inputType="number"
+        android:inputType="phone"
         app:layout_constraintLeft_toLeftOf="@+id/phone_code"
         app:layout_constraintTop_toTopOf="@+id/phone_code"
         app:layout_constraintRight_toRightOf="@+id/phone_code"
@@ -281,6 +283,7 @@
         android:id="@+id/input_email"
         android:background="#00000000"
         android:textColor="#d3d3d3"
+        android:inputType="textEmailAddress"
         app:layout_constraintTop_toTopOf="@+id/txt_email"
         app:layout_constraintLeft_toLeftOf="@+id/txt_email"
         app:layout_constraintRight_toRightOf="@+id/txt_email"
@@ -317,6 +320,7 @@
         android:id="@+id/input_wechar"
         android:background="#00000000"
         android:textColor="#d3d3d3"
+        android:inputType="textVisiblePassword"
         app:layout_constraintTop_toTopOf="@+id/txt_wechart"
         app:layout_constraintLeft_toLeftOf="@+id/txt_wechart"
         app:layout_constraintRight_toRightOf="@+id/txt_wechart"

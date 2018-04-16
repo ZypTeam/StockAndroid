@@ -28,6 +28,11 @@ public class UserInfoDelegate {
         return SingletonHolder.delegate;
     }
 
+    public void clearUser(){
+        userModel=null;
+        SharePrefenceUtils.getInstance().setString(SharePrefenceConstant.USER_MODEL, "");
+    }
+
     public UserModel getUserInfo(){
         return userModel;
     }

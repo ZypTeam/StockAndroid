@@ -2,7 +2,9 @@ package com.jusfoun.baselibrary.base;
 
 
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.jusfoun.baselibrary.BaseApplication;
 import com.jusfoun.baselibrary.Util.LogUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -55,15 +57,23 @@ public class RxManage {
      * @param action1
      * @param error
      */
-    public <T extends BaseModel> void add(Observable<T> observable, Action1<T> action1, final Action1<Throwable> error){
+    public <T extends BaseModel> void add(Observable<T> observable, final Action1<T> action1, final Action1<Throwable> error){
         mCompositeSubscription.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribe(action1, new Action1<Throwable>() {
+                        .subscribe(new Action1<T>() {
+                            @Override
+                            public void call(T t) {
+                                if (t.getCode()!=0){
+                                    Toast.makeText(BaseApplication.getBaseApplication(),t.getMsg(),Toast.LENGTH_LONG).show();
+                                }
+                                action1.call(t);
+                            }
+                        }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                LogUtil.e("throwable",throwable.getMessage());
-                                if (error!=null) {
+                                LogUtil.e("throwable", throwable.getMessage());
+                                if (error != null) {
                                     error.call(throwable);
                                 }
                             }

@@ -1,36 +1,46 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.jusfoun.baselibrary.view.HomeViewPager;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.StockApplication;
-import com.yiyoupin.stock.ui.adapter.HomeAdapter;
+import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.comment.FragmentCallback;
+import com.yiyoupin.stock.delegate.UserInfoDelegate;
+import com.yiyoupin.stock.model.UserModel;
+import com.yiyoupin.stock.ui.adapter.MainAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
+import com.yiyoupin.stock.ui.fragment.LoginFragment;
+import com.yiyoupin.stock.ui.fragment.MainFragment;
+import com.yiyoupin.stock.ui.util.TransformUtil;
+import com.yiyoupin.stock.ui.view.transformer.FlipHorizontalTransformer;
 
-public class MainActivity extends BaseStockActivity {
+import rx.functions.Action1;
+
+public class MainActivity extends BaseStockActivity implements FragmentCallback {
 
 
     protected HomeViewPager viewpager;
-    protected ImageView imgHome;
-    protected TextView textHome;
-    protected RelativeLayout layoutHome;
-    protected ImageView imgQuotes;
-    protected TextView textQuotes;
-    protected RelativeLayout layoutQuotes;
-    protected ImageView imgOptional;
-    protected TextView textOptional;
-    protected RelativeLayout layoutOptional;
-    protected ImageView imgMy;
-    protected TextView textMy;
-    protected RelativeLayout layoutMy;
-    private HomeAdapter homeAdapter;
+    protected FrameLayout login;
+    protected FrameLayout main;
+    private MainAdapter homeAdapter;
+
+    private ValueAnimator valueAnimator1, valueAnimator2, valueAnimator3, valueAnimator4;
 
 
     @Override
@@ -40,101 +50,100 @@ public class MainActivity extends BaseStockActivity {
 
     @Override
     public void initDatas() {
-        homeAdapter = new HomeAdapter(getSupportFragmentManager());
+
+        rxManage.on(Constant.REGISTER_SUC, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                login.postDelayed(()->{
+                    valueAnimator1.start();
+                },1000);
+            }
+        });
+
     }
 
     @Override
     public void initView() {
         viewpager = (HomeViewPager) findViewById(R.id.viewpager);
-        imgHome = (ImageView) findViewById(R.id.img_home);
-        textHome = (TextView) findViewById(R.id.text_home);
-        layoutHome = (RelativeLayout) findViewById(R.id.layout_home);
-        imgQuotes = (ImageView) findViewById(R.id.img_quotes);
-        textQuotes = (TextView) findViewById(R.id.text_quotes);
-        layoutQuotes = (RelativeLayout) findViewById(R.id.layout_quotes);
-        imgOptional = (ImageView) findViewById(R.id.img_optional);
-        textOptional = (TextView) findViewById(R.id.text_optional);
-        layoutOptional = (RelativeLayout) findViewById(R.id.layout_optional);
-        imgMy = (ImageView) findViewById(R.id.img_my);
-        textMy = (TextView) findViewById(R.id.text_my);
-        layoutMy = (RelativeLayout) findViewById(R.id.layout_my);
+        login = (FrameLayout) findViewById(R.id.login_fragment);
+        main = (FrameLayout) findViewById(R.id.main_fragment);
 
+        UserModel userModel=UserInfoDelegate.getInstance().getUserInfo();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.login_fragment,LoginFragment.getInstance(),"login")
+                .add(R.id.main_fragment, MainFragment.getInstance(userModel==null?null:new Bundle()),"main")
+                .commitAllowingStateLoss();
+
+        if (userModel==null){
+            login.setVisibility(View.VISIBLE);
+            main.setVisibility(View.INVISIBLE);
+        }else {
+            login.setVisibility(View.INVISIBLE);
+            main.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void initAction() {
+
+        /*homeAdapter = new MainAdapter(getSupportFragmentManager());
         viewpager.setAdapter(homeAdapter);
         viewpager.setNotTouchScoll(true);
+        TransformUtil.reverse(viewpager, new FlipHorizontalTransformer());*/
 
-        layoutHome.setOnClickListener(new View.OnClickListener() {
+        valueAnimator1 = ObjectAnimator.ofFloat(login, "rotationY", 0, 90f);
+        valueAnimator2 = ObjectAnimator.ofFloat(main, "rotationY", -90, 0f);
+        valueAnimator3 = ObjectAnimator.ofFloat(login, "rotationY", 90f, 0f);
+        valueAnimator4 = ObjectAnimator.ofFloat(main, "rotationY", 0f, -90f);
+
+        valueAnimator2.setInterpolator(new LinearInterpolator());
+        valueAnimator2.setDuration(500);
+        valueAnimator2.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View view) {
-                select(0);
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
             }
         });
-        layoutQuotes.setOnClickListener(new View.OnClickListener() {
+
+        valueAnimator1.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View view) {
-                select(1);
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                login.setVisibility(View.GONE);
+                main.setVisibility(View.VISIBLE);
+                valueAnimator2.start();
             }
         });
-        layoutOptional.setOnClickListener(new View.OnClickListener() {
+        valueAnimator1.setInterpolator(new LinearInterpolator());
+        valueAnimator1.setDuration(500);
+
+        valueAnimator3.setInterpolator(new LinearInterpolator());
+        valueAnimator3.setDuration(500);
+        valueAnimator3.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View view) {
-                select(2);
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                Log.e("tag", "flipCardTwo2");
             }
         });
-        layoutMy.setOnClickListener(new View.OnClickListener() {
+
+        valueAnimator4.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View view) {
-                select(3);
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                Log.e("tag", "flipCardTwo1");
+                login.setVisibility(View.VISIBLE);
+                main.setVisibility(View.GONE);
+                valueAnimator3.start();
             }
         });
-    }
 
-    private void select(int position) {
-        viewpager.setCurrentItem(position, false);
-
-        imgHome.setImageResource(R.drawable.img_home_normal);
-        textHome.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_normal));
-        layoutHome.setBackgroundResource(R.color.home_bottom_btn_normal);
-
-        imgQuotes.setImageResource(R.drawable.img_quotes_noraml);
-        textQuotes.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_normal));
-        layoutQuotes.setBackgroundResource(R.color.home_bottom_btn_normal);
-
-        imgOptional.setImageResource(R.drawable.img_optional_normal);
-        textOptional.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_normal));
-        layoutOptional.setBackgroundResource(R.color.home_bottom_btn_normal);
-
-        imgMy.setImageResource(R.drawable.img_my_normal);
-        textMy.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_normal));
-        layoutMy.setBackgroundResource(R.color.home_bottom_btn_normal);
-
-        switch (position) {
-            case 0:
-                imgHome.setImageResource(R.drawable.img_home_select);
-                textHome.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_selecter));
-                layoutHome.setBackgroundResource(R.color.home_bottom_btn_selscter);
-                break;
-            case 1:
-                imgQuotes.setImageResource(R.drawable.img_quotes_selecter);
-                textQuotes.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_selecter));
-                layoutQuotes.setBackgroundResource(R.color.home_bottom_btn_selscter);
-                break;
-            case 2:
-                imgOptional.setImageResource(R.drawable.img_optional_select);
-                textOptional.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_selecter));
-                layoutOptional.setBackgroundResource(R.color.home_bottom_btn_selscter);
-                break;
-            case 3:
-                imgMy.setImageResource(R.drawable.img_my_select);
-                textMy.setTextColor(getResources().getColor(R.color.home_bottom__btn_text_selecter));
-                layoutMy.setBackgroundResource(R.color.home_bottom_btn_selscter);
-                break;
-            default:
-                break;
-        }
+        valueAnimator4.setInterpolator(new LinearInterpolator());
+        valueAnimator4.setDuration(500);
     }
 
     private long mLastTime;
@@ -154,5 +163,17 @@ public class MainActivity extends BaseStockActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCallback(Fragment fragment) {
+
+        if (fragment instanceof LoginFragment){
+            valueAnimator1.start();
+        }else {
+            fragment.setArguments(null);
+            valueAnimator4.start();
+        }
+//        viewpager.setCurrentItem(1);
     }
 }
