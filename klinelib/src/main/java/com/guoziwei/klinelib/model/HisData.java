@@ -1,10 +1,12 @@
 package com.guoziwei.klinelib.model;
 
+import java.io.Serializable;
+
 /**
  * chart data model
  */
 
-public class HisData {
+public class HisData implements Serializable{
 
     private double close;
     private double high;

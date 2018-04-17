@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+import com.yiyoupin.stock.ui.view.StocksTopView;
 import com.yiyoupin.stock.ui.view.kline.FiveDayChartFragment;
 import com.yiyoupin.stock.ui.view.kline.KLineChartFragment;
 import com.yiyoupin.stock.ui.view.kline.SimpleFragmentPagerAdapter;
@@ -44,6 +46,7 @@ public class StockShowActivity extends BaseStockActivity {
     protected RelativeLayout layoutRemind;
     protected RelativeLayout layoutAdd;
     protected RelativeLayout layoutDelete;
+    protected StocksTopView viewTop;
     private NewsAdapter newsAdapter;
 
     public static String ID = "id";
@@ -51,6 +54,12 @@ public class StockShowActivity extends BaseStockActivity {
     private String stockCode = "";
     private String stockID = "";
     private boolean fromSeach = false;
+    private Fragment[] fragments;
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 
     @Override
     public int getLayoutResId() {
@@ -62,6 +71,7 @@ public class StockShowActivity extends BaseStockActivity {
         newsAdapter = new NewsAdapter(getSupportFragmentManager());
         stockCode = getIntent().getStringExtra(CODE);
         stockID = getIntent().getStringExtra(ID);
+        fragments = new Fragment[5];
 
     }
 
@@ -76,6 +86,7 @@ public class StockShowActivity extends BaseStockActivity {
         layoutRemind = (RelativeLayout) findViewById(R.id.layout_remind);
         layoutAdd = (RelativeLayout) findViewById(R.id.layout_add);
         layoutDelete = (RelativeLayout) findViewById(R.id.layout_delete);
+        viewTop = (StocksTopView) findViewById(R.id.view_top);
 
     }
 
@@ -85,10 +96,11 @@ public class StockShowActivity extends BaseStockActivity {
 
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
-        Fragment[] fragments = {TimeLineChartFragment.newInstance(1), FiveDayChartFragment.newInstance(),
-                KLineChartFragment.newInstance(1), KLineChartFragment.newInstance(7),
-                KLineChartFragment.newInstance(30)};
-
+        fragments[0] = TimeLineChartFragment.newInstance(1);
+        fragments[1] = FiveDayChartFragment.newInstance();
+        fragments[2] = KLineChartFragment.newInstance(1);
+        fragments[3] = KLineChartFragment.newInstance(7);
+        fragments[4] = KLineChartFragment.newInstance(30);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);
@@ -200,10 +212,16 @@ public class StockShowActivity extends BaseStockActivity {
 
 
         addNetwork(Api.getInstance().getService(ApiService.class).getStockDetails(params)
-                , new Action1<HomeListModel>() {
+                , new Action1<StockDetailModel>() {
                     @Override
-                    public void call(HomeListModel model) {
+                    public void call(StockDetailModel model) {
                         hideLoadDialog();
+                        if (model.data != null && model.data.dapandata != null)
+                            ((TimeLineChartFragment) fragments[0]).setData(model.data);
+
+                        if (model.data != null) {
+                            viewTop.setData(model.data);
+                        }
                         getNewsList();
                     }
                 }, new Action1<Throwable>() {
