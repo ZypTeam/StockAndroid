@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.NewsAdapter;
@@ -242,11 +243,10 @@ public class StockShowActivity extends BaseStockActivity {
         HashMap<String, String> params = new HashMap();
         params.put("stock_id", stockID);
 
-
         addNetwork(Api.getInstance().getService(ApiService.class).getNewsList(params)
-                , new Action1<HomeListModel>() {
+                , new Action1<NewModel>() {
                     @Override
-                    public void call(HomeListModel model) {
+                    public void call(NewModel model) {
                         hideLoadDialog();
                     }
                 }, new Action1<Throwable>() {

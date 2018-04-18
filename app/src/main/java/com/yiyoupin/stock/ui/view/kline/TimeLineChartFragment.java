@@ -180,7 +180,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
             mingXiModel.list= list;
 
-            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(),mingXiModel));
+            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(),mingXiModel,model));
         }
 
     }
