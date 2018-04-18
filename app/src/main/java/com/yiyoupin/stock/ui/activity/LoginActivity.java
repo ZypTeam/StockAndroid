@@ -16,6 +16,7 @@ import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.delegate.HeaderStockInterceptor;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
@@ -94,6 +95,9 @@ public class LoginActivity extends BaseStockActivity {
                         hideLoadDialog();
                         if (userDataModel.getCode() == 0) {
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
+                            Api.getInstance().register(LoginActivity.this, getString(R.string.url))
+                                    .addInterceptro(new HeaderStockInterceptor())
+                                    .build();
                             UiUtils.goHomeActivity(LoginActivity.this);
                             onBackPressed();
                         } else {

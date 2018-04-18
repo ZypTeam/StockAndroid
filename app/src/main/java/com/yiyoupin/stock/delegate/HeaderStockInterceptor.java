@@ -29,12 +29,12 @@ public class HeaderStockInterceptor implements Interceptor {
             user_id="0";
         }
 
-        LogUtil.e("HeaderStockInterceptor","user_id=="+user_id);
+
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-
+        LogUtil.e("HeaderStockInterceptor","user_id=="+user_id);
         Request request;
         request=chain.request().newBuilder()
                 .addHeader(USER_ID, user_id)

@@ -60,8 +60,11 @@ public class DetailsFragment extends BaseStockFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
         adapter.setType(type);
-        if (type == DetailsAdapter.TYPE_FIVE && model != null)
+        if (type == DetailsAdapter.TYPE_FIVE && model != null) {
             adapter.refreshList(model.list);
+        }else{
+
+        }
     }
 
     @Override

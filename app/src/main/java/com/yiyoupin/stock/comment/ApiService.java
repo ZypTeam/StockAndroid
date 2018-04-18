@@ -214,9 +214,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @FormUrlEncoded
     @POST("/stock/user/modify_info.do")
-    Observable<NoDataModel> editInfo(@FieldMap Map<String,String> params);
+    Observable<NoDataModel> editInfo(@QueryMap Map<String,String> params);
 
     /**
      * 首页

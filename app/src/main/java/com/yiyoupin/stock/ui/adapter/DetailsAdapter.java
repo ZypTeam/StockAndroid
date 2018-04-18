@@ -19,8 +19,8 @@ import java.io.Serializable;
  * @Description ${明细adapter}
  */
 public class DetailsAdapter<T> extends BaseAdapter<BaseModel> {
-    public static int TYPE_FIVE = 0;
-    public static int TYPE_DETAILS = 1;
+    public static int TYPE_FIVE = 0; // 五档
+    public static int TYPE_DETAILS = 1;//明细
     private int type;
 
     public DetailsAdapter(Context context) {
