@@ -197,7 +197,8 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
         params.put("nick_name",inputNickname.getText().toString());
         params.put("email",inputEmail.getText().toString());
         params.put("sex","1");
-        params.put("birthday","1990");
+        params.put("birthday","2018-01-01");
+//        params.put("id",UserInfoDelegate.getInstance().getUserId());
         addNetwork(Api.getInstance().getService(ApiService.class).editInfo(params)
                 , new Action1<NoDataModel>() {
                     @Override

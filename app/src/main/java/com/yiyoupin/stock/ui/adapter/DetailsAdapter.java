@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.MingXiModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
 
@@ -17,9 +18,9 @@ import java.io.Serializable;
  * @Email zyp@jusfoun.com
  * @Description ${明细adapter}
  */
-public class DetailsAdapter extends BaseAdapter<BaseModel> {
-    public static int TYPE_FIVE = 0;
-    public static int TYPE_DETAILS = 1;
+public class DetailsAdapter<T> extends BaseAdapter<BaseModel> {
+    public static int TYPE_FIVE = 0; // 五档
+    public static int TYPE_DETAILS = 1;//明细
     private int type;
 
     public DetailsAdapter(Context context) {
@@ -72,9 +73,9 @@ public class DetailsAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("卖5");
-            textNum1.setText("4.74");
-            textNum2.setText("2378");
+            textTitle.setText(((MingXiModel.MingXiItemModel)model).name);
+            textNum1.setText(((MingXiModel.MingXiItemModel)model).price);
+            textNum2.setText(((MingXiModel.MingXiItemModel)model).count);
         }
 
         private void initView(View rootView) {
@@ -104,7 +105,8 @@ public class DetailsAdapter extends BaseAdapter<BaseModel> {
 
         @Override
         public void update(Serializable model) {
-            textTitle.setText("卖5");
+
+//            textTitle.setText(model.);
             textNum1.setText("4.74");
             textNum2.setText("2378");
         }

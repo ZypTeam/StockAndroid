@@ -38,6 +38,7 @@
                     android:orientation="vertical">
 
                     <com.yiyoupin.stock.ui.view.StocksTopView
+                        android:id="@+id/view_top"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

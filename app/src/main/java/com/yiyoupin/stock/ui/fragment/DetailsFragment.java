@@ -5,15 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.jusfoun.baselibrary.base.BaseFragment;
-import com.jusfoun.baselibrary.base.BaseModel;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.ui.HomeListModel;
+import com.yiyoupin.stock.model.MingXiModel;
 import com.yiyoupin.stock.ui.adapter.DetailsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author zhaoyapeng
@@ -26,12 +22,14 @@ public class DetailsFragment extends BaseStockFragment {
     protected XRecyclerView recyclerView;
     private DetailsAdapter adapter;
 
-    private int type=0;
+    private int type = 0;
+    private MingXiModel model;
 
-    public static BaseFragment getInstance(int type ){
+    public static BaseFragment getInstance(int type, MingXiModel model) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type",type);
+        bundle.putInt("type", type);
+        bundle.putSerializable("model", model);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -44,7 +42,10 @@ public class DetailsFragment extends BaseStockFragment {
 
     @Override
     public void initDatas() {
-        type = (int)getArguments().get("type");
+        type = (int) getArguments().get("type");
+        if (getArguments().getSerializable("model") != null) {
+            model = (MingXiModel) getArguments().getSerializable("model");
+        }
         adapter = new DetailsAdapter(mContext);
     }
 
@@ -58,15 +59,12 @@ public class DetailsFragment extends BaseStockFragment {
     public void initAction() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
-
         adapter.setType(type);
+        if (type == DetailsAdapter.TYPE_FIVE && model != null) {
+            adapter.refreshList(model.list);
+        }else{
 
-        List<BaseModel> list = new ArrayList<>();
-
-        for(int i=0;i<100;i++){
-            list.add(new HomeListModel());
         }
-        adapter.refreshList(list);
     }
 
     @Override

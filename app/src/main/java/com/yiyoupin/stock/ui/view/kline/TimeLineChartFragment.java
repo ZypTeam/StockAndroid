@@ -8,9 +8,12 @@ import android.view.View;
 import com.guoziwei.klinelib.chart.TimeLineView;
 import com.guoziwei.klinelib.model.HisData;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.MingXiModel;
+import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.ui.adapter.DetailsFragmentAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,7 +56,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
     @Override
     public void initAction() {
-        viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager()));
+
     }
 
     protected void initData() {
@@ -102,8 +105,83 @@ public class TimeLineChartFragment extends BaseStockFragment {
         mTimeLineView.initData(hisData);
     }
 
-    public void setData(List<HisData> hisData){
-        mTimeLineView.setLastClose(hisData.get(0).getClose());
-        mTimeLineView.initData(hisData);
+    public void setData(StockDetailModel.StockDetailDataModel model) {
+        if (model != null && model.dapandata != null) {
+            if (model.dapandata.size() > 0)
+                mTimeLineView.setLastClose(model.dapandata.get(0).getClose());
+            mTimeLineView.initData(model.dapandata);
+        }
+
+        if (model != null && model.stock_detail != null) {
+            MingXiModel mingXiModel = new MingXiModel();
+            List<MingXiModel.MingXiItemModel> list = new ArrayList<>();
+            MingXiModel.MingXiItemModel oneModel = new MingXiModel.MingXiItemModel();
+            oneModel.name = "卖1";
+            oneModel.price = model.stock_detail.sellOnePri;
+            oneModel.count = model.stock_detail.sellOne;
+            list.add(oneModel);
+
+            MingXiModel.MingXiItemModel twoModel = new MingXiModel.MingXiItemModel();
+            twoModel.name = "卖2";
+            twoModel.price = model.stock_detail.sellTwoPri;
+            twoModel.count = model.stock_detail.sellTwo;
+            list.add(twoModel);
+
+            MingXiModel.MingXiItemModel threeModel = new MingXiModel.MingXiItemModel();
+            threeModel.name = "卖3";
+            threeModel.price = model.stock_detail.sellThreePri;
+            threeModel.count = model.stock_detail.sellThree;
+            list.add(threeModel);
+
+            MingXiModel.MingXiItemModel fourModel = new MingXiModel.MingXiItemModel();
+            fourModel.name = "卖4";
+            fourModel.price = model.stock_detail.sellFourPri;
+            fourModel.count = model.stock_detail.sellFour;
+            list.add(fourModel);
+
+
+            MingXiModel.MingXiItemModel fiveModel = new MingXiModel.MingXiItemModel();
+            fiveModel.name = "卖5";
+            fiveModel.price = model.stock_detail.sellFivePri;
+            fiveModel.count = model.stock_detail.sellFive;
+            list.add(fiveModel);
+
+
+            MingXiModel.MingXiItemModel buyoneModel = new MingXiModel.MingXiItemModel();
+            buyoneModel.name = "买1";
+            buyoneModel.price = model.stock_detail.buyOnePri;
+            buyoneModel.count = model.stock_detail.buyOne;
+            list.add(buyoneModel);
+
+            MingXiModel.MingXiItemModel buytwoModel = new MingXiModel.MingXiItemModel();
+            buytwoModel.name = "买2";
+            buytwoModel.price = model.stock_detail.buyTwoPri;
+            buytwoModel.count = model.stock_detail.buyTwo;
+            list.add(buytwoModel);
+
+
+            MingXiModel.MingXiItemModel buythreeModel = new MingXiModel.MingXiItemModel();
+            buythreeModel.name = "买3";
+            buythreeModel.price = model.stock_detail.buyThreePri;
+            buythreeModel.count = model.stock_detail.buyThree;
+            list.add(buythreeModel);
+
+            MingXiModel.MingXiItemModel buyfourModel = new MingXiModel.MingXiItemModel();
+            buyfourModel.name = "买4";
+            buyfourModel.price = model.stock_detail.buyFourPri;
+            buyfourModel.count = model.stock_detail.buyFour;
+            list.add(buyfourModel);
+
+            MingXiModel.MingXiItemModel buyfiveModel = new MingXiModel.MingXiItemModel();
+            buyfiveModel.name = "买5";
+            buyfiveModel.price = model.stock_detail.buyFivePri;
+            buyfiveModel.count = model.stock_detail.buyFive;
+            list.add(buyfiveModel);
+
+            mingXiModel.list= list;
+
+            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(),mingXiModel));
+        }
+
     }
 }

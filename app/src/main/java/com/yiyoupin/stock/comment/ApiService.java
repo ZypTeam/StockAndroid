@@ -10,6 +10,7 @@ import com.yiyoupin.stock.model.PayListModel;
 import com.yiyoupin.stock.model.QuotesListModel;
 import com.yiyoupin.stock.model.ReplayListModel;
 import com.yiyoupin.stock.model.SearchListModel;
+import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.model.StrategiesDetailModel;
 import com.yiyoupin.stock.model.UploadDataModel;
 import com.yiyoupin.stock.model.ChartsModel;
@@ -213,9 +214,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @FormUrlEncoded
     @POST("/stock/user/modify_info.do")
-    Observable<NoDataModel> editInfo(@FieldMap Map<String,String> params);
+    Observable<NoDataModel> editInfo(@QueryMap Map<String,String> params);
 
     /**
      * 首页
@@ -300,6 +300,6 @@ public interface ApiService {
      * @return
      */
     @GET("/stock/detail.do")
-    Observable<HomeListModel> getStockDetails(@QueryMap Map<String,String> params);
+    Observable<StockDetailModel> getStockDetails(@QueryMap Map<String,String> params);
 
 }
