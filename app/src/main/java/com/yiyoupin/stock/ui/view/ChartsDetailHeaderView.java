@@ -45,7 +45,7 @@ public class ChartsDetailHeaderView extends CoordinatorLayout {
 
         zhangfu.setText(getText("涨幅:", "9.98%", "#ffffff", "#fe492f"));
         price.setText(getText("股价:", "9.98元", "#ffffff", "#fe492f"));
-        price.setText(getText("上榜理由:", "理由理由理由理由", "#919191", "#ffffff"));
+        liyou.setText(getText("上榜理由:", "理由理由理由理由", "#919191", "#ffffff"));
     }
 
     public SpannableStringBuilder getText(String txt1, String txt2, String color1, String color2) {

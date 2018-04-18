@@ -81,9 +81,7 @@ public class ChartsAdapter extends ExpandableRecyclerViewAdapter<ChartsAdapter.C
         }
 
         public void update(ChartsModel model,int position) {
-            more.setOnClickListener(v -> {
-                UiUtils.goChartsDetails(context,model.getId());
-            });
+
             name.setText(model.getName());
         }
 
@@ -130,6 +128,9 @@ public class ChartsAdapter extends ExpandableRecyclerViewAdapter<ChartsAdapter.C
         }
 
         public void update(ChartItemModel model,int position) {
+            itemView.setOnClickListener(v -> {
+                UiUtils.goChartsDetails(context,model.getDetail_id());
+            });
             if (position==0){
                 title.setVisibility(View.VISIBLE);
             }else {
