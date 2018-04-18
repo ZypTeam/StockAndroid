@@ -85,7 +85,7 @@ public class UpdatePassActivity extends BaseStockActivity {
         HashMap<String,String> params=new HashMap<>();
         params.put("phone",phone);
         params.put("phone_validate_code",code);
-        params.put("password",inputPassword.getText().toString());
+        params.put("new_password",inputPassword.getText().toString());
         addNetwork(Api.getInstance().getService(ApiService.class).findPassword(params)
                 , new Action1<NoDataModel>() {
                     @Override

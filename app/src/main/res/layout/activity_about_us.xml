@@ -9,7 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <WebView
+        android:id="@+id/webview"
+        android:background="#202020"
+        app:layout_constraintTop_toBottomOf="@+id/title_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
     <TextView
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/title_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

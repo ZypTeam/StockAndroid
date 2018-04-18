@@ -18,6 +18,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="#1e1e1e"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:inputType="number"
         android:paddingLeft="16dp"
@@ -30,6 +31,7 @@
 
     <ImageView
         android:id="@+id/image"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@+id/code"
         app:layout_constraintBottom_toBottomOf="@+id/code"
         app:layout_constraintRight_toRightOf="@+id/code"
@@ -41,6 +43,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:visibility="gone"
         android:background="@color/transparent"
         android:id="@+id/input_code"
         android:layout_marginLeft="85dp"

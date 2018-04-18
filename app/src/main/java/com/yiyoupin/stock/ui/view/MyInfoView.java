@@ -19,11 +19,14 @@ import com.yiyoupin.stock.comment.FlipListener;
 import com.yiyoupin.stock.comment.ViewLoadingListener;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
+import com.yiyoupin.stock.model.UserModel;
+import com.yiyoupin.stock.ui.activity.GetPhoneCodeActivity;
 import com.yiyoupin.stock.ui.util.ImageLoderUtil;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.util.HashMap;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -36,7 +39,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class MyInfoView extends ConstraintLayout {
 
-    private CompositeSubscription mCompositeSubscription=new CompositeSubscription();
+    private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     protected TextView username;
     protected TextView consume;
@@ -50,6 +53,7 @@ public class MyInfoView extends ConstraintLayout {
     private ImageView iconHead;
     private TextView editPersion;
     private Context mContext;
+
     public MyInfoView(Context context) {
         this(context, null);
     }
@@ -63,8 +67,8 @@ public class MyInfoView extends ConstraintLayout {
         initView(context);
         initAction();
     }
-    
-    private void initView(Context context){
+
+    private void initView(Context context) {
         this.mContext = context;
         LayoutInflater.from(mContext).inflate(R.layout.view_my_info, this);
 
@@ -79,10 +83,10 @@ public class MyInfoView extends ConstraintLayout {
         aboutUs = (TextView) findViewById(R.id.about_us);
         msgList = (TextView) findViewById(R.id.msg_list);
         exit = (TextView) findViewById(R.id.exit);
-        
+
     }
-    
-    private void initAction(){
+
+    private void initAction() {
         iconHead.setOnClickListener(v -> {
 //            goActivity(null, LoginActivity.class);
         });
@@ -112,82 +116,87 @@ public class MyInfoView extends ConstraintLayout {
                 exitLogin();
             }
         });
+
+        UserModel userModel = UserInfoDelegate.getInstance().getUserInfo();
+        if (userModel != null) {
+            username.setText(userModel.getName());
+            consume.setText("消费金额:" + userModel.getConsume_total());
+            ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
+        }
     }
 
-    private void exitLogin(){
-        if (flipListener!=null){
-            flipListener.flip(false);
-            return;
-        }
-        if (loadingListener!=null){
+    private void exitLogin() {
+
+        if (loadingListener != null) {
             loadingListener.showLoading();
         }
         addNetwork(Api.getInstance().getService(ApiService.class).loginOut()
                 , new Action1<NoDataModel>() {
                     @Override
                     public void call(NoDataModel userDataModel) {
-                        if (loadingListener!=null){
+                        if (loadingListener != null) {
                             loadingListener.hideLoading();
                         }
-                        if (userDataModel.getCode()==0) {
+                        if (userDataModel.getCode() == 0) {
                             UserInfoDelegate.getInstance().clearUser();
-                            Toast.makeText(mContext,"退出成功",Toast.LENGTH_SHORT).show();
-                            if (flipListener!=null){
+                            Toast.makeText(mContext, "退出成功", Toast.LENGTH_SHORT).show();
+                            if (flipListener != null) {
                                 flipListener.flip(false);
                             }
-                        }else {
-                            Toast.makeText(mContext,userDataModel.getMsg(),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(mContext, userDataModel.getMsg(), Toast.LENGTH_SHORT).show();
 
                         }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        if (loadingListener!=null){
+                        if (loadingListener != null) {
                             loadingListener.hideLoading();
                         }
-                        Toast.makeText(mContext,"退出失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "退出失败", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void getUserInfo(){
-        if (loadingListener!=null){
+    public void getUserInfo() {
+        if (loadingListener != null) {
             loadingListener.showLoading();
         }
         addNetwork(Api.getInstance().getService(ApiService.class).getUserInfo(new HashMap<>())
                 , new Action1<UserDataModel>() {
                     @Override
                     public void call(UserDataModel userDataModel) {
-                        if (loadingListener!=null){
+                        if (loadingListener != null) {
                             loadingListener.hideLoading();
                         }
-                        if (userDataModel.getCode()==0){
+                        if (userDataModel.getCode() == 0) {
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
                             username.setText(userDataModel.getData().getName());
+                            consume.setText("消费金额:" + userDataModel.getData().getConsume_total());
                             ImageLoderUtil.loadCircleImage(mContext, iconHead, userDataModel.getData().getUser_picture(), R.mipmap.ic_launcher_round);
                         }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        if (loadingListener!=null){
+                        if (loadingListener != null) {
                             loadingListener.hideLoading();
                         }
-                        Toast.makeText(mContext,"退出失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "退出失败", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public <T extends BaseModel> void addNetwork(rx.Observable<T> observable, Action1<T> next, Action1<Throwable> error){
+    public <T extends BaseModel> void addNetwork(rx.Observable<T> observable, Action1<T> next, Action1<Throwable> error) {
         mCompositeSubscription.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(next, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                LogUtil.e("throwable",throwable.getMessage());
-                                if (error!=null) {
+                                LogUtil.e("throwable", throwable.getMessage());
+                                if (error != null) {
                                     error.call(throwable);
                                 }
                             }

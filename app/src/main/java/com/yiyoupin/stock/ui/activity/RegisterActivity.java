@@ -8,6 +8,7 @@ import com.jusfoun.baselibrary.Util.StringUtil;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
@@ -89,6 +90,7 @@ public class RegisterActivity extends BaseStockActivity {
                         hideLoadDialog();
                         if (userDataModel.getCode()==0) {
                             showToast("注册成功");
+                            rxManage.post(Constant.REGISTER_SUC,"");
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
                             UiUtils.goRegisterName(mContext,userDataModel.getData());
                             onBackPressed();

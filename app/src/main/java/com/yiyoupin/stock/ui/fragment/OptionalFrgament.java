@@ -74,8 +74,6 @@ public class OptionalFrgament extends BaseStockFragment {
     private void refreshList(){
         showLoadDialog();
         HashMap<String, String> params = new HashMap();
-        params.put(Constant.PAGE_PARAMS, Constant.PAGE_SIZE);
-        params.put(Constant.PAGE_INDEX, "1");
         addNetwork(Api.getInstance().getService(ApiService.class).optionalList(params)
                 , new Action1<HomeListModel>() {
                     @Override

@@ -63,7 +63,7 @@ public class MyFrgament extends BaseStockFragment {
     @Override
     public void initDatas() {
         userModel=UserInfoDelegate.getInstance().getUserInfo();
-        rxManage.on(Constant.REGISTER_SUC, new Action1<Object>() {
+        rxManage.on(Constant.REGISTER_NAME, new Action1<Object>() {
             @Override
             public void call(Object o) {
                 userModel= UserInfoDelegate.getInstance().getUserInfo();

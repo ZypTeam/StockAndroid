@@ -86,7 +86,8 @@ public class ChartsDetailAdapter extends BaseAdapter<ChartItemModel> {
 
         @Override
         public void update(ChartItemModel model) {
-
+            title.setText(model.getStock_name());
+            content.setText(model.getStock_code());
         }
     }
 
@@ -102,6 +103,8 @@ public class ChartsDetailAdapter extends BaseAdapter<ChartItemModel> {
         @Override
         public void update(ChartItemModel model) {
 
+            title.setText(model.getBuy_name());
+            content.setText(model.getBuy_amount());
         }
     }
 
@@ -117,6 +120,8 @@ public class ChartsDetailAdapter extends BaseAdapter<ChartItemModel> {
         @Override
         public void update(ChartItemModel model) {
 
+            title.setText(model.getSale_name());
+            content.setText(model.getSale_amount());
         }
     }
 }

@@ -95,7 +95,7 @@ public class LoginView extends ConstraintLayout {
     }
 
     private void login() {
-        if (!RegularUtils.checkPhone(phone.getText().toString())) {
+        if (!RegularUtils.checkMobile(phone.getText().toString())) {
             showToast("手机号不正确");
             return;
         }

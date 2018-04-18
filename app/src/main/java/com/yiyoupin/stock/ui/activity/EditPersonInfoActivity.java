@@ -3,10 +3,12 @@ package com.yiyoupin.stock.ui.activity;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
 import com.jusfoun.baselibrary.Util.PhoneUtil;
+import com.jusfoun.baselibrary.Util.RegularUtils;
 import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
@@ -102,36 +104,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
 
         ImageLoderUtil.loadCircleImage(mContext, iconHead, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522439396278&di=25e6651bf56bc21ebaaf4c3df36f2502&imgtype=0&src=http%3A%2F%2Fpic38.nipic.com%2F20140306%2F251960_125327345000_2.jpg", R.mipmap.ic_launcher_round);
         timerTxt.setOnClickListener(v -> {
-            timer = Observable.interval(1, TimeUnit.SECONDS)
-                    .take(120)
-                    .map(new Func1<Long, Long>() {
-                        @Override
-                        public Long call(Long aLong) {
-                            return 120 - aLong;
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Long>() {
-
-                        @Override
-                        public void onCompleted() {
-                            timerTxt.setEnabled(true);
-                            timerTxt.setText("重发");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            timerTxt.setEnabled(true);
-                            timerTxt.setText("重发");
-                        }
-
-                        @Override
-                        public void onNext(Long aLong) {
-                            timerTxt.setEnabled(false);
-                            timerTxt.setText(aLong + "s");
-                        }
-                    });
+            getCode();
         });
         head.setOnClickListener(v -> {
             CropOptions cropOptions = new CropOptions.Builder()
@@ -153,12 +126,12 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
     @Override
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
-        if (result!=null){
+        if (result != null) {
             uploadHead(result.getImage().getOriginalPath());
         }
     }
 
-    private void uploadHead(String path){
+    private void uploadHead(String path) {
         showLoadDialog();
         ApiUploadFiles.uploadFiles(path)
                 .subscribe(new Action1<UploadDataModel>() {
@@ -166,7 +139,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                     public void call(UploadDataModel uploadDataModel) {
 
                         hideLoadDialog();
-                        if (uploadDataModel.getCode()==0){
+                        if (uploadDataModel.getCode() == 0) {
                             userModel.setUser_picture(uploadDataModel.getData());
                             UserInfoDelegate.getInstance().saveUserInfo(userModel);
                             ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
@@ -190,14 +163,74 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
         }
     }
 
-    private void updateData(){
+    private void getCode() {
+        if (!RegularUtils.checkMobile(inputPhone.getText().toString())){
+            showToast("手机号不正确");
+            return;
+        }
         showLoadDialog();
-        HashMap<String,String> params=new HashMap<>();
-        params.put("name",inputName.getText().toString());
-        params.put("nick_name",inputNickname.getText().toString());
-        params.put("email",inputEmail.getText().toString());
-        params.put("sex","1");
-        params.put("birthday","2018-01-01");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("phone", inputPhone.getText().toString());
+        params.put("type", "2");
+        addNetwork(Api.getInstance().getService(ApiService.class).getPhoneCode(params)
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel noDataModel) {
+                        hideLoadDialog();
+                        if (noDataModel.getCode() == 0) {
+                            timer = Observable.interval(1, TimeUnit.SECONDS)
+                                    .take(120)
+                                    .map(new Func1<Long, Long>() {
+                                        @Override
+                                        public Long call(Long aLong) {
+                                            return 120 - aLong;
+                                        }
+                                    })
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<Long>() {
+
+                                        @Override
+                                        public void onCompleted() {
+                                            timerTxt.setEnabled(true);
+                                            timerTxt.setText("重发");
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            timerTxt.setEnabled(true);
+                                            timerTxt.setText("重发");
+                                        }
+
+                                        @Override
+                                        public void onNext(Long aLong) {
+                                            timerTxt.setEnabled(false);
+                                            timerTxt.setText(aLong + "s");
+                                        }
+                                    });
+                            Toast.makeText(mContext, "获取成功", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                        Toast.makeText(mContext, "获取失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+
+    private void updateData() {
+        showLoadDialog();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("name", inputName.getText().toString());
+        params.put("nick_name", inputNickname.getText().toString());
+        params.put("email", inputEmail.getText().toString());
+        params.put("sex", "1");
+        params.put("birthday", "2018-01-01");
 //        params.put("id",UserInfoDelegate.getInstance().getUserId());
         addNetwork(Api.getInstance().getService(ApiService.class).editInfo(params)
                 , new Action1<NoDataModel>() {
@@ -205,7 +238,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                     public void call(NoDataModel noDataModel) {
 
                         hideLoadDialog();
-                        if (noDataModel.getCode()==0){
+                        if (noDataModel.getCode() == 0) {
                             userModel.setName(inputName.getText().toString());
                             userModel.setNick_name(inputNickname.getText().toString());
                             userModel.setEmail(inputEmail.getText().toString());

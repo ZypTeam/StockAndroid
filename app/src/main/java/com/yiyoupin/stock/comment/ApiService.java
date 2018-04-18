@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.comment;
 
 import com.jusfoun.baselibrary.base.NoDataModel;
+import com.yiyoupin.stock.model.AboutModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
@@ -188,9 +189,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @FormUrlEncoded
     @POST("/stock/user/login_password_modify.do")
-    Observable<NoDataModel> editPassword(@FieldMap Map<String,String> params);
+    Observable<NoDataModel> editPassword(@QueryMap Map<String,String> params);
 
     /**
      * 修改密码
@@ -301,5 +301,8 @@ public interface ApiService {
      */
     @GET("/stock/detail.do")
     Observable<StockDetailModel> getStockDetails(@QueryMap Map<String,String> params);
+
+    @GET("/stock/user/about.do")
+    Observable<AboutModel> aboutUs();
 
 }

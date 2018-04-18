@@ -36,6 +36,7 @@ public class UserModel implements Serializable {
     private String sex;
     private String birthday;
     private String email;
+    private String consume_total;
     private int is_set_login_password;
     private int is_bind_phone;
 
@@ -133,5 +134,13 @@ public class UserModel implements Serializable {
 
     public void setIs_bind_phone(int is_bind_phone) {
         this.is_bind_phone = is_bind_phone;
+    }
+
+    public String getConsume_total() {
+        return consume_total;
+    }
+
+    public void setConsume_total(String consume_total) {
+        this.consume_total = consume_total;
     }
 }

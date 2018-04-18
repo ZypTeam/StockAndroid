@@ -55,6 +55,10 @@ public class ChartsDetailHeaderView extends CoordinatorLayout {
         builder.setSpan(new ForegroundColorSpan(Color.parseColor(color2)), txt1.length(), txt1.length() + txt2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
     }
+
+    public void setLiyou(String liyou){
+        this.liyou.setText(getText("上榜理由:", liyou, "#919191", "#ffffff"));
+    }
 }
 
 

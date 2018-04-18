@@ -55,6 +55,7 @@ public class NewspaperAdapter extends BaseAdapter<NewspaperModel> {
             title.setText(model.getTitle());
             count.setText(model.getView_count()+"");
             time.setText(model.getDaily_date());
+            content.setText(model.getDescribe());
         }
     }
 }

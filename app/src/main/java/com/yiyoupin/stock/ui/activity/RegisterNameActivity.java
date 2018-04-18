@@ -58,7 +58,7 @@ public class RegisterNameActivity extends BaseStockActivity {
         titleView.setTitle("注册成功");
         titleView.setRightText("跳过",v -> {
             UserInfoDelegate.getInstance().saveUserInfo(userModel);
-            rxManage.post(Constant.REGISTER_SUC,"");
+            rxManage.post(Constant.REGISTER_NAME,"");
             onBackPressed();
         });
         editName.addTextChangedListener(new TextWatcher() {
@@ -105,7 +105,7 @@ public class RegisterNameActivity extends BaseStockActivity {
                         if (noDataModel.getCode()==0){
                             userModel.setName(name);
                             UserInfoDelegate.getInstance().saveUserInfo(userModel);
-                            rxManage.post(Constant.REGISTER_SUC,"");
+                            rxManage.post(Constant.REGISTER_NAME,"");
                             showToast("修改成功");
                             onBackPressed();
                         }

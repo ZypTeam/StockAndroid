@@ -15,4 +15,5 @@ public class Constant {
     public static final String PAGE_INDEX="page_index";
 
     public static final String REGISTER_SUC="register_suc";
+    public static final String REGISTER_NAME="register_name";
 }

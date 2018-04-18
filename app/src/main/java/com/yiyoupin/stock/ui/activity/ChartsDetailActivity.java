@@ -86,8 +86,29 @@ public class ChartsDetailActivity extends BaseStockActivity {
 //                        complete();
                         hideLoadDialog();
                         if (model.getCode() == 0) {
-                            if (refresh){
-                                adapter.refreshList(model.getData().getDetail_list());
+                            List<ChartItemModel> list=new ArrayList<>();
+                            headerView.setLiyou(model.getData().getName());
+                            ChartItemModel model1=new ChartItemModel();
+                            model1.setStock_name("买入前五营业部");
+                            model1.setStock_code("累计买入金额(万元)");
+                            model1.setType(0);
+                            list.add(model1);
+                            for (ChartItemModel chartItemModel : model.getData().getDetail_list()) {
+                                chartItemModel.setType(1);
+                                list.add(chartItemModel);
+                            }
+                            ChartItemModel model2=new ChartItemModel();
+                            model2.setStock_name("卖出前五营业部");
+                            model2.setStock_code("累计卖出金额(万元)");
+                            model2.setType(0);
+                            list.add(model2);
+                            for (ChartItemModel chartItemModel : model.getData().getSale_list()) {
+                                chartItemModel.setType(2);
+                                list.add(chartItemModel);
+                            }
+                            adapter.refreshList(list);
+                           /* if (refresh){
+
                             }else {
                                 adapter.addList(model.getData().getDetail_list());
                             }
@@ -95,7 +116,7 @@ public class ChartsDetailActivity extends BaseStockActivity {
                                 page=1;
                             }else {
                                 page+=1;
-                            }
+                            }*/
 
                             /*if (adapter.getItemCount()>=model.getData().getTotal_number()){
                                 newspaperList.setLoadingMoreEnabled(false);

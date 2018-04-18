@@ -103,36 +103,6 @@ public class ForgetPassActivity extends BaseStockActivity {
                 return;
             }
             getCode();
-            timer = Observable.interval(1, TimeUnit.SECONDS)
-                    .take(120)
-                    .map(new Func1<Long, Long>() {
-                        @Override
-                        public Long call(Long aLong) {
-                            return 120 - aLong;
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Long>() {
-
-                        @Override
-                        public void onCompleted() {
-                            code.setEnabled(true);
-                            code.setText("重发");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            code.setEnabled(true);
-                            code.setText("重发");
-                        }
-
-                        @Override
-                        public void onNext(Long aLong) {
-                            code.setEnabled(false);
-                            code.setText(aLong+"s");
-                        }
-                    });
         });
 
         inputPhone.addTextChangedListener(new TextWatcher() {
@@ -148,7 +118,7 @@ public class ForgetPassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()==11&& RegularUtils.checkPhone(s.toString())){
+                if (s.length()==11&& RegularUtils.checkMobile(s.toString())){
                     phoneOk=true;
                 }else {
                     phoneOk=false;
@@ -186,6 +156,36 @@ public class ForgetPassActivity extends BaseStockActivity {
                     public void call(NoDataModel noDataModel) {
                         hideLoadDialog();
                         if (noDataModel.getCode()==0) {
+                            timer = Observable.interval(1, TimeUnit.SECONDS)
+                                    .take(120)
+                                    .map(new Func1<Long, Long>() {
+                                        @Override
+                                        public Long call(Long aLong) {
+                                            return 120 - aLong;
+                                        }
+                                    })
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<Long>() {
+
+                                        @Override
+                                        public void onCompleted() {
+                                            code.setEnabled(true);
+                                            code.setText("重发");
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            code.setEnabled(true);
+                                            code.setText("重发");
+                                        }
+
+                                        @Override
+                                        public void onNext(Long aLong) {
+                                            code.setEnabled(false);
+                                            code.setText(aLong+"s");
+                                        }
+                                    });
                             return;
                         }
                         showToast("获取失败");

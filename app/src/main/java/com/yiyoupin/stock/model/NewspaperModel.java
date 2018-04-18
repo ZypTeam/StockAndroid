@@ -20,6 +20,7 @@ public class NewspaperModel implements Serializable {
 
     private int daily_id;
     private String title;
+    private String describe;
     private String daily_date;
     private int view_count;
     private String url;
@@ -62,5 +63,13 @@ public class NewspaperModel implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 }
