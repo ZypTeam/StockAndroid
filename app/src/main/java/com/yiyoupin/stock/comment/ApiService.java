@@ -5,6 +5,7 @@ import com.yiyoupin.stock.model.AboutModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
+import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.model.NoticeListModel;
 import com.yiyoupin.stock.model.PayListModel;
@@ -290,7 +291,7 @@ public interface ApiService {
      * @return
      */
     @GET("/stock/news_detail.do")
-    Observable<HomeListModel> getNewsList(@QueryMap Map<String,String> params);
+    Observable<NewModel> getNewsList(@QueryMap Map<String,String> params);
 
 
 

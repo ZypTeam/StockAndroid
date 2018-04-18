@@ -20,6 +20,7 @@ public class QuotesItemModel extends BaseModel implements Parcelable,Serializabl
     private String stock_code;
     private String offset_size;
     private String stock_id;
+    private String trade_volumn;
 
     public String getStock_id() {
         return stock_id;

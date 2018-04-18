@@ -21,7 +21,7 @@ public class StockDetailModel extends BaseModel implements Serializable {
 
         public List<HisData> dapandata;
         public StockTopModel stock_detail;
-//        public TradeDetailModel trade_detail;
+        public List<TradeDetailModel> trade_detail;
     }
 
     public class StockTopModel extends BaseModel implements Serializable {
