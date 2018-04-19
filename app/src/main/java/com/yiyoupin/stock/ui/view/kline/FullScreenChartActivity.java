@@ -26,7 +26,7 @@ public class FullScreenChartActivity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.view_pager);
         KLineChartFragment dayKFragment = KLineChartFragment.newInstance(1);
         KLineChartFragment weekKFragment = KLineChartFragment.newInstance(7);
-        Fragment[] fragments = {TimeLineChartFragment.newInstance(1), FiveDayChartFragment.newInstance(),
+        Fragment[] fragments = {TimeLineChartFragment.newInstance(1), FiveDayChartFragment.newInstance("",""),
                 dayKFragment, weekKFragment,
                 KLineChartFragment.newInstance(30)};
         String[] titles = {"分时图", "5Day", "日K", "周K", "月"};

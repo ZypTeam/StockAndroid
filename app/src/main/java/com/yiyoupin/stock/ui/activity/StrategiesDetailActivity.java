@@ -95,6 +95,9 @@ public class StrategiesDetailActivity extends BaseStockActivity {
 
         hisAdapter.setType(HomeListAdapter.TYPE_STRATEGIES_DETAIL);
 
+        todayAdapter.setChoicenessId(choiceness_id);
+        phoneAdapter.setChoicenessId(choiceness_id);
+        hisAdapter.setChoicenessId(choiceness_id);
 
         getTechnologyNet();
     }

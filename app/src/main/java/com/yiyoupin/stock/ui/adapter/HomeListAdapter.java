@@ -40,8 +40,9 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
     public static int TYPE_STRATEGIES_DETAIL = 7;// 策略详情 列表
 
-
     private int type = 1;
+
+    public String choiceness_id = "";//策略id
 
     public HomeListAdapter(Context context) {
         super(context);
@@ -119,8 +120,8 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID,((HomeModel.StocktacticsItemModel) model).tactics_id);
-                        UiUtils.goStrategiesDetailActivity(bundle,mContext);
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((HomeModel.StocktacticsItemModel) model).tactics_id);
+                        UiUtils.goStrategiesDetailActivity(bundle, mContext);
                     }
                 });
             }
@@ -159,8 +160,8 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID,((HomeModel.BuyselectionItemModel) model).choiceness_id);
-                        UiUtils.goStrategiesDetailActivity(bundle,mContext);
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((HomeModel.BuyselectionItemModel) model).choiceness_id);
+                        UiUtils.goStrategiesDetailActivity(bundle, mContext);
                     }
                 });
             }
@@ -197,7 +198,7 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, FromListActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString(FromListActivity.TECHNOLOGY_ID,((HomeModel.TechnologyItemModel) model).technology_id);
+                    bundle.putString(FromListActivity.TECHNOLOGY_ID, ((HomeModel.TechnologyItemModel) model).technology_id);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }
@@ -241,9 +242,10 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 public void onClick(View view) {
 
                     Bundle bundle = new Bundle();
-                    bundle.putString(StockShowActivity.ID,((StockModel) model).getStock_id());
-                    bundle.putString(StockShowActivity.CODE,((StockModel) model).getStock_code());
-                    UiUtils.goStockShowActivity(mContext,bundle);
+                    bundle.putString(StockShowActivity.ID, ((StockModel) model).getStock_id());
+                    bundle.putString(StockShowActivity.CODE, ((StockModel) model).getStock_code());
+                    bundle.putString(StockShowActivity.CHOICENESS_ID, choiceness_id);
+                    UiUtils.goStockShowActivity(mContext, bundle);
                 }
             });
         }
@@ -290,8 +292,8 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID,((StrategiesMoreModel.StrategiesItemModel) model).tactics_id);
-                        UiUtils.goStrategiesDetailActivity(bundle,mContext);
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((StrategiesMoreModel.StrategiesItemModel) model).tactics_id);
+                        UiUtils.goStrategiesDetailActivity(bundle, mContext);
                     }
                 });
             }
@@ -335,9 +337,10 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                     public void onClick(View view) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(StockShowActivity.ID,((QuotesItemModel) model).getStock_id());
-                        bundle.putString(StockShowActivity.CODE,((QuotesItemModel) model).getStock_code());
-                        UiUtils.goStockShowActivity(mContext,bundle);
+                        bundle.putString(StockShowActivity.ID, ((QuotesItemModel) model).getStock_id());
+                        bundle.putString(StockShowActivity.CODE, ((QuotesItemModel) model).getStock_code());
+                        bundle.putString(StockShowActivity.CHOICENESS_ID, choiceness_id);
+                        UiUtils.goStockShowActivity(mContext, bundle);
                     }
                 });
             }
@@ -358,5 +361,10 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
     public int getType() {
         return type;
+    }
+
+    //设置策略id
+    public void setChoicenessId(String choiceness_id) {
+        this.choiceness_id = choiceness_id;
     }
 }
