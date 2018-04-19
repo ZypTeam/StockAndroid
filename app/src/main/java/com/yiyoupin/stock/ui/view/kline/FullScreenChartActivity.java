@@ -24,11 +24,11 @@ public class FullScreenChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen_chart);
         TabLayout tabLayout = findViewById(R.id.tab);
         final ViewPager viewPager = findViewById(R.id.view_pager);
-        KLineChartFragment dayKFragment = KLineChartFragment.newInstance(1);
-        KLineChartFragment weekKFragment = KLineChartFragment.newInstance(7);
-        Fragment[] fragments = {TimeLineChartFragment.newInstance(1), FiveDayChartFragment.newInstance(),
+        KLineChartFragment dayKFragment = KLineChartFragment.newInstance(1,"","");
+        KLineChartFragment weekKFragment = KLineChartFragment.newInstance(7,"","");
+        Fragment[] fragments = {TimeLineChartFragment.newInstance(1), FiveDayChartFragment.newInstance("",""),
                 dayKFragment, weekKFragment,
-                KLineChartFragment.newInstance(30)};
+                KLineChartFragment.newInstance(30,"","")};
         String[] titles = {"分时图", "5Day", "日K", "周K", "月"};
         viewPager.setOffscreenPageLimit(fragments.length);
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));

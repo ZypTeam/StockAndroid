@@ -52,8 +52,16 @@ public class StockShowActivity extends BaseStockActivity {
 
     public static String ID = "id";
     public static String CODE = "code";
-    private String stockCode = "";
-    private String stockID = "";
+    public static String CHOICENESS_ID="choiceness_id";//策略id
+
+
+
+
+    private String stockCode = "";//股票code
+    private String stockID = "";//股票id
+    private String choiceness_id="";//策略id
+
+
     private boolean fromSeach = false;
     private Fragment[] fragments;
 
@@ -72,6 +80,7 @@ public class StockShowActivity extends BaseStockActivity {
         newsAdapter = new NewsAdapter(getSupportFragmentManager());
         stockCode = getIntent().getStringExtra(CODE);
         stockID = getIntent().getStringExtra(ID);
+        choiceness_id= getIntent().getStringExtra(CHOICENESS_ID);
         fragments = new Fragment[5];
 
     }
@@ -98,10 +107,10 @@ public class StockShowActivity extends BaseStockActivity {
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
         fragments[0] = TimeLineChartFragment.newInstance(1);
-        fragments[1] = FiveDayChartFragment.newInstance();
-        fragments[2] = KLineChartFragment.newInstance(1);
-        fragments[3] = KLineChartFragment.newInstance(7);
-        fragments[4] = KLineChartFragment.newInstance(30);
+        fragments[1] = FiveDayChartFragment.newInstance(stockID,choiceness_id);
+        fragments[2] = KLineChartFragment.newInstance(1,stockID,choiceness_id);
+        fragments[3] = KLineChartFragment.newInstance(7,stockID,choiceness_id);
+        fragments[4] = KLineChartFragment.newInstance(30,stockID,choiceness_id);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);

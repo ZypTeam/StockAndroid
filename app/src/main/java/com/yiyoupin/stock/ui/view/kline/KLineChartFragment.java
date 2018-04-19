@@ -13,42 +13,56 @@ import android.widget.RadioGroup;
 
 import com.guoziwei.klinelib.chart.KLineView;
 import com.guoziwei.klinelib.model.HisData;
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.FiveDayModel;
+import com.yiyoupin.stock.model.KLineModel;
+import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
+import java.util.HashMap;
 import java.util.List;
 
+import rx.functions.Action1;
 
-public class KLineChartFragment extends Fragment {
+
+public class KLineChartFragment extends BaseStockFragment {
 
 
     private KLineView mKLineView;
     private int mDay;
+    private String stock_id = "", tactics_id = "";
 
     public KLineChartFragment() {
         // Required empty public constructor
     }
 
-    public static KLineChartFragment newInstance(int day) {
+    public static KLineChartFragment newInstance(int day,String stock_id,String tactics_id) {
         KLineChartFragment fragment = new KLineChartFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("day", day);
+        bundle.putString("stock_id", stock_id);
+        bundle.putString("tactics_id", tactics_id);
         fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mDay = getArguments().getInt("day");
+    public int getLayoutResId() {
+        return R.layout.fragment_kline_chart;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_kline_chart, container, false);
-        mKLineView = v.findViewById(R.id.kline);
-        RadioGroup rgIndex = v.findViewById(R.id.rg_index);
-        mKLineView.setDateFormat("yyyy-MM-dd");
+    public void initDatas() {
+        mDay = getArguments().getInt("day");
+        stock_id = getArguments().getString("stock_id");
+        tactics_id = getArguments().getString("tactics_id");
+    }
+
+    @Override
+    public void initView(View rootView) {
+        mKLineView = rootView.findViewById(R.id.kline);
+        RadioGroup rgIndex = rootView.findViewById(R.id.rg_index);
         rgIndex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -61,9 +75,17 @@ public class KLineChartFragment extends Fragment {
                 }
             }
         });
-        initData();
         ((RadioButton) rgIndex.getChildAt(0)).setChecked(true);
-        return v;
+    }
+
+    @Override
+    public void initAction() {
+
+
+        mKLineView.setDateFormat("yyyy-MM-dd");
+
+
+
     }
 
     public void showVolume() {
@@ -94,47 +116,50 @@ public class KLineChartFragment extends Fragment {
         });
     }
 
-    protected void initData() {
-        final List<HisData> hisData = Util.getK(getContext(), mDay);
-        mKLineView.initData(hisData);
-        mKLineView.setLimitLine();
 
-        /*new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mKLineView.post(new Runnable() {
+    private void getFiveDayDetialNet() {
+        HashMap<String, String> params = new HashMap();
+        if(mDay==1){
+            params.put("type", "1");
+        }else if(mDay==7){
+            params.put("type", "2");
+        }else if(mDay==30){
+            params.put("type", "3");
+        }
+        params.put("stock_id", stock_id);
+        params.put("tactics_id", tactics_id);
+
+        addNetwork(Api.getInstance().getService(ApiService.class).getKLineDetialNet(params)
+                , new Action1<KLineModel>() {
                     @Override
-                    public void run() {
-                        int index = (int) (Math.random() * hisData.size());
-                        HisData data = hisData.get(index);
-                        HisData lastData = hisData.get(hisData.size() - 1);
-                        HisData newData = new HisData();
-                        newData.setVol(data.getVol());
-                        newData.setClose(data.getClose());
-                        newData.setHigh(Math.max(data.getHigh(), lastData.getClose()));
-                        newData.setLow(Math.min(data.getLow(), lastData.getClose()));
-                        newData.setOpen(lastData.getClose());
-                        newData.setDate(System.currentTimeMillis());
-                        hisData.add(newData);
-                        mKLineView.addData(newData);
+                    public void call(KLineModel model) {
+                        hideLoadDialog();
+                        if (model.data != null) {
+
+                            final List<HisData> hisData = Util.getK(model.data);
+                            int maxCount = hisData.size();
+                            int initCount =80;
+                            int minCount =80;
+
+                            if(hisData.size()<80){
+                                initCount = hisData.size();
+                                minCount = hisData.size();
+                            }
+                            mKLineView.setCount(initCount,maxCount,minCount);
+                            mKLineView.initData(hisData);
+                            mKLineView.setLimitLine();
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
                     }
                 });
-            }
-        }, 1000, 1000);*/
-
-       /* new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mKLineView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int index = (int) (Math.random() * 100);
-                        HisData data = hisData.get(index);
-                        mKLineView.refreshData((float) data.getClose());
-                    }
-                });
-            }
-        }, 1000, 1000);*/
     }
 
+    @Override
+    protected void refreshData() {
+        getFiveDayDetialNet();
+    }
 }
