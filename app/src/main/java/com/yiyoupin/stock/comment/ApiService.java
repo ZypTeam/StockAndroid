@@ -174,9 +174,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @FormUrlEncoded
     @POST("/stock/user/find_password.do")
-    Observable<NoDataModel> findPassword(@FieldMap Map<String,String> params);
+    Observable<NoDataModel> findPassword(@QueryMap Map<String,String> params);
 
     /**
      * 绑定手机号

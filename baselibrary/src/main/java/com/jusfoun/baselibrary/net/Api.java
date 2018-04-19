@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Api {
 
-    private int TIMEOUT = 10000;
+    private int TIMEOUT = 60000;
     private OkHttpClient okHttpClient;
     private String baseUrl;
 

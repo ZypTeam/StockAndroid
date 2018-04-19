@@ -20,6 +20,9 @@
 
     <color name="color_red">#fe492f</color>
     <color name="color_green">#149117</color>
+
+    <color name="color_017af8">#017af8</color>
+    <color name="division_line">#efefef</color>
 </resources>
 
 

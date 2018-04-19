@@ -23,10 +23,10 @@ public class NoticeModel implements Serializable {
      * url : http://www.baidu.com
      */
 
-    private int news_id;
+    private String news_id;
     private String title;
     private String sub_title;
-    private int stock_id;
+    private String stock_id;
     private String stock_code;
     private String stock_name;
     private String news_time;
@@ -34,11 +34,11 @@ public class NoticeModel implements Serializable {
     private String source;
     private String url;
 
-    public int getNews_id() {
+    public String getNews_id() {
         return news_id;
     }
 
-    public void setNews_id(int news_id) {
+    public void setNews_id(String news_id) {
         this.news_id = news_id;
     }
 
@@ -58,11 +58,11 @@ public class NoticeModel implements Serializable {
         this.sub_title = sub_title;
     }
 
-    public int getStock_id() {
+    public String getStock_id() {
         return stock_id;
     }
 
-    public void setStock_id(int stock_id) {
+    public void setStock_id(String stock_id) {
         this.stock_id = stock_id;
     }
 

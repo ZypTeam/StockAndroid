@@ -1,5 +1,7 @@
 package com.yiyoupin.stock.model;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -137,7 +139,7 @@ public class UserModel implements Serializable {
     }
 
     public String getConsume_total() {
-        return consume_total;
+        return TextUtils.isEmpty(consume_total)?"":consume_total;
     }
 
     public void setConsume_total(String consume_total) {

@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,11 +14,14 @@ import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.ApiUploadFiles;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UploadDataModel;
 import com.yiyoupin.stock.model.UserModel;
+import com.yiyoupin.stock.ui.dialog.BottomDialog;
 import com.yiyoupin.stock.ui.util.ImageLoderUtil;
+import com.yiyoupin.stock.ui.util.TakeHelper;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
 import java.util.HashMap;
@@ -63,6 +67,8 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
     protected TextView timerTxt;
     private UserModel userModel;
 
+    private BottomDialog bottomDialog;
+
     @Override
     public int getLayoutResId() {
         return R.layout.activity_edit_person_info;
@@ -71,6 +77,23 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
     @Override
     public void initDatas() {
 
+        bottomDialog = new BottomDialog(mContext, R.style.my_dialog);
+        bottomDialog.setTxt("拍照", "从相册选取");
+        bottomDialog.setTopListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TakeHelper.pickByTake(getTakePhoto());
+                bottomDialog.dismiss();
+            }
+        });
+
+        bottomDialog.setBottomListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TakeHelper.pickBySelect(takePhoto);
+                bottomDialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -107,7 +130,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
             getCode();
         });
         head.setOnClickListener(v -> {
-            takePhoto.onPickFromGallery();
+            bottomDialog.show();
         });
 
         submit.setOnClickListener(v -> {
@@ -151,6 +174,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
         if (userModel != null) {
             ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
             inputName.setText(userModel.getName());
+            inputName.setSelection(inputName.getText().length());
             inputNickname.setText(userModel.getNick_name());
             inputEmail.setText(userModel.getEmail());
 
@@ -239,12 +263,16 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                             userModel.setBirthday("1990");
                             UserInfoDelegate.getInstance().saveUserInfo(userModel);
                             updateView();
+                            rxManage.post(Constant.EDIT_USER,"");
+                            showToast("修改成功");
+                            onBackPressed();
                         }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         hideLoadDialog();
+                        showToast("修改失败");
                     }
                 });
     }

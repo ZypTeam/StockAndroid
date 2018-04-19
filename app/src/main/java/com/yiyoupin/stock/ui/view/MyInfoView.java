@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.jusfoun.baselibrary.Util.LogUtil;
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.jusfoun.baselibrary.base.NoDataModel;
+import com.jusfoun.baselibrary.base.RxManage;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.comment.FlipListener;
 import com.yiyoupin.stock.comment.ViewLoadingListener;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
@@ -55,6 +57,9 @@ public class MyInfoView extends ConstraintLayout {
     private TextView editPersion;
     private Context mContext;
 
+    private RxManage rxManage;
+    private UserModel userModel;
+
     public MyInfoView(Context context) {
         this(context, null);
     }
@@ -88,6 +93,14 @@ public class MyInfoView extends ConstraintLayout {
     }
 
     private void initAction() {
+        rxManage=new RxManage();
+        rxManage.on(Constant.EDIT_USER, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                userModel=UserInfoDelegate.getInstance().getUserInfo();
+                updateView();
+            }
+        });
         iconHead.setOnClickListener(v -> {
 //            goActivity(null, LoginActivity.class);
         });
@@ -118,15 +131,16 @@ public class MyInfoView extends ConstraintLayout {
             }
         });
 
-        UserModel userModel = UserInfoDelegate.getInstance().getUserInfo();
-        if (userModel != null) {
-            username.setText(userModel.getName());
-            consume.setText("消费金额:" + userModel.getConsume_total());
-            ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
-        }
+        userModel = UserInfoDelegate.getInstance().getUserInfo();
+
     }
 
     private void exitLogin() {
+
+        if (flipListener != null) {
+            flipListener.flip(false);
+            return;
+        }
 
         if (loadingListener != null) {
             loadingListener.showLoading();
@@ -177,9 +191,8 @@ public class MyInfoView extends ConstraintLayout {
                                 return;
                             }
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
-                            username.setText(userDataModel.getData().getName());
-                            consume.setText("消费金额:" + userDataModel.getData().getConsume_total());
-                            ImageLoderUtil.loadCircleImage(mContext, iconHead, userDataModel.getData().getUser_picture(), R.mipmap.ic_launcher_round);
+                            userModel=userDataModel.getData();
+                            updateView();
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -191,6 +204,14 @@ public class MyInfoView extends ConstraintLayout {
                         Toast.makeText(mContext, "退出失败", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void updateView(){
+        if (userModel != null) {
+            username.setText(userModel.getName());
+            consume.setText("消费金额:" + userModel.getConsume_total());
+            ImageLoderUtil.loadCircleImage(mContext, iconHead, userModel.getUser_picture(), R.mipmap.ic_launcher_round);
+        }
     }
 
     public <T extends BaseModel> void addNetwork(rx.Observable<T> observable, Action1<T> next, Action1<Throwable> error) {
@@ -212,6 +233,7 @@ public class MyInfoView extends ConstraintLayout {
     @Override
     protected void onDetachedFromWindow() {
         mCompositeSubscription.clear();
+        rxManage.clear();
         super.onDetachedFromWindow();
     }
 

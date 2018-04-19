@@ -52,9 +52,9 @@ public class NoticeAdapter extends BaseAdapter<NoticeModel> {
                 UiUtils.goWebActivity(context, "公告详情", model.getUrl());
             });
 
-            title.setText(model.getTitle());
-            count.setText(model.getView_count());
-            content.setText(model.getSub_title());
+            title.setText(model.getStock_name());
+            count.setText(String.valueOf(model.getView_count()));
+            content.setText(model.getTitle());
             time.setText(model.getNews_time());
         }
     }
