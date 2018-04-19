@@ -5,8 +5,11 @@ import com.yiyoupin.stock.model.AboutModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
+import com.yiyoupin.stock.model.CheckVersionModel;
 import com.yiyoupin.stock.model.FiveDayModel;
 import com.yiyoupin.stock.model.KLineModel;
+import com.yiyoupin.stock.model.MsgListModel;
+import com.yiyoupin.stock.model.MsgModel;
 import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.model.NoticeListModel;
@@ -324,5 +327,21 @@ public interface ApiService {
      */
     @GET("/stock/k-detail.do")
     Observable<KLineModel> getKLineDetialNet(@QueryMap Map<String,String> params);
+
+    /**
+     * 检查更新
+     * @param params
+     * @return
+     */
+    @POST("/stock/setting/checkUpdate.do")
+    Observable<CheckVersionModel> checkVersion(@QueryMap Map<String,String> params);
+
+    /**
+     *  消息列表
+     * @param params
+     * @return
+     */
+    @GET("")
+    Observable<MsgListModel> getMsgList(@QueryMap Map<String,String> params);
 
 }

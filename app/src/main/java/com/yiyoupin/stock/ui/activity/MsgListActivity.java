@@ -2,15 +2,23 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.model.MsgListModel;
 import com.yiyoupin.stock.model.MsgModel;
+import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.ui.adapter.MsgAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import rx.functions.Action1;
 
 /**
  * @author wangcc
@@ -22,6 +30,7 @@ public class MsgListActivity extends BaseStockActivity {
     protected BackTitleView titleView;
     protected XRecyclerView list;
     private MsgAdapter adapter;
+    private int page;
 
     @Override
     public int getLayoutResId() {
@@ -46,10 +55,71 @@ public class MsgListActivity extends BaseStockActivity {
         list.setLayoutManager(new LinearLayoutManager(mContext));
         list.setAdapter(adapter);
 
+        list.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                refresh(false,true);
+            }
+
+            @Override
+            public void onLoadMore() {
+                refresh(false,false);
+            }
+        });
+
         List<MsgModel> list=new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             list.add(new MsgModel());
         }
         adapter.refreshList(list);
+    }
+
+    private void refresh(boolean showLoading, boolean refresh) {
+
+        if (showLoading){
+            showLoadDialog();
+        }
+        HashMap<String, String> params = new HashMap();
+        params.put(Constant.PAGE_PARAMS, Constant.PAGE_SIZE);
+        params.put(Constant.PAGE_INDEX, refresh ? "1" : (page + 1) + "");
+        addNetwork(Api.getInstance().getService(ApiService.class).getMsgList(params)
+                , new Action1<MsgListModel>() {
+                    @Override
+                    public void call(MsgListModel model) {
+                        complete();
+                        hideLoadDialog();
+                        if (model.getCode() == 0) {
+                            if (refresh){
+                                adapter.refreshList(model.getData().getRows());
+                            }else {
+                                adapter.addList(model.getData().getRows());
+                            }
+                            if (refresh){
+                                page=1;
+                            }else {
+                                page+=1;
+                            }
+
+                            if (adapter.getItemCount()>=model.getData().getTotal_number()){
+                                list.setLoadingMoreEnabled(false);
+                            }else {
+                                list.setLoadingMoreEnabled(true);
+                            }
+
+
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                        complete();
+                    }
+                });
+    }
+
+    private void complete(){
+        list.loadMoreComplete();
+        list.refreshComplete();
     }
 }
