@@ -6,6 +6,7 @@ import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
 import com.yiyoupin.stock.model.FiveDayModel;
+import com.yiyoupin.stock.model.KLineModel;
 import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.model.NoticeListModel;
@@ -316,5 +317,13 @@ public interface ApiService {
     @GET("/stock/five-detail.do")
     Observable<FiveDayModel> getFiveDayDetialNet(@QueryMap Map<String,String> params);
 
+
+    /**
+     * 股票详情-K先图
+     * @param params
+     * @return
+     */
+    @GET("/stock/k-detail.do")
+    Observable<KLineModel> getKLineDetialNet(@QueryMap Map<String,String> params);
 
 }

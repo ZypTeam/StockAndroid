@@ -22,7 +22,7 @@ public class KModel {
     private double price_c;
     private double price_h;
     private double price_l;
-    private long volume;
+    private float volume;
     private String volume_price;
     private String zf_bfb;
 
@@ -66,11 +66,11 @@ public class KModel {
         this.price_l = price_l;
     }
 
-    public long getVolume() {
+    public float getVolume() {
         return volume;
     }
 
-    public void setVolume(long volume) {
+    public void setVolume(float volume) {
         this.volume = volume;
     }
 

@@ -12,9 +12,9 @@ public class HisData implements Serializable{
     private double high;
     private double low;
     private double open;
-    private long vol;
+    private float vol;
     private long date;
-    private long amountVol;
+    private float amountVol;
     private double avePrice;
     private double total;
     private double maSum;
@@ -81,11 +81,11 @@ public class HisData implements Serializable{
         this.open = open;
     }
 
-    public long getVol() {
+    public float getVol() {
         return vol;
     }
 
-    public void setVol(long vol) {
+    public void setVol(float vol) {
         this.vol = vol;
     }
 
@@ -99,11 +99,11 @@ public class HisData implements Serializable{
     }
 
 
-    public long getAmountVol() {
+    public float getAmountVol() {
         return amountVol;
     }
 
-    public void setAmountVol(long amountVol) {
+    public void setAmountVol(float amountVol) {
         this.amountVol = amountVol;
     }
 

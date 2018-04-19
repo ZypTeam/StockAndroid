@@ -108,9 +108,9 @@ public class StockShowActivity extends BaseStockActivity {
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
         fragments[0] = TimeLineChartFragment.newInstance(1);
         fragments[1] = FiveDayChartFragment.newInstance(stockID,choiceness_id);
-        fragments[2] = KLineChartFragment.newInstance(1);
-        fragments[3] = KLineChartFragment.newInstance(7);
-        fragments[4] = KLineChartFragment.newInstance(30);
+        fragments[2] = KLineChartFragment.newInstance(1,stockID,choiceness_id);
+        fragments[3] = KLineChartFragment.newInstance(7,stockID,choiceness_id);
+        fragments[4] = KLineChartFragment.newInstance(30,stockID,choiceness_id);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);

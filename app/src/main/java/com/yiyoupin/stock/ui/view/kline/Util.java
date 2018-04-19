@@ -164,31 +164,31 @@ public class Util {
         return fivedays;
     }
 
-    public static List<HisData> getK(Context context, int day) {
-        int res = R.raw.day_k;
-        if (day == 7) {
-            res = R.raw.week_k;
-        } else if (day == 30) {
-            res = R.raw.month_k;
-        }
-        InputStream is = context.getResources().openRawResource(res);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String json = writer.toString();
-        final List<KModel> list = new Gson().fromJson(json, new TypeToken<List<KModel>>() {
-        }.getType());
-        List<HisData> hisData = new ArrayList<>(100);
+    public static List<HisData> getK(List<KModel> list) {
+//        int res = R.raw.day_k;
+//        if (day == 7) {
+//            res = R.raw.week_k;
+//        } else if (day == 30) {
+//            res = R.raw.month_k;
+//        }
+//        InputStream is = context.getResources().openRawResource(res);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try {
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        String json = writer.toString();
+//        final List<KModel> list = new Gson().fromJson(json, new TypeToken<List<KModel>>() {
+//        }.getType());
+        List<HisData> hisData = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             KModel m = list.get(i);
             HisData data = new HisData();
@@ -198,8 +198,9 @@ public class Util {
             data.setLow(m.getPrice_l());
             data.setVol(m.getVolume());
             try {
-                data.setDate(sFormat2.parse(m.getTime()).getTime());
-            } catch (ParseException e) {
+//                data.setDate(sFormat2.parse(m.getTime()).getTime());
+                data.setDate(Long.parseLong(m.getTime()));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             hisData.add(data);
