@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.Util.RegularUtils;
 import com.jusfoun.baselibrary.base.NoDataModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
@@ -79,36 +80,7 @@ public class AuthChangePassActivity extends BaseStockActivity {
         });
 
         timerTxt.setOnClickListener(v ->{
-            timer = Observable.interval(1, TimeUnit.SECONDS)
-                    .take(120)
-                    .map(new Func1<Long, Long>() {
-                        @Override
-                        public Long call(Long aLong) {
-                            return 120 - aLong;
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Long>() {
-
-                        @Override
-                        public void onCompleted() {
-                            timerTxt.setEnabled(true);
-                            timerTxt.setText("重发");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            timerTxt.setEnabled(true);
-                            timerTxt.setText("重发");
-                        }
-
-                        @Override
-                        public void onNext(Long aLong) {
-                            timerTxt.setEnabled(false);
-                            timerTxt.setText(aLong+"s");
-                        }
-                    });
+            getCode();
         });
 
         inputPhone.addTextChangedListener(new TextWatcher() {
@@ -124,8 +96,31 @@ public class AuthChangePassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()>0){
+                if (RegularUtils.checkMobile(s.toString())&&inputCode.getText().length()==6){
                     submit.setEnabled(true);
+                }else {
+                    submit.setEnabled(false);
+                }
+            }
+        });
+
+        inputCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()==6&&RegularUtils.checkMobile(inputPhone.getText().toString())){
+                    submit.setEnabled(true);
+                }else {
+                    submit.setEnabled(false);
                 }
             }
         });
@@ -135,10 +130,68 @@ public class AuthChangePassActivity extends BaseStockActivity {
         });
     }
 
+    private void getCode(){
+        if (!RegularUtils.checkMobile(inputPhone.getText().toString())){
+            showToast("手机号不正确");
+            return;
+        }
+        showLoadDialog();
+        HashMap<String,String> params=new HashMap<>();
+        params.put("phone",inputPhone.getText().toString());
+        params.put("type","3");
+        addNetwork(Api.getInstance().getService(ApiService.class).getPhoneCode(params)
+                , new Action1<NoDataModel>() {
+                    @Override
+                    public void call(NoDataModel noDataModel) {
+                        hideLoadDialog();
+                        if (noDataModel.getCode()==0) {
+                            timer = Observable.interval(1, TimeUnit.SECONDS)
+                                    .take(120)
+                                    .map(new Func1<Long, Long>() {
+                                        @Override
+                                        public Long call(Long aLong) {
+                                            return 120 - aLong;
+                                        }
+                                    })
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<Long>() {
+
+                                        @Override
+                                        public void onCompleted() {
+                                            code.setEnabled(true);
+                                            code.setText("重发");
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            code.setEnabled(true);
+                                            code.setText("重发");
+                                        }
+
+                                        @Override
+                                        public void onNext(Long aLong) {
+                                            code.setEnabled(false);
+                                            code.setText(aLong+"s");
+                                        }
+                                    });
+                            showToast(R.string.code_send);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                        showToast("获取失败");
+                    }
+                });
+    }
+
     private void auth(){
         showLoadDialog();
         HashMap<String,String> params=new HashMap<>();
         params.put("phone",inputPhone.getText().toString());
+        params.put("",inputCode.getText().toString());
         params.put("password",password);
         addNetwork(Api.getInstance().getService(ApiService.class).bindPhone(params)
                 , new Action1<NoDataModel>() {

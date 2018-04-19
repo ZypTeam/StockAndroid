@@ -2,6 +2,7 @@ package com.yiyoupin.stock.ui.view;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -171,6 +172,10 @@ public class MyInfoView extends ConstraintLayout {
                             loadingListener.hideLoading();
                         }
                         if (userDataModel.getCode() == 0) {
+                            if (userDataModel.getData()==null
+                                    || TextUtils.isEmpty(userDataModel.getData().getId())){
+                                return;
+                            }
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
                             username.setText(userDataModel.getData().getName());
                             consume.setText("消费金额:" + userDataModel.getData().getConsume_total());

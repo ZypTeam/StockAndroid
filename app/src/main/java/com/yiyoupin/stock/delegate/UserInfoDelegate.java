@@ -49,7 +49,7 @@ public class UserInfoDelegate {
     }
 
     public String getUserId() {
-        String userId = null;
+        String userId = "";
         if (userModel != null) {
             userId = userModel.getId();
         }

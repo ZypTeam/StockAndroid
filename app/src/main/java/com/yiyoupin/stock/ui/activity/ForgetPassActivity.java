@@ -42,7 +42,7 @@ public class ForgetPassActivity extends BaseStockActivity {
 
     private Subscription timer;
 
-    private boolean phoneOk,codeOk;
+    private boolean phoneOk, codeOk;
 
     @Override
     public int getLayoutResId() {
@@ -70,6 +70,13 @@ public class ForgetPassActivity extends BaseStockActivity {
 
         titleView.setTitle("找回登录密码");
 
+        rxManage.on(Constant.FORGET_PASS, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                onBackPressed();
+            }
+        });
+
         inputCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -83,22 +90,22 @@ public class ForgetPassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()==6){
-                    codeOk=true;
-                }else {
-                    codeOk=false;
+                if (s.length() == 6) {
+                    codeOk = true;
+                } else {
+                    codeOk = false;
                 }
 
-                if (phoneOk&&codeOk){
+                if (phoneOk && codeOk) {
                     next.setEnabled(true);
-                }else {
+                } else {
                     next.setEnabled(false);
                 }
             }
         });
 
         code.setOnClickListener(v -> {
-            if (!RegularUtils.checkMobile(inputPhone.getText().toString())){
+            if (!RegularUtils.checkMobile(inputPhone.getText().toString())) {
                 showToast("输入正确的手机号");
                 return;
             }
@@ -118,22 +125,22 @@ public class ForgetPassActivity extends BaseStockActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()==11&& RegularUtils.checkMobile(s.toString())){
-                    phoneOk=true;
-                }else {
-                    phoneOk=false;
+                if (s.length() == 11 && RegularUtils.checkMobile(s.toString())) {
+                    phoneOk = true;
+                } else {
+                    phoneOk = false;
                 }
 
-                if (phoneOk&&codeOk){
+                if (phoneOk && codeOk) {
                     next.setEnabled(true);
-                }else {
+                } else {
                     next.setEnabled(false);
                 }
             }
         });
 
         next.setOnClickListener(v -> {
-            UiUtils.goUpdatePass(ForgetPassActivity.this,inputPhone.getText().toString(),inputCode.getText().toString());
+            UiUtils.goUpdatePass(ForgetPassActivity.this, inputPhone.getText().toString(), inputCode.getText().toString());
         });
     }
 
@@ -145,17 +152,17 @@ public class ForgetPassActivity extends BaseStockActivity {
         }
     }
 
-    private void getCode(){
+    private void getCode() {
         showLoadDialog();
-        HashMap<String,String> params=new HashMap<>();
-        params.put("phone",inputPhone.getText().toString());
-        params.put("type","1");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("phone", inputPhone.getText().toString());
+        params.put("type", "1");
         addNetwork(Api.getInstance().getService(ApiService.class).getPhoneCode(params)
                 , new Action1<NoDataModel>() {
                     @Override
                     public void call(NoDataModel noDataModel) {
                         hideLoadDialog();
-                        if (noDataModel.getCode()==0) {
+                        if (noDataModel.getCode() == 0) {
                             timer = Observable.interval(1, TimeUnit.SECONDS)
                                     .take(120)
                                     .map(new Func1<Long, Long>() {
@@ -183,13 +190,11 @@ public class ForgetPassActivity extends BaseStockActivity {
                                         @Override
                                         public void onNext(Long aLong) {
                                             code.setEnabled(false);
-                                            code.setText(aLong+"s");
+                                            code.setText(aLong + "s");
                                         }
                                     });
-                            return;
+                            showToast(R.string.code_send);
                         }
-                        showToast("获取失败");
-
                     }
                 }, new Action1<Throwable>() {
                     @Override

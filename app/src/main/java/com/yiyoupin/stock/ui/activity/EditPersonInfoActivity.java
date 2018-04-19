@@ -107,13 +107,6 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
             getCode();
         });
         head.setOnClickListener(v -> {
-            CropOptions cropOptions = new CropOptions.Builder()
-                    .setAspectX(1)
-                    .setAspectY(1)
-                    .setOutputX(PhoneUtil.dip2px(mContext, 200))
-                    .setOutputY(PhoneUtil.dip2px(mContext, 200))
-                    .setWithOwnCrop(true)
-                    .create();
             takePhoto.onPickFromGallery();
         });
 
@@ -126,8 +119,9 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
     @Override
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
-        if (result != null) {
-            uploadHead(result.getImage().getOriginalPath());
+        if (result != null&&result.getImages()!=null
+                &&result.getImages().size()>0) {
+            uploadHead(result.getImages().get(0).getOriginalPath());
         }
     }
 
@@ -164,7 +158,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
     }
 
     private void getCode() {
-        if (!RegularUtils.checkMobile(inputPhone.getText().toString())){
+        if (!RegularUtils.checkMobile(inputPhone.getText().toString())) {
             showToast("手机号不正确");
             return;
         }
@@ -208,7 +202,7 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                                             timerTxt.setText(aLong + "s");
                                         }
                                     });
-                            Toast.makeText(mContext, "获取成功", Toast.LENGTH_SHORT).show();
+                            showToast(R.string.code_send);
                         }
 
                     }
@@ -220,7 +214,6 @@ public class EditPersonInfoActivity extends BaseTakeActivity {
                     }
                 });
     }
-
 
 
     private void updateData() {

@@ -92,7 +92,7 @@ public class UpdatePassActivity extends BaseStockActivity {
                     public void call(NoDataModel noDataModel) {
                         hideLoadDialog();
                         if (noDataModel.getCode()==0) {
-                            UiUtils.goLoginActivity(mContext);
+                            rxManage.post(Constant.FORGET_PASS,"");
                             showToast("找回成功");
                             onBackPressed();
                         }

@@ -161,7 +161,8 @@ public class ChangePassActivity extends BaseStockActivity {
                         hideLoadDialog();
                         if (noDataModel.getCode() == 0) {
                             showToast("修改成功");
-                            UiUtils.goAuthChangePass(inputPassword.getText().toString(), mContext);
+//                            UiUtils.goAuthChangePass(inputPassword.getText().toString(), mContext);
+                            onBackPressed();
                         }
 
                     }

@@ -107,7 +107,7 @@ public class GetPhoneCodeActivity extends BaseStockActivity {
                         if (noDataModel.getCode()==0) {
                             UiUtils.goAuthPhone(GetPhoneCodeActivity.this, phoneNum);
 //                        onBackPressed();
-                            showToast("获取成功");
+                            showToast(R.string.code_send);
                         }
 
                     }

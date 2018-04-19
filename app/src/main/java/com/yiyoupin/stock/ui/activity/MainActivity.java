@@ -1,19 +1,8 @@
 package com.yiyoupin.stock.ui.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,19 +11,9 @@ import android.widget.Toast;
 import com.jusfoun.baselibrary.view.HomeViewPager;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.StockApplication;
-import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.comment.FragmentCallback;
-import com.yiyoupin.stock.delegate.UserInfoDelegate;
-import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.adapter.HomeAdapter;
-import com.yiyoupin.stock.ui.adapter.MainAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
-import com.yiyoupin.stock.ui.fragment.LoginFragment;
-import com.yiyoupin.stock.ui.fragment.MainFragment;
-import com.yiyoupin.stock.ui.util.TransformUtil;
-import com.yiyoupin.stock.ui.view.transformer.FlipHorizontalTransformer;
-
-import rx.functions.Action1;
 
 public class MainActivity extends BaseStockActivity implements FragmentCallback {
 

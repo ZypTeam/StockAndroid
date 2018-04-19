@@ -77,6 +77,9 @@ public class LoginView extends ConstraintLayout {
         password = (EditText) findViewById(R.id.password);
         phone = (EditText) findViewById(R.id.phone);
 
+        phone.requestFocus();
+        setFocusable(true);
+        requestFocus();
     }
 
     private void initAction() {

@@ -16,4 +16,5 @@ public class Constant {
 
     public static final String REGISTER_SUC="register_suc";
     public static final String REGISTER_NAME="register_name";
+    public static final String FORGET_PASS="forget_pass";
 }
