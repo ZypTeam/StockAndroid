@@ -238,10 +238,10 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         setDescription(mChartVolume, "成交量 " + getLastData().getVol());
     }
 
-    public void initDatas(List<HisData>... hisDatas) {
+    public void initDatas(List<List<HisData>> hisDatas) {
         // 设置标签数量，并让标签居中显示
         XAxis xAxis = mChartVolume.getXAxis();
-        xAxis.setLabelCount(hisDatas.length + 1, true);
+        xAxis.setLabelCount(hisDatas.size() + 1, true);
         xAxis.setAvoidFirstLastClipping(false);
         xAxis.setCenterAxisLabels(true);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -278,8 +278,8 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
                 aveEntries.add(new Entry(i + mData.size(), (float) t.getAvePrice()));
                 barEntries.add(new BarEntry(i + mData.size(), (float) t.getVol(), t));
             }
-            if (!hisData.isEmpty() && hisData.size() < INIT_COUNT / hisDatas.length) {
-                for (int i = hisData.size(); i < INIT_COUNT / hisDatas.length; i++) {
+            if (!hisData.isEmpty() && hisData.size() < INIT_COUNT / hisDatas.size()) {
+                for (int i = hisData.size(); i < INIT_COUNT / hisDatas.size(); i++) {
                     paddingEntries.add(new Entry(i, (float) hisData.get(hisData.size() - 1).getClose()));
                     barPaddingEntries.add(new BarEntry(i, (float) hisData.get(hisData.size() - 1).getClose()));
                 }

@@ -61,8 +61,6 @@ public class FiveDayChartFragment extends BaseStockFragment {
         mTimeLineView = (TimeLineView) rootView.findViewById(R.id.view_time_line);
 
         mTimeLineView.setDateFormat("yyyy-MM-dd");
-        int count = 241 * 5;
-        mTimeLineView.setCount(count, count, count);
 
 
     }
@@ -84,11 +82,17 @@ public class FiveDayChartFragment extends BaseStockFragment {
                     public void call(FiveDayModel model) {
                         hideLoadDialog();
                         if (model.data != null) {
+
+                            int count = 0;
+                            for (int i = 0; i < model.data.size(); i++) {
+                                if (model.data.get(i) != null && model.data.get(i).dapandata != null)
+                                    count += model.data.get(i).dapandata.size();
+                            }
+                            mTimeLineView.setCount(count, count, count);
                             final List<List<HisData>> hisData = Util.get5Day(model.data);
                             if (hisData.get(0) != null && hisData.get(0).get(0) != null)
                                 mTimeLineView.setLastClose(hisData.get(0).get(0).getClose());
-                            if (hisData.size()>=5)
-                                mTimeLineView.initDatas(hisData.get(0), hisData.get(1), hisData.get(2), hisData.get(3), hisData.get(4));
+                            mTimeLineView.initDatas(hisData);
                         }
                     }
                 }, new Action1<Throwable>() {
