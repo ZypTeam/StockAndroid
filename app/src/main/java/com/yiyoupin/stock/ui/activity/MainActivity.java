@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jusfoun.baselibrary.view.HomeViewPager;
+import com.umeng.socialize.UMShareAPI;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.comment.FragmentCallback;
@@ -93,6 +95,12 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
         viewpager.setAdapter(homeAdapter);
 
         select(0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(mContext).onActivityResult(requestCode, resultCode, data);
     }
 
     private void select(int position) {

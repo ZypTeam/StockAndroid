@@ -64,6 +64,15 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
+    @POST("/stock/login/login_third.do")
+    Observable<UserDataModel> thridLogin(@FieldMap Map<String,String> params);
+
+    /**
+     * 登录
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
     @POST("/stock/login/login_password.do")
     Observable<UserDataModel> login(@FieldMap Map<String,String> params);
 
