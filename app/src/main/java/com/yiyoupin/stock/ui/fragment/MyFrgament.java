@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,6 +34,7 @@ public class MyFrgament extends BaseStockFragment {
 
     protected LoginView loginView;
     protected MyInfoView myInfoView;
+    private Activity activity;
 
     private ValueAnimator valueAnimator1, valueAnimator2, valueAnimator3, valueAnimator4;
     private UserModel userModel;
@@ -40,6 +43,14 @@ public class MyFrgament extends BaseStockFragment {
     public static MyFrgament getInstance() {
         MyFrgament fragment = new MyFrgament();
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            this.activity= (Activity) context;
+        }
     }
 
     @Override
@@ -175,9 +186,19 @@ public class MyFrgament extends BaseStockFragment {
             }
         });
 
+        loginView.setActivity(activity);
+
         WindowManager window = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int screenWidth = window.getDefaultDisplay().getWidth();
         loginView.setCameraDistance(10 * screenWidth);
         myInfoView.setCameraDistance(10 * screenWidth);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (loginView!=null){
+            loginView.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

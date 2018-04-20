@@ -24,16 +24,14 @@ public class HeaderStockInterceptor implements Interceptor {
 
     public HeaderStockInterceptor(){
 
-        user_id=UserInfoDelegate.getInstance().getUserId();
-        if (StringUtil.isEmpty(user_id)){
-            user_id="0";
-        }
-
-
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+        user_id=UserInfoDelegate.getInstance().getUserId();
+        if (StringUtil.isEmpty(user_id)){
+            user_id="0";
+        }
         LogUtil.e("HeaderStockInterceptor","user_id=="+user_id);
         Request request;
         request=chain.request().newBuilder()
