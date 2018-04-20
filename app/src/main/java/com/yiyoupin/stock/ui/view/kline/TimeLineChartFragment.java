@@ -100,9 +100,9 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
     @Override
     protected void refreshData() {
-        final List<HisData> hisData = Util.get1Day(getContext());
-        mTimeLineView.setLastClose(hisData.get(0).getClose());
-        mTimeLineView.initData(hisData);
+//        final List<HisData> hisData = Util.get1Day(getContext());
+//        mTimeLineView.setLastClose(hisData.get(0).getClose());
+//        mTimeLineView.initData(hisData);
     }
 
     public void setData(StockDetailModel.StockDetailDataModel model) {
