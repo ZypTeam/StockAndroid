@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.QuotesItemModel;
 import com.yiyoupin.stock.model.QuotesModel;
+import com.yiyoupin.stock.model.StockModel;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
+import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.util.List;
 
@@ -137,6 +141,17 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
             name.setText(model.getStock_name());
             code.setText(model.getStock_code());
             cur_price.setText(model.getOffset_size());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StockShowActivity.ID, model.getStock_id());
+                    bundle.putString(StockShowActivity.CODE, model.getStock_code());
+                    bundle.putString(StockShowActivity.CHOICENESS_ID, "");
+                    UiUtils.goStockShowActivity(context, bundle);
+                }
+            });
         }
     }
 }
