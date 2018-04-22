@@ -2,6 +2,9 @@ package com.yiyoupin.stock.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+
+import com.yiyoupin.stock.ui.util.MathUtils;
 
 import java.io.Serializable;
 
@@ -150,7 +153,7 @@ public class ChartItemModel implements Parcelable,Serializable{
     }
 
     public String getBuy_amount() {
-        return buy_amount;
+        return MathUtils.getRound(buy_amount);
     }
 
     public void setBuy_amount(String buy_amount) {
@@ -166,7 +169,8 @@ public class ChartItemModel implements Parcelable,Serializable{
     }
 
     public String getSale_amount() {
-        return sale_amount;
+
+        return MathUtils.getRound(sale_amount);
     }
 
     public void setSale_amount(String sale_amount) {

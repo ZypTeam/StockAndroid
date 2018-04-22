@@ -43,9 +43,9 @@ public class ChartsDetailHeaderView extends CoordinatorLayout {
         price = (TextView) findViewById(R.id.price);
         liyou = (TextView) findViewById(R.id.liyou);
 
-        zhangfu.setText(getText("涨幅:", "9.98%", "#ffffff", "#fe492f"));
-        price.setText(getText("股价:", "9.98元", "#ffffff", "#fe492f"));
-        liyou.setText(getText("上榜理由:", "理由理由理由理由", "#919191", "#ffffff"));
+        zhangfu.setText(getText("涨幅:", "9.98%", "#d3d3d3", "#fe492f"));
+        price.setText(getText("股价:", "9.98", "#d3d3d3", "#fe492f"));
+        liyou.setText(getText("上榜理由:", "理由理由理由理由", "#919191", "#d3d3d3"));
     }
 
     public SpannableStringBuilder getText(String txt1, String txt2, String color1, String color2) {

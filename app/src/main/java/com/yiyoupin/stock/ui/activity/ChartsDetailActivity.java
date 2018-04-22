@@ -2,6 +2,7 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
@@ -54,6 +55,9 @@ public class ChartsDetailActivity extends BaseStockActivity {
         titleView = (BackTitleView) findViewById(R.id.title_view);
         list = (XRecyclerView) findViewById(R.id.list);
         headerView=new ChartsDetailHeaderView(mContext);
+
+        ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        headerView.setLayoutParams(params);
 
     }
 
