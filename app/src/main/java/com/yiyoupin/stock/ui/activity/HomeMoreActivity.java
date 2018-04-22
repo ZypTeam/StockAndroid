@@ -4,7 +4,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.jusfoun.baselibrary.base.BaseModel;
 import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
@@ -12,14 +11,11 @@ import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.StrategiesMoreModel;
 import com.yiyoupin.stock.model.TechnologyMoreModel;
-import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import rx.functions.Action1;
 
@@ -108,16 +104,16 @@ public class HomeMoreActivity extends BaseStockActivity {
 
         if (type == HomeListAdapter.TYPE_STRATEGIES) {
             getStrategiesNet();
-        }else if (type == HomeListAdapter.TYPE_FEATURED) {
+        } else if (type == HomeListAdapter.TYPE_FEATURED) {
             getBuyselectionNet();
         } else if (type == HomeListAdapter.TYPE_FORM) {
-           getTechnologyNet();
+            getTechnologyNet();
         }
     }
 
     /**
-     *  选股策略
-     * */
+     * 选股策略
+     */
     private void getStrategiesNet() {
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
@@ -132,16 +128,16 @@ public class HomeMoreActivity extends BaseStockActivity {
                         hideLoadDialog();
                         if (model.getCode() == 0) {
                             if (model.data != null) {
-                                if(page_index==1) {
+                                if (page_index == 1) {
                                     adapter.refreshList(model.data.rows);
-                                }else{
+                                } else {
                                     adapter.addList(model.data.rows);
                                 }
 
-                                if(adapter.getItemCount()<model.data.total_number){
+                                if (adapter.getItemCount() < model.data.total_number) {
                                     recyclerView.setLoadingMoreEnabled(true);
                                     page_index++;
-                                }else{
+                                } else {
                                     recyclerView.setLoadingMoreEnabled(false);
                                 }
 
@@ -159,8 +155,8 @@ public class HomeMoreActivity extends BaseStockActivity {
     }
 
     /**
-     *  买点精选
-     * */
+     * 买点精选
+     */
     private void getBuyselectionNet() {
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
@@ -175,16 +171,16 @@ public class HomeMoreActivity extends BaseStockActivity {
                         hideLoadDialog();
                         if (model.getCode() == 0) {
                             if (model.data != null) {
-                                if(page_index==1) {
+                                if (page_index == 1) {
                                     adapter.refreshList(model.data.rows);
-                                }else{
+                                } else {
                                     adapter.addList(model.data.rows);
                                 }
 
-                                if(adapter.getItemCount()<model.data.total_number){
+                                if (adapter.getItemCount() < model.data.total_number) {
                                     recyclerView.setLoadingMoreEnabled(true);
                                     page_index++;
-                                }else{
+                                } else {
                                     recyclerView.setLoadingMoreEnabled(false);
                                 }
 
@@ -202,8 +198,8 @@ public class HomeMoreActivity extends BaseStockActivity {
     }
 
     /**
-     *  技术形态
-     * */
+     * 技术形态
+     */
     private void getTechnologyNet() {
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
@@ -218,10 +214,12 @@ public class HomeMoreActivity extends BaseStockActivity {
                         hideLoadDialog();
                         if (model.getCode() == 0) {
                             if (model.data != null) {
-                                if(page_index==1) {
-                                    adapter.refreshList(model.data);
-                                }else{
-                                    adapter.addList(model.data);
+                                if (page_index == 1) {
+                                    if (model.data != null)
+                                        adapter.refreshList(model.data.rows);
+                                } else {
+                                    if (model.data.rows != null)
+                                        adapter.addList(model.data.rows);
                                 }
 //
 //                                if(adapter.getItemCount()<model.data.total_number){
