@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jusfoun.baselibrary.net.Api;
@@ -19,6 +20,7 @@ import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+import com.yiyoupin.stock.ui.view.ShowBottomView;
 import com.yiyoupin.stock.ui.view.StocksTopView;
 import com.yiyoupin.stock.ui.view.kline.FiveDayChartFragment;
 import com.yiyoupin.stock.ui.view.kline.KLineChartFragment;
@@ -48,18 +50,22 @@ public class StockShowActivity extends BaseStockActivity {
     protected RelativeLayout layoutAdd;
     protected RelativeLayout layoutDelete;
     protected StocksTopView viewTop;
+    protected ShowBottomView viewShowBottom;
+    protected TextView textBottomTitle;
+    protected TextView textPrice;
+    protected TextView textZhangdie1;
+    protected TextView textZhangdie2;
     private NewsAdapter newsAdapter;
+    private RelativeLayout bottomLineLayout;
 
     public static String ID = "id";
     public static String CODE = "code";
-    public static String CHOICENESS_ID="choiceness_id";//策略id
-
-
+    public static String CHOICENESS_ID = "choiceness_id";//策略id
 
 
     private String stockCode = "";//股票code
     private String stockID = "";//股票id
-    private String choiceness_id="";//策略id
+    private String choiceness_id = "";//策略id
 
 
     private boolean fromSeach = false;
@@ -80,7 +86,7 @@ public class StockShowActivity extends BaseStockActivity {
         newsAdapter = new NewsAdapter(getSupportFragmentManager());
         stockCode = getIntent().getStringExtra(CODE);
         stockID = getIntent().getStringExtra(ID);
-        choiceness_id= getIntent().getStringExtra(CHOICENESS_ID);
+        choiceness_id = getIntent().getStringExtra(CHOICENESS_ID);
         fragments = new Fragment[5];
 
     }
@@ -97,6 +103,12 @@ public class StockShowActivity extends BaseStockActivity {
         layoutAdd = (RelativeLayout) findViewById(R.id.layout_add);
         layoutDelete = (RelativeLayout) findViewById(R.id.layout_delete);
         viewTop = (StocksTopView) findViewById(R.id.view_top);
+        bottomLineLayout = (RelativeLayout) findViewById(R.id.layout_time_line_bottom);
+        viewShowBottom = (ShowBottomView) findViewById(R.id.view_show_bottom);
+        textBottomTitle = (TextView) findViewById(R.id.text_bottom_title);
+        textPrice = (TextView) findViewById(R.id.text_bottom_price);
+        textZhangdie1 = (TextView) findViewById(R.id.text_zhangdie1);
+        textZhangdie2 = (TextView) findViewById(R.id.text_zhangdie2);
 
     }
 
@@ -107,10 +119,10 @@ public class StockShowActivity extends BaseStockActivity {
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
         fragments[0] = TimeLineChartFragment.newInstance(1);
-        fragments[1] = FiveDayChartFragment.newInstance(stockID,choiceness_id);
-        fragments[2] = KLineChartFragment.newInstance(1,stockID,choiceness_id);
-        fragments[3] = KLineChartFragment.newInstance(7,stockID,choiceness_id);
-        fragments[4] = KLineChartFragment.newInstance(30,stockID,choiceness_id);
+        fragments[1] = FiveDayChartFragment.newInstance(stockID, choiceness_id);
+        fragments[2] = KLineChartFragment.newInstance(1, stockID, choiceness_id);
+        fragments[3] = KLineChartFragment.newInstance(7, stockID, choiceness_id);
+        fragments[4] = KLineChartFragment.newInstance(30, stockID, choiceness_id);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);
@@ -152,6 +164,18 @@ public class StockShowActivity extends BaseStockActivity {
 //                Toast.makeText(mContext, "已移除至自选股", Toast.LENGTH_SHORT).show();
             }
         });
+
+        bottomLineLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (viewShowBottom.getVisibility() == View.VISIBLE) {
+                    viewShowBottom.setVisibility(View.GONE);
+                } else {
+                    viewShowBottom.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         getDetailsNet();
 
 
@@ -232,6 +256,8 @@ public class StockShowActivity extends BaseStockActivity {
                         if (model.data != null) {
                             viewTop.setData(model.data);
                         }
+                        setBottomTitleData();
+
                         getNewsList();
                     }
                 }, new Action1<Throwable>() {
@@ -264,6 +290,15 @@ public class StockShowActivity extends BaseStockActivity {
                         hideLoadDialog();
                     }
                 });
+    }
+
+    private void setBottomTitleData(){
+        viewShowBottom.setData();
+        textBottomTitle.setText("沪");
+        textPrice.setText("3253.62");
+        textZhangdie1.setText("+64.5");
+        textZhangdie2.setText("+2.09%");
+
     }
 
 
