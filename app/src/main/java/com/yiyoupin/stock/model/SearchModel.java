@@ -23,7 +23,7 @@ public class SearchModel implements Serializable {
     private String stock_code;
     private String stock_name;
     private double stock_price;
-    private int offset_size;
+    private double offset_size;
 
     public int getStock_id() {
         return stock_id;
@@ -57,11 +57,11 @@ public class SearchModel implements Serializable {
         this.stock_price = stock_price;
     }
 
-    public int getOffset_size() {
+    public double getOffset_size() {
         return offset_size;
     }
 
-    public void setOffset_size(int offset_size) {
+    public void setOffset_size(double offset_size) {
         this.offset_size = offset_size;
     }
 

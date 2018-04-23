@@ -10,6 +10,7 @@ import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.model.QuotesItemModel;
+import com.yiyoupin.stock.model.SearchModel;
 import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.model.StrategiesMoreModel;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
@@ -152,15 +153,15 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
         @Override
         public void update(Serializable model) {
             if (model instanceof HomeModel.BuyselectionItemModel) {
-                textTitle.setText(((HomeModel.BuyselectionItemModel) model).choiceness_name);
-                textCount1.setText(((HomeModel.BuyselectionItemModel) model).yield_rate);
-                textCount2.setText(((HomeModel.BuyselectionItemModel) model).yield_rate);
-                textId.setText(((HomeModel.BuyselectionItemModel) model).choiceness_id);
+                textTitle.setText(((HomeModel.BuyselectionItemModel) model).stock_name);
+                textCount1.setText(((HomeModel.BuyselectionItemModel) model).stock_price);
+                textCount2.setText(((HomeModel.BuyselectionItemModel) model).offset_size);
+                textId.setText(((HomeModel.BuyselectionItemModel) model).stock_code);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((HomeModel.BuyselectionItemModel) model).choiceness_id);
+                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((HomeModel.BuyselectionItemModel) model).stock_id);
                         UiUtils.goStrategiesDetailActivity(bundle, mContext);
                     }
                 });

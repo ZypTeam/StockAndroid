@@ -165,7 +165,8 @@
                 android:gravity="center"
                 android:text="查看更多"
                 android:textColor="#6b6b6b"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"

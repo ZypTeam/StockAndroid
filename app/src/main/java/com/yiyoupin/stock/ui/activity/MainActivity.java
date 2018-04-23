@@ -67,6 +67,7 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
     @Override
     public void initAction() {
         viewpager.setNotTouchScoll(true);
+        viewpager.setOffscreenPageLimit(4);
 
         layoutHome.setOnClickListener(new View.OnClickListener() {
             @Override

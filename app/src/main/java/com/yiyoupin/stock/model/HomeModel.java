@@ -39,9 +39,11 @@ public class HomeModel extends BaseModel implements Serializable {
     }
 
     public class BuyselectionItemModel extends BaseModel implements Serializable{
-        public String choiceness_id;
-        public String choiceness_name;
-        public String yield_rate;
+        public String stock_id;
+        public String stock_code;
+        public String stock_name;
+        public String stock_price;
+        public String offset_size;
     }
 
     public class TechnologyItemModel extends BaseModel implements Serializable{

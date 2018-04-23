@@ -126,6 +126,12 @@ public class HomeFrgament extends BaseStockFragment {
                     adapter.refreshList(homeDataModel.stocktactics);
                     adapter.notifyDataSetChanged();
 
+                    if(homeDataModel.stocktactics!=null&&homeDataModel.stocktactics.size()>5){
+                        textMore.setVisibility(View.VISIBLE);
+                    }else{
+                        textMore.setVisibility(View.GONE);
+                    }
+
                 }
 
             }
@@ -163,6 +169,11 @@ public class HomeFrgament extends BaseStockFragment {
                     adapter.setType(HomeListAdapter.TYPE_FEATURED);
                     adapter.refreshList(homeDataModel.buyselection);
                     adapter.notifyDataSetChanged();
+                    if(homeDataModel.buyselection!=null&&homeDataModel.buyselection.size()>5){
+                        textMore.setVisibility(View.VISIBLE);
+                    }else{
+                        textMore.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -205,6 +216,12 @@ public class HomeFrgament extends BaseStockFragment {
                     adapter.setType(HomeListAdapter.TYPE_FORM);
                     adapter.refreshList(homeDataModel.technology);
                     adapter.notifyDataSetChanged();
+
+                    if(homeDataModel.technology!=null&&homeDataModel.technology.size()>5){
+                        textMore.setVisibility(View.VISIBLE);
+                    }else{
+                        textMore.setVisibility(View.GONE);
+                    }
                 }
 
             }
@@ -244,6 +261,13 @@ public class HomeFrgament extends BaseStockFragment {
                             if (model.data != null) {
                                 homeDataModel = model.data;
                                 adapter.refreshList(model.data.stocktactics);
+
+
+                                if(homeDataModel.stocktactics!=null&&homeDataModel.stocktactics.size()>5){
+                                    textMore.setVisibility(View.VISIBLE);
+                                }else{
+                                    textMore.setVisibility(View.GONE);
+                                }
 
                                 if (model.data.plateindex != null) {
                                     if (model.data.plateindex.size() >= 1) {
