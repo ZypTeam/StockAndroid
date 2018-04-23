@@ -20,7 +20,7 @@ public class HomeModel extends BaseModel implements Serializable {
     public class HomeDataModel extends BaseModel implements Serializable{
         public List<PlateindexItemModel> plateindex;
         public List<StocktacticsItemModel> stocktactics;
-        public List<SearchModel> buyselection;
+        public List<BuyselectionItemModel> buyselection;
         public List<TechnologyItemModel> technology;
 
     }
