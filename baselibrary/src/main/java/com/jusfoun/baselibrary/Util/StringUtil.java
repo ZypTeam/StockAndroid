@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -115,5 +117,18 @@ public class StringUtil {
             return false;
         }
         return str2.equals(str1);
+    }
+
+
+    public static String getDate(String dateStr){
+        try{
+            Long l=Long.parseLong(dateStr);
+            Date date=new Date(l);
+            SimpleDateFormat format=new SimpleDateFormat("MM-dd hh:mm");
+            return format.format(date);
+        }catch (Exception e){
+
+        }
+        return "";
     }
 }

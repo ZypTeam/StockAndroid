@@ -1,5 +1,7 @@
 package com.yiyoupin.stock.model;
 
+import com.jusfoun.baselibrary.Util.StringUtil;
+
 import java.io.Serializable;
 
 /**
@@ -83,7 +85,7 @@ public class NoticeModel implements Serializable {
     }
 
     public String getNews_time() {
-        return news_time;
+        return StringUtil.getDate(news_time);
     }
 
     public void setNews_time(String news_time) {

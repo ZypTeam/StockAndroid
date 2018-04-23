@@ -1,5 +1,7 @@
 package com.yiyoupin.stock.model;
 
+import com.jusfoun.baselibrary.Util.StringUtil;
+
 import java.io.Serializable;
 
 /**
@@ -42,7 +44,7 @@ public class NewspaperModel implements Serializable {
     }
 
     public String getDaily_date() {
-        return daily_date;
+        return StringUtil.getDate(daily_date);
     }
 
     public void setDaily_date(String daily_date) {
