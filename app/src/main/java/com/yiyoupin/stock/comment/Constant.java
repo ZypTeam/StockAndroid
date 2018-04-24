@@ -8,6 +8,12 @@ package com.yiyoupin.stock.comment;
 
 public class Constant {
 
+    public static final int INSTALL_TYPE_NORMAL = 0;
+    public static final int INSTALL_TYPE_NEW = 1;
+    public static final int INSTALL_TYPE_UPDATE = 2;
+
+    public static final String PREFERENCE_LAST_APP_BUILD="preference_last_app_build";
+
     public static final String FINISH_FORGET_PASS="finish_forget_pass";
 
     public static final String PAGE_SIZE="20";

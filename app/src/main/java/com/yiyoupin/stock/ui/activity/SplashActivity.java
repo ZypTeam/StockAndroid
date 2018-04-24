@@ -8,6 +8,8 @@ import com.jusfoun.baselibrary.permissiongen.PermissionGen;
 import com.jusfoun.baselibrary.permissiongen.PermissionSuccess;
 import com.jusfoun.baselibrary.task.WeakHandler;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.StockApplication;
+import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
@@ -67,7 +69,11 @@ public class SplashActivity extends BaseStockActivity {
 
 
     private void goNextActivity(){
-        UiUtils.goHomeActivity(this);
+        if (StockApplication.isFirstInstall()!= Constant.INSTALL_TYPE_NORMAL){
+            UiUtils.goGuideActivity(this);
+        }else {
+            UiUtils.goHomeActivity(this);
+        }
         onBackPressed();
     }
 }

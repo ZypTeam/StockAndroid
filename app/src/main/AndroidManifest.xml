@@ -138,6 +138,11 @@
             android:name=".ui.activity.PayListActivity"
             android:screenOrientation="portrait" />
 
+        <!--引导页-->
+        <activity
+            android:name=".ui.activity.GuideActivity"
+            android:screenOrientation="portrait" />
+
         <!--消息列表-->
         <activity
             android:name=".ui.activity.MsgListActivity"

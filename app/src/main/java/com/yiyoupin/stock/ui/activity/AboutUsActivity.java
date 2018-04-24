@@ -87,6 +87,10 @@ public class AboutUsActivity extends BaseStockActivity {
     }
 
     private void aboutUs(){
+        if (true){
+            webView.loadUrl(getString(R.string.url)+getString(R.string.about_us_url));
+            return;
+        }
         showLoadDialog();
         addNetwork(Api.getInstance().getService(ApiService.class).aboutUs(),
                 new Action1<AboutModel>() {

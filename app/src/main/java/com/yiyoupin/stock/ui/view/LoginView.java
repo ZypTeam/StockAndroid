@@ -59,7 +59,7 @@ public class LoginView extends ConstraintLayout {
     protected TextView login;
     protected EditText password;
     protected EditText phone;
-    private ImageView qq;
+    private ImageView qq,wechat,weibo;
     private Context mContext;
 
     private Activity activity;
@@ -118,6 +118,8 @@ public class LoginView extends ConstraintLayout {
         password = (EditText) findViewById(R.id.password);
         phone = (EditText) findViewById(R.id.phone);
         qq = (ImageView) findViewById(R.id.qq);
+        wechat = (ImageView) findViewById(R.id.wechat);
+        weibo = (ImageView) findViewById(R.id.weibo);
 
         phone.requestFocus();
         setFocusable(true);
@@ -142,6 +144,14 @@ public class LoginView extends ConstraintLayout {
             if (activity!=null) {
                 mShareAPI.getPlatformInfo(activity, SHARE_MEDIA.QQ, umAuthListener);
             }
+        });
+
+        wechat.setOnClickListener(v -> {
+            mShareAPI.getPlatformInfo(activity, SHARE_MEDIA.WEIXIN, umAuthListener);
+        });
+
+        weibo.setOnClickListener(v -> {
+            mShareAPI.getPlatformInfo(activity, SHARE_MEDIA.SINA, umAuthListener);
         });
     }
 

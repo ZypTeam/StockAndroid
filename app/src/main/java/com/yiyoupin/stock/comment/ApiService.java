@@ -316,6 +316,10 @@ public interface ApiService {
     @GET("/stock/detail.do")
     Observable<StockDetailModel> getStockDetails(@QueryMap Map<String,String> params);
 
+    /**
+     * 关于我们
+     * @return
+     */
     @GET("/stock/user/about.do")
     Observable<AboutModel> aboutUs();
 
