@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -76,6 +77,18 @@ public class DetailsAdapter<T> extends BaseAdapter<BaseModel> {
             textTitle.setText(((MingXiModel.MingXiItemModel)model).name);
             textNum1.setText(((MingXiModel.MingXiItemModel)model).price);
             textNum2.setText(((MingXiModel.MingXiItemModel)model).count);
+
+            if(TextUtils.isEmpty(((MingXiModel.MingXiItemModel) model).name)){
+                textTitle.setText("--");
+            }
+
+            if(TextUtils.isEmpty(((MingXiModel.MingXiItemModel) model).price)){
+                textNum1.setText("--");
+            }
+
+            if(TextUtils.isEmpty(((MingXiModel.MingXiItemModel) model).count)){
+                textNum2.setText("--");
+            }
         }
 
         private void initView(View rootView) {

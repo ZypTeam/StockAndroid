@@ -9,8 +9,8 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#d2d2d2"
         android:layout_centerVertical="true"
+        android:textColor="#d2d2d2"
         android:textSize="15sp" />
 
     <LinearLayout
@@ -18,12 +18,12 @@
         android:layout_width="123dp"
         android:layout_height="30dp"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_toEndOf="@+id/text_title"
         android:layout_toRightOf="@+id/text_title"
-        android:orientation="horizontal"
-        android:layout_marginLeft="26dp"
         android:background="@drawable/bg_remid_edit"
-        android:layout_marginStart="26dp"
+        android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -41,10 +41,12 @@
             android:id="@+id/editIinput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@null"
+            android:digits="0123456789."
+            android:inputType="number"
             android:textColor="#d3d3d3"
-            android:textSize="12sp"
-            android:layout_weight="1"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/text_lv_type"
@@ -54,8 +56,7 @@
             android:paddingLeft="6dp"
             android:text="%"
             android:textColor="#d3d3d3"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
 
     </LinearLayout>

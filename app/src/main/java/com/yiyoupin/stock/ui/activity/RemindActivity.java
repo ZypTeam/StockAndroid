@@ -1,10 +1,22 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
+import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.delegate.HeaderStockInterceptor;
+import com.yiyoupin.stock.delegate.UserInfoDelegate;
+import com.yiyoupin.stock.model.UserDataModel;
+import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.RemindView;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 /**
  * @author zhaoyapeng
@@ -23,6 +35,10 @@ public class RemindActivity extends BaseTakeActivity {
     protected RemindView viewVip;
     protected BackTitleView titlebar;
 
+
+    private  String stock_code;
+
+
     @Override
     public int getLayoutResId() {
         return R.layout.activity_remind;
@@ -30,7 +46,7 @@ public class RemindActivity extends BaseTakeActivity {
 
     @Override
     public void initDatas() {
-
+        stock_code = getIntent().getStringExtra("stock_code");
     }
 
     @Override
@@ -53,7 +69,7 @@ public class RemindActivity extends BaseTakeActivity {
         titlebar.setRightText("保存", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                setRemindNet();
             }
         });
 
@@ -67,4 +83,61 @@ public class RemindActivity extends BaseTakeActivity {
         viewVip.setTitle(RemindView.TYPE_VIP);
 
     }
+
+
+    protected  void setRemindNet(){
+        if(TextUtils.isEmpty(viewZhang.getText())){
+            Toast.makeText(mContext,"请输入股票涨到",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(viewZhang.getText())){
+            Toast.makeText(mContext,"请输入股票跌到",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(viewZhang.getText())){
+            Toast.makeText(mContext,"请输入日涨幅超",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if(TextUtils.isEmpty(viewZhang.getText())){
+            Toast.makeText(mContext,"请输入日跌幅超",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        showLoadDialog();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("up_to",viewZhang.getText() );
+        params.put("down_to", viewDie.getText());
+        params.put("day_up_rate",viewRizhang.getText());
+        params.put("day_down_rate", viewRidie.getText());
+        params.put("up_to_remind", viewZhang.getState());
+        params.put("down_to_remind", viewRidie.getState());
+        params.put("day_up_rate_remind", viewRizhang.getState());
+        params.put("day_down_rate_remind", viewRizhang.getState());
+        params.put("stock_code", stock_code);
+        addNetwork(Api.getInstance().getService(ApiService.class).setRemindNet(params)
+                , new Action1<UserDataModel>() {
+                    @Override
+                    public void call(UserDataModel userDataModel) {
+                        hideLoadDialog();
+                        if (userDataModel.getCode() == 0) {
+                            showToast("保存成功");
+                            finish();
+                        } else {
+                            showToast(userDataModel.getMsg());
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+
+    }
+
+
 }

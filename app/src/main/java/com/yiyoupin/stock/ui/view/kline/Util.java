@@ -77,31 +77,46 @@ public class Util {
     }
 
 
-    public static List<HisData> get1Day(Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.oneday);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static List<HisData> get1Day(List<LineModel> list) {
+//        InputStream is = context.getResources().openRawResource(R.raw.oneday);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try {
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-        String json = writer.toString();
-        final List<LineModel> list = new Gson().fromJson(json, new TypeToken<List<LineModel>>() {
-        }.getType());
-        List<HisData> hisData = new ArrayList<>(100);
+//        String json = writer.toString();
+//        final List<LineModel> list = new Gson().fromJson(json, new TypeToken<List<LineModel>>() {
+//        }.getType());
+
+
+
+
+        List<HisData> hisData = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             LineModel m = list.get(i);
             HisData data = new HisData();
             data.setClose(m.getPrice());
             data.setVol(m.getVolume());
             data.setOpen(i == 0 ? 0 : list.get(i - 1).getPrice());
+
+
+            if(!TextUtils.isEmpty(m.getTime())) {
+                try {
+                    Date date = new Date(Long.parseLong(m.getTime()));
+                    m.setTime(sFormat1.format(date));
+                }catch (Exception e){
+
+                }
+            }
+
             try {
                 data.setDate(sFormat1.parse(m.getTime()).getTime());
             } catch (ParseException e) {
