@@ -2,6 +2,7 @@ package com.yiyoupin.stock.model;
 
 import com.guoziwei.klinelib.model.HisData;
 import com.jusfoun.baselibrary.base.BaseModel;
+import com.yiyoupin.stock.ui.view.kline.model.LineModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +20,7 @@ public class StockDetailModel extends BaseModel implements Serializable {
 
     public class StockDetailDataModel extends BaseModel implements Serializable {
 
-        public List<HisData> dapandata;
+        public List<LineModel> dapandata;
         public StockTopModel stock_detail;
         public List<TradeDetailModel> trade_detail;
     }

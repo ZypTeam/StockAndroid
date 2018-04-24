@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -147,7 +148,9 @@ public class StockShowActivity extends BaseStockActivity {
             @Override
             public void onClick(View view) {
 
-                UiUtils.goRemindActivity(StockShowActivity.this);
+                Bundle bundle =new Bundle();
+                bundle.putString("stock_code",stockCode);
+                UiUtils.goRemindActivity(StockShowActivity.this,bundle);
             }
         });
         layoutAdd.setOnClickListener(new View.OnClickListener() {

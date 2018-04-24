@@ -2,6 +2,7 @@ package com.yiyoupin.stock.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -28,7 +29,7 @@ import rx.functions.Action1;
  */
 public class DetailsFragment extends BaseStockFragment {
 
-    protected XRecyclerView recyclerView;
+    protected RecyclerView recyclerView;
     private DetailsAdapter adapter;
 
     private int type = 0;
@@ -66,7 +67,7 @@ public class DetailsFragment extends BaseStockFragment {
 
     @Override
     public void initView(View rootView) {
-        recyclerView = (XRecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
     }
 

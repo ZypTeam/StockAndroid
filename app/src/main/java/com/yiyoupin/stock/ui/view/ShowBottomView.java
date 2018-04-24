@@ -59,11 +59,6 @@ public class ShowBottomView extends BaseView {
     @Override
     protected void initActions() {
 
-        final List<HisData> hisData = Util.get1Day(getContext());
-        timeLineView.setLastClose(hisData.get(0).getClose());
-        timeLineView.initData(hisData);
-
-
         viewBottomTitleHu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,5 +103,9 @@ public class ShowBottomView extends BaseView {
         viewBottomTitleHu.setData();
         viewBottomTitleShen.setData();
         viewBottomTitleChuang.setData();
+
+//        final List<HisData> hisData = Util.get1Day();
+//        timeLineView.setLastClose(hisData.get(0).getClose());
+//        timeLineView.initData(hisData);
     }
 }

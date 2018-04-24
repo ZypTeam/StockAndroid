@@ -1,10 +1,12 @@
 package com.yiyoupin.stock.ui.view.kline.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2018/3/14 0014.
  */
 
-public class LineModel {
+public class LineModel implements Serializable{
 
     /**
      * time : 0930

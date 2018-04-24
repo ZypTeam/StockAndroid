@@ -37,6 +37,8 @@ public class RemindView extends BaseView {
     public static int TYPE_VIP = 8;
     protected ImageView imgKaiguan;
 
+    protected int isRemind = 0;// 0 不提醒 1提醒
+
 
     public RemindView(Context context) {
         super(context);
@@ -78,7 +80,14 @@ public class RemindView extends BaseView {
         imgKaiguan.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                imgKaiguan.setImageResource(R.drawable.img_remid_open);
+                if (isRemind == 0) {
+                    isRemind = 1;
+                    imgKaiguan.setImageResource(R.drawable.img_remid_open);
+                } else {
+                    isRemind = 0;
+                    imgKaiguan.setImageResource(R.drawable.img_remid_close);
+                }
+
             }
         });
     }
@@ -119,5 +128,14 @@ public class RemindView extends BaseView {
             layoutEdit.setVisibility(GONE);
         }
 
+    }
+
+
+    public String getText() {
+        return editIinput.getText().toString();
+    }
+
+    public String getState() {
+        return isRemind + "";
     }
 }

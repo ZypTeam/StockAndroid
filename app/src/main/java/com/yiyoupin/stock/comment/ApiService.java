@@ -353,4 +353,14 @@ public interface ApiService {
     @GET("")
     Observable<MsgListModel> getMsgList(@QueryMap Map<String,String> params);
 
+
+    /**
+     * 设置提醒
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/stock/optional/set_stock.do")
+    Observable<UserDataModel> setRemindNet(@FieldMap Map<String,String> params);
+
 }

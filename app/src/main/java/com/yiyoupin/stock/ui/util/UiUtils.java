@@ -176,8 +176,8 @@ public class UiUtils {
     /**
      *  跳转提醒
      * */
-    public static final void goRemindActivity(Context mContext){
-        goActivity(mContext,null, RemindActivity.class);
+    public static final void goRemindActivity(Context mContext,Bundle bundle){
+        goActivity(mContext,bundle, RemindActivity.class);
     }
 
     /**

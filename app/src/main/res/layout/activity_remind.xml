@@ -47,22 +47,26 @@
             <com.yiyoupin.stock.ui.view.RemindView
                 android:id="@+id/view_gonggao"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <com.yiyoupin.stock.ui.view.RemindView
                 android:id="@+id/view_buy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <com.yiyoupin.stock.ui.view.RemindView
                 android:id="@+id/view_mai"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <com.yiyoupin.stock.ui.view.RemindView
                 android:id="@+id/view_vip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
