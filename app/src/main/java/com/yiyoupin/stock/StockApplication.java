@@ -28,7 +28,7 @@ public class StockApplication extends BaseApplication {
     //各个平台的配置
     {
         PlatformConfig.setWeixin("wx6acb4c4141bd83a0", "5a540845a5a55a0740823ef4fe6616be");
-        PlatformConfig.setSinaWeibo("3840223590", "3154cfdc90e26ae8719a4989f4d72001", "");
+        PlatformConfig.setSinaWeibo("3840223590", "3154cfdc90e26ae8719a4989f4d72001", "http://www.yypstock.com");
         PlatformConfig.setQQZone("1106778129", "KEYufINAIzABZazJo6b");
     }
 
