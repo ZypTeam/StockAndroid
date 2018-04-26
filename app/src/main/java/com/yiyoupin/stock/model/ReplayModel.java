@@ -1,5 +1,7 @@
 package com.yiyoupin.stock.model;
 
+import com.jusfoun.baselibrary.Util.StringUtil;
+
 import java.io.Serializable;
 
 /**
@@ -42,7 +44,7 @@ public class ReplayModel implements Serializable {
     }
 
     public String getChecking_date() {
-        return checking_date;
+        return StringUtil.getDate(checking_date);
     }
 
     public void setChecking_date(String checking_date) {

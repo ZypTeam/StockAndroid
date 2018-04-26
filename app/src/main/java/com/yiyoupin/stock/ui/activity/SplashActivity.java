@@ -2,7 +2,10 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.Manifest;
 import android.text.TextUtils;
+import android.widget.TextView;
 
+import com.jusfoun.baselibrary.Util.AppUtil;
+import com.jusfoun.baselibrary.Util.PhoneUtil;
 import com.jusfoun.baselibrary.permissiongen.PermissionFail;
 import com.jusfoun.baselibrary.permissiongen.PermissionGen;
 import com.jusfoun.baselibrary.permissiongen.PermissionSuccess;
@@ -29,6 +32,7 @@ public class SplashActivity extends BaseStockActivity {
         }
     };
     private WeakHandler handler=new WeakHandler();
+    private TextView version;
     @Override
     public int getLayoutResId() {
         return R.layout.activity_splash;
@@ -41,7 +45,7 @@ public class SplashActivity extends BaseStockActivity {
 
     @Override
     public void initView() {
-
+        version=findViewById(R.id.version);
     }
 
     @Override
@@ -54,6 +58,8 @@ public class SplashActivity extends BaseStockActivity {
                     .addRequestCode(100)
                     .request();
         }
+
+        version.setText("V"+AppUtil.getVersionName(mContext));
 
     }
 

@@ -8,6 +8,7 @@ import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.ReplayModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.yiyoupin.stock.ui.util.UiUtils;
 
 /**
  * @author wangcc
@@ -32,15 +33,27 @@ public class ReplayAdapter extends BaseAdapter<ReplayModel> {
 
     class ReplayViewHolder extends BaseViewHolder<ReplayModel>{
 
-        private TextView name;
+        protected TextView title;
+        protected TextView content;
+        protected TextView time;
+        protected TextView count;
         public ReplayViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
-            name=itemView.findViewById(R.id.name);
+            title = (TextView) itemView.findViewById(R.id.title);
+            content = (TextView) itemView.findViewById(R.id.content);
+            time = (TextView) itemView.findViewById(R.id.time);
+            count = (TextView) itemView.findViewById(R.id.count);
         }
 
         @Override
         public void update(ReplayModel model) {
-            name.setText(model.getTitle());
+            itemView.setOnClickListener(v -> {
+                UiUtils.goWebActivity(context, "公告详情", model.getUrl());
+            });
+            title.setText(model.getTitle());
+            count.setText(String.valueOf(model.getView_count()));
+            content.setText(model.getTitle());
+            time.setText(model.getChecking_date());
         }
     }
 }

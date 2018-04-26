@@ -2,9 +2,9 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.jusfoun.baselibrary.net.Api;
-import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.comment.Constant;
@@ -13,6 +13,7 @@ import com.yiyoupin.stock.model.ChartsModel;
 import com.yiyoupin.stock.ui.adapter.ChartsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+import com.yiyoupin.stock.ui.view.NetErrorView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,10 +30,11 @@ import rx.functions.Action1;
 public class ChartsListActivity extends BaseStockActivity {
     protected BackTitleView titleView;
     protected RecyclerView list;
+    protected NetErrorView netError;
     private ChartsAdapter adapter;
 
     private int page = 0;
-    private List<ChartsModel> models=new ArrayList<>();
+    private List<ChartsModel> models = new ArrayList<>();
 
     @Override
     public int getLayoutResId() {
@@ -48,11 +50,18 @@ public class ChartsListActivity extends BaseStockActivity {
     public void initView() {
         titleView = (BackTitleView) findViewById(R.id.title_view);
         list = (RecyclerView) findViewById(R.id.list);
+        netError = (NetErrorView) findViewById(R.id.net_error);
 
     }
 
     @Override
     public void initAction() {
+        netError.setNetClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh(true,true);
+            }
+        });
         list.setLayoutManager(new LinearLayoutManager(mContext));
 
         titleView.setTitle("龙虎榜");
@@ -62,7 +71,7 @@ public class ChartsListActivity extends BaseStockActivity {
 
     private void refresh(boolean showLoading, boolean refresh) {
 
-        if (showLoading){
+        if (showLoading) {
             showLoadDialog();
         }
         HashMap<String, String> params = new HashMap();
@@ -74,17 +83,18 @@ public class ChartsListActivity extends BaseStockActivity {
                     public void call(ChartsListModel model) {
                         hideLoadDialog();
                         if (model.getCode() == 0) {
-                            if (refresh){
+                            netError.setVisibility(View.GONE);
+                            if (refresh) {
                                 refreshList(model.getData().getTopcharts());
-                            }else {
+                            } else {
                                 addList(model.getData().getTopcharts());
                             }
-                            adapter = new ChartsAdapter(mContext,models);
+                            adapter = new ChartsAdapter(mContext, models);
                             list.setAdapter(adapter);
-                            if (refresh){
-                                page=0;
-                            }else {
-                                page+=1;
+                            if (refresh) {
+                                page = 0;
+                            } else {
+                                page += 1;
                             }
 
 
@@ -94,22 +104,23 @@ public class ChartsListActivity extends BaseStockActivity {
                     @Override
                     public void call(Throwable throwable) {
                         hideLoadDialog();
+                        netError.setVisibility(View.VISIBLE);
                     }
                 });
 
     }
 
-    public void refreshList(List<ChartsModel> models){
-        if (models==null){
-            models=new ArrayList<>();
+    public void refreshList(List<ChartsModel> models) {
+        if (models == null) {
+            models = new ArrayList<>();
         }
         this.models.clear();
         this.models.addAll(models);
     }
 
-    public void addList(List<ChartsModel> models){
-        if (models==null){
-            models=new ArrayList<>();
+    public void addList(List<ChartsModel> models) {
+        if (models == null) {
+            models = new ArrayList<>();
         }
         this.models.addAll(models);
     }

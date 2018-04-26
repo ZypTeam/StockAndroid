@@ -5,4 +5,5 @@
     <string name="code_send">验证码已发送到手机</string>
     
     <string name="about_us_url">/stock/view/about/info.do</string>
+    <string name="splash_txt" >Copyright&#169; 2018益优品 - 泸ICP备16005435号-1</string>
 </resources>

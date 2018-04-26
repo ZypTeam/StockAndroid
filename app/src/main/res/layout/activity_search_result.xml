@@ -7,12 +7,6 @@
     android:focusableInTouchMode="true"
     android:background="#1e1e1e">
 
-    <com.yiyoupin.stock.ui.view.BackTitleView
-        android:id="@+id/title_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/search"
         android:layout_width="0dp"
@@ -42,4 +36,17 @@
         android:layout_marginRight="16dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
+
+    <com.yiyoupin.stock.ui.view.NetErrorView
+        android:id="@+id/net_error"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <com.yiyoupin.stock.ui.view.BackTitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

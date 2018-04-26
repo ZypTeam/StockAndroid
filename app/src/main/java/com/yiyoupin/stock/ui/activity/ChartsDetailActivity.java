@@ -1,23 +1,21 @@
 package com.yiyoupin.stock.ui.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartItemModel;
-import com.yiyoupin.stock.model.ChartsModel;
-import com.yiyoupin.stock.model.NewsPaperListModel;
 import com.yiyoupin.stock.ui.adapter.ChartsDetailAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.ChartsDetailHeaderView;
+import com.yiyoupin.stock.ui.view.NetErrorView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +32,7 @@ import rx.functions.Action1;
 public class ChartsDetailActivity extends BaseStockActivity {
     protected BackTitleView titleView;
     protected XRecyclerView list;
+    protected NetErrorView netError;
     private ChartsDetailAdapter adapter;
     private int page;
     private String detailId;
@@ -46,18 +45,19 @@ public class ChartsDetailActivity extends BaseStockActivity {
 
     @Override
     public void initDatas() {
-        adapter=new ChartsDetailAdapter(mContext);
-        detailId=getIntent().getExtras().getString(UiUtils.DETAIL_ID);
+        adapter = new ChartsDetailAdapter(mContext);
+        detailId = getIntent().getExtras().getString(UiUtils.DETAIL_ID);
     }
 
     @Override
     public void initView() {
         titleView = (BackTitleView) findViewById(R.id.title_view);
         list = (XRecyclerView) findViewById(R.id.list);
-        headerView=new ChartsDetailHeaderView(mContext);
+        headerView = new ChartsDetailHeaderView(mContext);
 
-        ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         headerView.setLayoutParams(params);
+        netError = (NetErrorView) findViewById(R.id.net_error);
 
     }
 
@@ -71,18 +71,25 @@ public class ChartsDetailActivity extends BaseStockActivity {
         list.setLoadingMoreEnabled(false);
         list.setPullRefreshEnabled(false);
 
-        refresh(true,true);
+        netError.setNetClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh(true,true);
+            }
+        });
+
+        refresh(true, true);
     }
 
     private void refresh(boolean showLoading, boolean refresh) {
 
-        if (showLoading){
+        if (showLoading) {
             showLoadDialog();
         }
         HashMap<String, String> params = new HashMap();
       /*  params.put(Constant.PAGE_PARAMS, Constant.PAGE_SIZE);
         params.put(Constant.PAGE_INDEX, refresh ? "1" : (page + 1) + "");*/
-        params.put("detail_id",detailId);
+        params.put("detail_id", detailId);
         addNetwork(Api.getInstance().getService(ApiService.class).chartsDetail(params)
                 , new Action1<ChartDetailModel>() {
                     @Override
@@ -90,9 +97,10 @@ public class ChartsDetailActivity extends BaseStockActivity {
 //                        complete();
                         hideLoadDialog();
                         if (model.getCode() == 0) {
-                            List<ChartItemModel> list=new ArrayList<>();
+                            netError.setVisibility(View.GONE);
+                            List<ChartItemModel> list = new ArrayList<>();
                             headerView.setLiyou(model.getData().getName());
-                            ChartItemModel model1=new ChartItemModel();
+                            ChartItemModel model1 = new ChartItemModel();
                             model1.setStock_name("买入前五营业部");
                             model1.setStock_code("累计买入金额(万元)");
                             model1.setType(0);
@@ -101,7 +109,7 @@ public class ChartsDetailActivity extends BaseStockActivity {
                                 chartItemModel.setType(1);
                                 list.add(chartItemModel);
                             }
-                            ChartItemModel model2=new ChartItemModel();
+                            ChartItemModel model2 = new ChartItemModel();
                             model2.setStock_name("卖出前五营业部");
                             model2.setStock_code("累计卖出金额(万元)");
                             model2.setType(0);
@@ -135,6 +143,7 @@ public class ChartsDetailActivity extends BaseStockActivity {
                     @Override
                     public void call(Throwable throwable) {
                         hideLoadDialog();
+                        netError.setVisibility(View.VISIBLE);
                     }
                 });
     }
