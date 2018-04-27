@@ -367,4 +367,14 @@ public interface ApiService {
     @POST("/stock/optional/set_stock.do")
     Observable<UserDataModel> setRemindNet(@FieldMap Map<String,String> params);
 
+
+    /**
+     * 发送推送id
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/stock/user/setPushId.do")
+    Observable<UserDataModel> sendPushId(@FieldMap Map<String,String> params);
+
 }

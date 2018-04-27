@@ -1,7 +1,9 @@
 package com.yiyoupin.stock;
 
 import android.os.Build;
+import android.util.Log;
 
+import com.huawei.android.hms.agent.HMSAgent;
 import com.jusfoun.baselibrary.BaseApplication;
 import com.jusfoun.baselibrary.Util.LogUtil;
 import com.jusfoun.baselibrary.Util.SharePrefenceUtils;
@@ -9,6 +11,9 @@ import com.jusfoun.baselibrary.net.Api;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.HeaderStockInterceptor;
 
@@ -31,6 +36,10 @@ public class StockApplication extends BaseApplication {
         PlatformConfig.setSinaWeibo("3840223590", "3154cfdc90e26ae8719a4989f4d72001", "http://www.yypstock.com");
         PlatformConfig.setQQZone("1106778129", "KEYufINAIzABZazJo6b");
     }
+
+    private String MI_APP_ID ="2882303761517775739";
+    private String MI_APP_KEY="5371777555739";
+
 
     @Override
     public void onCreate() {
@@ -56,6 +65,29 @@ public class StockApplication extends BaseApplication {
             setFirstInstall(Constant.INSTALL_TYPE_NEW);
             SharePrefenceUtils.getInstance().setInt(Constant.PREFERENCE_LAST_APP_BUILD, BuildConfig.VERSION_CODE);
         }
+
+        MiPushClient.registerPush(this, MI_APP_ID, MI_APP_KEY);
+        HMSAgent.init(this);
+
+
+        LoggerInterface newLogger = new LoggerInterface() {
+
+            @Override
+            public void setTag(String tag) {
+                // ignore
+            }
+
+            @Override
+            public void log(String content, Throwable t) {
+                Log.e("tag_mi", content, t);
+            }
+
+            @Override
+            public void log(String content) {
+                Log.e("tag_mi", content);
+            }
+        };
+        Logger.setLogger(this, newLogger);
     }
 
     private void setFirstInstall(int value){
