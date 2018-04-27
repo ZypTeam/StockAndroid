@@ -1,26 +1,35 @@
 package com.yiyoupin.stock.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huawei.android.hms.agent.HMSAgent;
 import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
 import com.huawei.hms.support.api.push.TokenResult;
+import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.view.HomeViewPager;
 import com.umeng.socialize.UMShareAPI;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.StockApplication;
+import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.comment.FragmentCallback;
+import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.ui.adapter.HomeAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
+
+import java.util.HashMap;
+
+import rx.functions.Action1;
 
 public class MainActivity extends BaseStockActivity implements FragmentCallback {
 
@@ -49,7 +58,6 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
     public void initDatas() {
         homeAdapter = new HomeAdapter(getSupportFragmentManager());
 
-        Log.e("tag"," MiPushClient="+ MiPushClient.getRegId(this));
 
 //        HMSAgent.Push.getToken(new GetTokenHandler() {
 //            @Override
@@ -64,6 +72,8 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
                 Log.e("tag","get token: end" + rtnCode);
             }
         });
+
+
     }
 
     @Override
@@ -115,6 +125,9 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
         viewpager.setAdapter(homeAdapter);
 
         select(0);
+
+        sendPushId();
+
     }
 
     @Override
@@ -192,5 +205,32 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
 
 
 //        viewpager.setCurrentItem(1);
+    }
+
+    private void sendPushId(){
+        HashMap<String, String> params = new HashMap<>();
+        String deviceBrand = Build.BRAND;
+        String deviceModel = Build.MODEL;
+        if ("huawei".equals(deviceBrand.toLowerCase()) && deviceModel.toLowerCase()
+                .contains("honor")) {
+            params.put("pushId",MiPushClient.getRegId(this));
+            params.put("type","2" );
+        } else {
+            params.put("pushId",MiPushClient.getRegId(this) );
+            params.put("type","1" );
+        }
+
+        addNetwork(Api.getInstance().getService(ApiService.class).sendPushId(params)
+                , new Action1<UserDataModel>() {
+                    @Override
+                    public void call(UserDataModel userDataModel) {
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+
     }
 }

@@ -57,4 +57,5 @@ dependencies {
     implementation project(':expandablerecyclerview')
     implementation files('libs/MiPush_SDK_Client_3_6_2.jar')
     compile 'com.huawei.android.hms:push:2.6.0.301'
+
 }
