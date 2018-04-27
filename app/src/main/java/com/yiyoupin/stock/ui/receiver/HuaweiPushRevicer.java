@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.huawei.hms.support.api.push.PushReceiver;
 
@@ -69,7 +70,10 @@ public class HuaweiPushRevicer extends PushReceiver {
 
     @Override
     public void onToken(Context context, String tokenIn, Bundle extras) {
-    	String belongId = extras.getString("belongId");
+
+
+        Log.e("tag","tokenIntokenIn="+tokenIn);
+        String belongId = extras.getString("belongId");
 
         Intent intent = new Intent();
         intent.setAction(ACTION_TOKEN);

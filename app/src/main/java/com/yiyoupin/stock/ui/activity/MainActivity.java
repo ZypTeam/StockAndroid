@@ -2,6 +2,7 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,8 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.huawei.android.hms.agent.HMSAgent;
+import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
+import com.huawei.hms.support.api.push.TokenResult;
 import com.jusfoun.baselibrary.view.HomeViewPager;
 import com.umeng.socialize.UMShareAPI;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.StockApplication;
 import com.yiyoupin.stock.comment.FragmentCallback;
@@ -42,9 +47,23 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
 
     @Override
     public void initDatas() {
-
         homeAdapter = new HomeAdapter(getSupportFragmentManager());
 
+        Log.e("tag"," MiPushClient="+ MiPushClient.getRegId(this));
+
+//        HMSAgent.Push.getToken(new GetTokenHandler() {
+//            @Override
+//            public void onResult(int rtnCode, TokenResult tokenResult) {
+//                Log.e("tag""get token: end" + rtnCode);
+//            }
+//        });
+
+        HMSAgent.Push.getToken(new GetTokenHandler() {
+            @Override
+            public void onResult(int rtnCode) {
+                Log.e("tag","get token: end" + rtnCode);
+            }
+        });
     }
 
     @Override

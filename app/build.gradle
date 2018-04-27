@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.jph.takephoto:takephoto_library:4.0.3'
     compile project(':baselibrary')
     compile project(':klinelib')
+    compile project(':hmsagents')
     implementation project(':expandablerecyclerview')
     implementation files('libs/MiPush_SDK_Client_3_6_2.jar')
     compile 'com.huawei.android.hms:push:2.6.0.301'

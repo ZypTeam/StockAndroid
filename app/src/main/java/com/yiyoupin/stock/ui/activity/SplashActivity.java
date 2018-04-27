@@ -2,7 +2,10 @@ package com.yiyoupin.stock.ui.activity;
 
 import android.Manifest;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.huawei.android.hms.agent.HMSAgent;
+import com.huawei.android.hms.agent.common.handler.ConnectHandler;
 import com.jusfoun.baselibrary.permissiongen.PermissionFail;
 import com.jusfoun.baselibrary.permissiongen.PermissionGen;
 import com.jusfoun.baselibrary.permissiongen.PermissionSuccess;
@@ -54,6 +57,13 @@ public class SplashActivity extends BaseStockActivity {
                     .addRequestCode(100)
                     .request();
         }
+
+        HMSAgent.connect(this, new ConnectHandler() {
+            @Override
+            public void onConnect(int rst) {
+                Log.e("tag","HMS connect end:" + rst);
+            }
+        });
 
     }
 
