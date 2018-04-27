@@ -9,6 +9,7 @@ import com.jusfoun.baselibrary.net.Api;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import com.yiyoupin.stock.comment.Constant;
 import com.yiyoupin.stock.delegate.HeaderStockInterceptor;
 
@@ -31,6 +32,10 @@ public class StockApplication extends BaseApplication {
         PlatformConfig.setSinaWeibo("1701976759", "c9f6b6d5015055964780e0c56c3e59a5", "http:www.sharesdk.cn");
         PlatformConfig.setQQZone("1106778129", "KEYufINAIzABZazJo6b");
     }
+
+    private String MI_APP_ID ="2882303761517775739";
+    private String MI_APP_KEY="5371777555739";
+
 
     @Override
     public void onCreate() {
@@ -56,6 +61,8 @@ public class StockApplication extends BaseApplication {
             setFirstInstall(Constant.INSTALL_TYPE_NEW);
             SharePrefenceUtils.getInstance().setInt(Constant.PREFERENCE_LAST_APP_BUILD, BuildConfig.VERSION_CODE);
         }
+
+        MiPushClient.registerPush(this, MI_APP_ID, MI_APP_KEY);
     }
 
     private void setFirstInstall(int value){

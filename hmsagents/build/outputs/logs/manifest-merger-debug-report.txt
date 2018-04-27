@@ -1,0 +1,101 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+	package
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:2:5-43
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:1-55:12
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:1:11-69
+application
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:4:5-53:19
+activity#com.huawei.android.hms.agent.common.HMSAgentActivity
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:5:9-15:20
+	android:excludeFromRecents
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:8:13-46
+	android:hardwareAccelerated
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:10:13-47
+	android:exported
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:9:13-37
+	android:configChanges
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:7:13-92
+	android:theme
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:11:13-61
+	android:name
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:6:13-80
+meta-data#hwc-theme
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:12:13-14:77
+	android:value
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:14:17-74
+	android:name
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:13:17-41
+activity#com.huawei.android.hms.agent.pay.HMSPayAgentActivity
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:17:9-27:20
+	android:excludeFromRecents
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:20:13-46
+	android:hardwareAccelerated
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:22:13-47
+	android:exported
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:21:13-37
+	android:configChanges
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:19:13-92
+	android:theme
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:23:13-61
+	android:name
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:18:13-80
+activity#com.huawei.android.hms.agent.pay.HMSPMSPayAgentActivity
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:29:9-39:20
+	android:excludeFromRecents
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:32:13-46
+	android:hardwareAccelerated
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:34:13-47
+	android:exported
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:33:13-37
+	android:configChanges
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:31:13-92
+	android:theme
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:35:13-61
+	android:name
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:30:13-83
+activity#com.huawei.android.hms.agent.hwid.HMSSignInAgentActivity
+ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:41:9-51:20
+	android:excludeFromRecents
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:44:13-46
+	android:hardwareAccelerated
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:46:13-47
+	android:exported
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:45:13-37
+	android:configChanges
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:43:13-92
+	android:theme
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:47:13-61
+	android:name
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml:42:13-84
+uses-sdk
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		ADDED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
+		INJECTED from /Users/mrj/zhaoyp/StockAndroid/hmsagents/src/main/AndroidManifest.xml
