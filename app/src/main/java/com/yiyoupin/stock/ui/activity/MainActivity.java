@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.huawei.android.hms.agent.HMSAgent;
 import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
 import com.huawei.hms.support.api.push.TokenResult;
+import com.huawei.android.hms.agent.HMSAgent;
+import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
+import com.huawei.hms.support.api.push.TokenResult;
 import com.jusfoun.baselibrary.net.Api;
 import com.jusfoun.baselibrary.view.HomeViewPager;
 import com.umeng.socialize.UMShareAPI;
@@ -58,6 +61,7 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
     public void initDatas() {
         homeAdapter = new HomeAdapter(getSupportFragmentManager());
 
+        Log.e("tag"," MiPushClient="+ MiPushClient.getRegId(this));
 
 //        HMSAgent.Push.getToken(new GetTokenHandler() {
 //            @Override
@@ -72,8 +76,6 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
                 Log.e("tag","get token: end" + rtnCode);
             }
         });
-
-
     }
 
     @Override

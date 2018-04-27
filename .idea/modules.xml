@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/expandablerecyclerview/expandablerecyclerview.iml" filepath="$PROJECT_DIR$/expandablerecyclerview/expandablerecyclerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hmsagents/hmsagents.iml" filepath="$PROJECT_DIR$/hmsagents/hmsagents.iml" />
       <module fileurl="file://$PROJECT_DIR$/klinelib/klinelib.iml" filepath="$PROJECT_DIR$/klinelib/klinelib.iml" />
     </modules>
   </component>
