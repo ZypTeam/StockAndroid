@@ -23,6 +23,7 @@ public class StockDetailModel extends BaseModel implements Serializable {
         public List<LineModel> dapandata;
         public StockTopModel stock_detail;
         public List<TradeDetailModel> trade_detail;
+        public List<MyTacticsModel>my_tactics;
     }
 
     public class StockTopModel extends BaseModel implements Serializable {
