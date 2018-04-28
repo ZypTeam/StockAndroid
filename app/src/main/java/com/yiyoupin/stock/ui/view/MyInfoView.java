@@ -139,6 +139,8 @@ public class MyInfoView extends ConstraintLayout {
 
         if (flipListener != null) {
             flipListener.flip(false);
+            UserInfoDelegate.getInstance().clearUser();
+            Toast.makeText(mContext, "退出成功", Toast.LENGTH_SHORT).show();
             return;
         }
 
