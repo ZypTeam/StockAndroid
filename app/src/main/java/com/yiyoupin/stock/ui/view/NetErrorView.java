@@ -44,14 +44,14 @@ public class NetErrorView extends FrameLayout {
         int height=MeasureSpec.getSize(heightMeasureSpec);
 
         MarginLayoutParams params= (MarginLayoutParams) imageView.getLayoutParams();
-        if (params.bottomMargin!=height*0.6f) {
-            params.bottomMargin = (int) (height * 0.6f);
+        if (params.bottomMargin!=height*0.46f) {
+            params.bottomMargin = (int) (height * 0.46f);
             imageView.setLayoutParams(params);
         }
 
         MarginLayoutParams txtParams= (MarginLayoutParams) textView.getLayoutParams();
-        if (txtParams.bottomMargin!=height*0.5f) {
-            txtParams.bottomMargin = (int) (height * 0.5f);
+        if (txtParams.bottomMargin!=height*0.35f) {
+            txtParams.bottomMargin = (int) (height * 0.35f);
             textView.setLayoutParams(txtParams);
         }
     }
