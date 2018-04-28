@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.ui.fragment.NewsFragment;
-import com.yiyoupin.stock.ui.util.HomeFragmentUtil;
 
 /**
  * @author zhaoyapeng
@@ -17,18 +17,25 @@ import com.yiyoupin.stock.ui.util.HomeFragmentUtil;
 public class NewsAdapter extends FragmentPagerAdapter {
 
 
+    private NewModel model;
+
     public NewsAdapter(FragmentManager fm) {
         super(fm);
+        model = new NewModel();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return NewsFragment.getInstance();
+        return NewsFragment.getInstance(model, position);
     }
 
     @Override
     public int getCount() {
-        return 5;
+        if (model != null) {
+            return 3;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -38,8 +45,12 @@ public class NewsAdapter extends FragmentPagerAdapter {
 //        }
 
         return "公告";
+    }
 
-//        return super.getPageTitle(position);
+
+    public void setData(NewModel model) {
+        this.model= model;
+        notifyDataSetChanged();
     }
 
 }

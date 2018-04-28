@@ -21,6 +21,7 @@ import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
+import com.yiyoupin.stock.ui.view.CeluePopupWindow;
 import com.yiyoupin.stock.ui.view.ShowBottomView;
 import com.yiyoupin.stock.ui.view.StocksTopView;
 import com.yiyoupin.stock.ui.view.kline.FiveDayChartFragment;
@@ -56,6 +57,8 @@ public class StockShowActivity extends BaseStockActivity {
     protected TextView textPrice;
     protected TextView textZhangdie1;
     protected TextView textZhangdie2;
+    protected TextView textCelueName;
+    protected RelativeLayout layoutCelue;
     private NewsAdapter newsAdapter;
     private RelativeLayout bottomLineLayout;
 
@@ -71,6 +74,8 @@ public class StockShowActivity extends BaseStockActivity {
 
     private boolean fromSeach = false;
     private Fragment[] fragments;
+
+    private CeluePopupWindow celuePopupWindow;
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -89,6 +94,8 @@ public class StockShowActivity extends BaseStockActivity {
         stockID = getIntent().getStringExtra(ID);
         choiceness_id = getIntent().getStringExtra(CHOICENESS_ID);
         fragments = new Fragment[5];
+
+        celuePopupWindow = new CeluePopupWindow(mContext);
 
     }
 
@@ -110,6 +117,8 @@ public class StockShowActivity extends BaseStockActivity {
         textPrice = (TextView) findViewById(R.id.text_bottom_price);
         textZhangdie1 = (TextView) findViewById(R.id.text_zhangdie1);
         textZhangdie2 = (TextView) findViewById(R.id.text_zhangdie2);
+        textCelueName = (TextView) findViewById(R.id.text_celue_name);
+        layoutCelue = (RelativeLayout) findViewById(R.id.layout_celue);
 
     }
 
@@ -140,17 +149,16 @@ public class StockShowActivity extends BaseStockActivity {
         tabNews.setTabTextColors(0xffe2e2e2, mContext.getResources().getColor(R.color.color_red));
         tabNews.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
 
-        viewpagerNews.setAdapter(newsAdapter);
-        tabNews.setupWithViewPager(viewpagerNews);
+
 
 
         layoutRemind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Bundle bundle =new Bundle();
-                bundle.putString("stock_code",stockCode);
-                UiUtils.goRemindActivity(StockShowActivity.this,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("stock_code", stockCode);
+                UiUtils.goRemindActivity(StockShowActivity.this, bundle);
             }
         });
         layoutAdd.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +186,14 @@ public class StockShowActivity extends BaseStockActivity {
                 }
             }
         });
+
+        layoutCelue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                celuePopupWindow.showAsDropDown(textCelueName);
+            }
+        });
+
 
         getDetailsNet();
 
@@ -259,6 +275,12 @@ public class StockShowActivity extends BaseStockActivity {
                         if (model.data != null) {
                             viewTop.setData(model.data);
                         }
+
+                        if (model.data != null && model.data.my_tactics != null && model.data.my_tactics.size() > 0) {
+                            textCelueName.setText(model.data.my_tactics.get(0).tactics_name);
+                            celuePopupWindow.setData(model.data.my_tactics);
+                        }
+
                         setBottomTitleData();
 
                         getNewsList();
@@ -286,6 +308,10 @@ public class StockShowActivity extends BaseStockActivity {
                     @Override
                     public void call(NewModel model) {
                         hideLoadDialog();
+                        newsAdapter.setData(model);
+
+                        viewpagerNews.setAdapter(newsAdapter);
+                        tabNews.setupWithViewPager(viewpagerNews);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -295,7 +321,7 @@ public class StockShowActivity extends BaseStockActivity {
                 });
     }
 
-    private void setBottomTitleData(){
+    private void setBottomTitleData() {
         viewShowBottom.setData();
         textBottomTitle.setText("沪");
         textPrice.setText("3253.62");

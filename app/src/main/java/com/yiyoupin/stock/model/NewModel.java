@@ -17,6 +17,8 @@ public class NewModel extends BaseModel implements Serializable {
 
     public class NewsDataModel extends BaseModel implements Serializable {
         public List<NewsItemModel> daily_list;
+        public List<NewsItemStopModel> stop_list;
+        public List<NewsItemNoticeModel> notice_list;
     }
 
     public class NewsItemModel extends BaseModel implements Serializable {
@@ -25,6 +27,21 @@ public class NewModel extends BaseModel implements Serializable {
         public String describe;
         public String title;
         public String view_count;
+        public String url;
+    }
+
+
+    public class NewsItemStopModel extends BaseModel implements Serializable {
+        public String stop_time;
+        public String stock_name;
+        public String url;
+    }
+
+
+
+    public class NewsItemNoticeModel extends BaseModel implements Serializable {
+        public String notice_time;
+        public String title;
         public String url;
     }
 }

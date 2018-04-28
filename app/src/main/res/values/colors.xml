@@ -17,6 +17,7 @@
     <color name="line_color_black">#171616</color>
 
     <color name="bg_main">#202020</color>
+    <color name="bg_main_black">#171616</color>
 
     <color name="color_red">#fe492f</color>
     <color name="color_green">#149117</color>

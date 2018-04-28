@@ -6,4 +6,5 @@
     <color name="app_bg_color">#161616</color>
     <color name="line_color">#585859</color>
     <color name="quotes_up">#ff4634</color>
+    <color name="black">#000000</color>
 </resources>
