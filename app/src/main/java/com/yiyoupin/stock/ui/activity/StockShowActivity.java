@@ -149,8 +149,7 @@ public class StockShowActivity extends BaseStockActivity {
         tabNews.setTabTextColors(0xffe2e2e2, mContext.getResources().getColor(R.color.color_red));
         tabNews.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
 
-        viewpagerNews.setAdapter(newsAdapter);
-        tabNews.setupWithViewPager(viewpagerNews);
+
 
 
         layoutRemind.setOnClickListener(new View.OnClickListener() {
@@ -309,6 +308,10 @@ public class StockShowActivity extends BaseStockActivity {
                     @Override
                     public void call(NewModel model) {
                         hideLoadDialog();
+                        newsAdapter.setData(model);
+
+                        viewpagerNews.setAdapter(newsAdapter);
+                        tabNews.setupWithViewPager(viewpagerNews);
                     }
                 }, new Action1<Throwable>() {
                     @Override
