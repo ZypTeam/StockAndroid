@@ -43,6 +43,7 @@ public class NoticeAdapter extends BaseAdapter<NoticeModel> {
             content = (TextView) itemView.findViewById(R.id.content);
             time = (TextView) itemView.findViewById(R.id.time);
             count = (TextView) itemView.findViewById(R.id.count);
+            
         }
 
         @Override
