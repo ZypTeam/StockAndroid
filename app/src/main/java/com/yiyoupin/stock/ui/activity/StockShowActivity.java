@@ -24,6 +24,7 @@ import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.CeluePopupWindow;
 import com.yiyoupin.stock.ui.view.ShowBottomView;
 import com.yiyoupin.stock.ui.view.StocksTopView;
+import com.yiyoupin.stock.ui.view.kline.DrawingChartFragment;
 import com.yiyoupin.stock.ui.view.kline.FiveDayChartFragment;
 import com.yiyoupin.stock.ui.view.kline.KLineChartFragment;
 import com.yiyoupin.stock.ui.view.kline.SimpleFragmentPagerAdapter;
@@ -130,7 +131,7 @@ public class StockShowActivity extends BaseStockActivity {
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
         fragments[0] = TimeLineChartFragment.newInstance(1);
         fragments[1] = FiveDayChartFragment.newInstance(stockID, choiceness_id);
-        fragments[2] = KLineChartFragment.newInstance(1, stockID, choiceness_id);
+        fragments[2] = DrawingChartFragment.newInstance(1, stockID, choiceness_id);
         fragments[3] = KLineChartFragment.newInstance(7, stockID, choiceness_id);
         fragments[4] = KLineChartFragment.newInstance(30, stockID, choiceness_id);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};

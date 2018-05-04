@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.highlight.CombinedHighlighter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.dataprovider.CombinedDataProvider;
+import com.github.mikephil.charting.my.DrawingData;
 import com.github.mikephil.charting.renderer.CombinedChartRenderer;
 
 /**
@@ -47,9 +48,10 @@ public class CombinedChart extends BarLineChartBase<CombinedData> implements Com
     /**
      * enum that allows to specify the order in which the different data objects
      * for the combined-chart are drawn
+     * DRAWING 自定义添加 附图
      */
     public enum DrawOrder {
-        BAR, BUBBLE, LINE, CANDLE, SCATTER
+        BAR, BUBBLE, LINE, CANDLE, SCATTER,DRAWING
     }
 
     public CombinedChart(Context context) {
@@ -70,7 +72,7 @@ public class CombinedChart extends BarLineChartBase<CombinedData> implements Com
 
         // Default values are not ready here yet
         mDrawOrder = new DrawOrder[]{
-                DrawOrder.BAR, DrawOrder.BUBBLE, DrawOrder.LINE, DrawOrder.CANDLE, DrawOrder.SCATTER
+                DrawOrder.BAR, DrawOrder.BUBBLE, DrawOrder.LINE, DrawOrder.CANDLE, DrawOrder.SCATTER, DrawOrder.DRAWING
         };
 
         setHighlighter(new CombinedHighlighter(this, this));
@@ -153,6 +155,16 @@ public class CombinedChart extends BarLineChartBase<CombinedData> implements Com
         if (mData == null)
             return null;
         return mData.getBubbleData();
+    }
+
+
+    /**
+     *  自定义添加 drawing 附图
+     * */
+    public DrawingData getDrawingData() {
+        if (mData == null)
+            return null;
+        return mData.getDrawingData();
     }
 
     @Override

@@ -4,6 +4,7 @@ package com.github.mikephil.charting.renderer;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.data.CandleData;
@@ -152,6 +153,8 @@ public class CandleStickChartRenderer extends LineScatterCandleRadarRenderer {
                 mBodyBuffers[1] = close * phaseY;
                 mBodyBuffers[2] = (xPos + 0.5f - barSpace);
                 mBodyBuffers[3] = open * phaseY;
+
+                Log.e("tag","barSpacebarSpace="+barSpace);
 
 
                 trans.pointValuesToPixel(mBodyBuffers);

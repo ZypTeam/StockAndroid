@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.comment;
 
+import com.guoziwei.klinelib.chart.FuTuModel;
 import com.jusfoun.baselibrary.base.NoDataModel;
 import com.yiyoupin.stock.model.AboutModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
@@ -376,5 +377,15 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/stock/user/setPushId.do")
     Observable<UserDataModel> sendPushId(@FieldMap Map<String,String> params);
+
+
+
+    /**
+     * 股票详情-K先图
+     * @param params
+     * @return
+     */
+    @GET("/stock/ftcl/detail.doo")
+    Observable<UserDataModel> getFtNet();
 
 }

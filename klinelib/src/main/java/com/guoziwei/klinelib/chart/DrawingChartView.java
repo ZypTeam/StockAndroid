@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
@@ -29,6 +30,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.my.DrawingData;
 import com.github.mikephil.charting.utils.Transformer;
 import com.guoziwei.klinelib.R;
 import com.guoziwei.klinelib.model.HisData;
@@ -44,7 +46,7 @@ import java.util.Locale;
  * kline
  * Created by guoziwei on 2017/10/26.
  */
-public class KLineView extends BaseView implements CoupleChartGestureListener.OnAxisChangeListener {
+public class DrawingChartView extends BaseView implements CoupleChartGestureListener.OnAxisChangeListener {
 
 
     public static final int NORMAL_LINE = 0;
@@ -94,15 +96,15 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
      */
     private int mDigits = 2;
 
-    public KLineView(Context context) {
+    public DrawingChartView(Context context) {
         this(context, null);
     }
 
-    public KLineView(Context context, @Nullable AttributeSet attrs) {
+    public DrawingChartView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public KLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DrawingChartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
         LayoutInflater.from(context).inflate(R.layout.view_kline, this);
@@ -221,6 +223,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         rightColorContentYAxisRenderer.setLabelColor(colorArray);
         mChartPrice.setRendererRightYAxis(rightColorContentYAxisRenderer);
 
+
     }
 
 
@@ -240,51 +243,54 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartKdj.setOnTouchListener(new ChartInfoViewHandler(mChartKdj));
     }
 
-    public void initData(List<HisData> hisDatas) {
+    public void initData(FuTuModel model) {
+        List<List<HisData>> hisDatas = model.lists;
         mData.clear();
-        mData.addAll(DataUtils.calculateHisData(hisDatas));
+//        mData.addAll();
 
-        ArrayList<CandleEntry> lineCJEntries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma5Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma10Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma20Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> paddingEntries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<CandleEntry> lineCJEntries = new ArrayList<>(INIT_COUNT);
 
-        for (int i = 0; i < mData.size(); i++) {
-            HisData hisData = mData.get(i);
-            lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose()));
 
-            if (!Double.isNaN(hisData.getMa5())) {
-                ma5Entries.add(new Entry(i, (float) hisData.getMa5()));
+//        ArrayList<Entry> ma5Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma10Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma20Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> paddingEntries = new ArrayList<>(INIT_COUNT);
+
+        ArrayList<Entry> trendLine = new ArrayList<>();
+        ArrayList<Entry> longTrendLine = new ArrayList<>();
+
+        ArrayList<ICandleDataSet> sets = new ArrayList<>();
+        for(int j=0;j<hisDatas.size();j++) {
+
+            ArrayList<CandleEntry> lineCJEntries = new ArrayList<>();
+            List<HisData> hdList =  DataUtils.calculateHisData(hisDatas.get(j));
+            for (int i = 0; i < hdList.size(); i++) {
+
+                HisData hisData = hdList.get(i);
+                lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose(), hisData.width, hisData.color));
             }
-
-            if (!Double.isNaN(hisData.getMa10())) {
-                ma10Entries.add(new Entry(i, (float) hisData.getMa10()));
-            }
-
-            if (!Double.isNaN(hisData.getMa20())) {
-                ma20Entries.add(new Entry(i, (float) hisData.getMa20()));
-            }
-
-            if (!Double.isNaN(hisData.getMa30())) {
-                ma30Entries.add(new Entry(i, (float) hisData.getMa30()));
-            }
+            sets.add(setKLine(NORMAL_LINE, lineCJEntries));
+            mData.addAll(hdList);
         }
 
-        if (!mData.isEmpty() && mData.size() < MAX_COUNT) {
-            for (int i = mData.size(); i < MAX_COUNT; i++) {
-                paddingEntries.add(new Entry(i, (float) mData.get(mData.size() - 1).getClose()));
-            }
+
+        for(int i=0;i<model.data.trendline.line_data.size();i++){
+            trendLine.add(new Entry(i, (float) model.data.trendline.line_data.get(i).trend_data));
         }
+
+
+
+        for(int i=0;i<model.data.longtrendline.line_data.size();i++){
+            longTrendLine.add(new Entry(i, (float) model.data.longtrendline.line_data.get(i).trend_data));
+        }
+
 
         LineData lineData = new LineData(
-                setLine(INVISIABLE_LINE, paddingEntries),
-                setLine(MA5, ma5Entries),
-                setLine(MA10, ma10Entries),
-                setLine(MA20, ma20Entries),
-                setLine(MA30, ma30Entries));
-        CandleData candleData = new CandleData(setKLine(NORMAL_LINE, lineCJEntries));
+                setLine(NORMAL_LINE, trendLine),setLine(NORMAL_LINE, longTrendLine));
+
+        Log.e("tag","DrawingDataDrawingData="+sets.size());
+        DrawingData candleData = new DrawingData(sets);
         CombinedData combinedData = new CombinedData();
         combinedData.setData(lineData);
         combinedData.setData(candleData);
@@ -309,12 +315,12 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartMacd.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
         mChartKdj.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
 
-        lineData.removeDataSet(0);
+//        lineData.removeDataSet(0);
 
         HisData hisData = getLastData();
         setDescription(mChartVolume, "成交量 " + hisData.getVol());
-        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
-                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
+//        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
+//                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
         setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
                 hisData.getMacd(), hisData.getDea(), hisData.getDif()));
         setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",

@@ -4,6 +4,8 @@ package com.github.mikephil.charting.data;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 
+import java.util.List;
+
 /**
  * Subclass of Entry that holds all values for one entry in a CandleStickChart.
  * 
@@ -24,6 +26,10 @@ public class CandleEntry extends Entry {
     /** open value */
     private float mOpen = 0f;
 
+
+    public List<Integer> width;
+    public List<String>color;
+
     /**
      * Constructor.
      * 
@@ -40,6 +46,18 @@ public class CandleEntry extends Entry {
         this.mShadowLow = shadowL;
         this.mOpen = open;
         this.mClose = close;
+    }
+
+
+    public CandleEntry(float x, float shadowH, float shadowL, float open, float close, List<Integer> width , List<String>  color ) {
+        super(x, (shadowH + shadowL) / 2f);
+
+        this.mShadowHigh = shadowH;
+        this.mShadowLow = shadowL;
+        this.mOpen = open;
+        this.mClose = close;
+        this.width = width;
+        this.color = color;
     }
 
     /**

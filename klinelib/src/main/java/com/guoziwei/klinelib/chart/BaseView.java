@@ -79,6 +79,7 @@ class BaseView extends LinearLayout {
         xAxisVolume.setLabelCount(3, true);
         xAxisVolume.setAvoidFirstLastClipping(true);
         xAxisVolume.setAxisMinimum(-0.5f);
+        xAxisVolume.setTextColor(0xff767676);
 
         xAxisVolume.setValueFormatter(new IAxisValueFormatter() {
             @Override

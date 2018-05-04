@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarLineScatterCandleBubbleDataSet;
+import com.github.mikephil.charting.my.DrawingData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class CombinedData extends BarLineScatterCandleBubbleData<IBarLineScatter
     private ScatterData mScatterData;
     private CandleData mCandleData;
     private BubbleData mBubbleData;
+    private DrawingData mDrawing;//附图
 
     public CombinedData() {
         super();
@@ -51,6 +53,12 @@ public class CombinedData extends BarLineScatterCandleBubbleData<IBarLineScatter
         mBubbleData = data;
         notifyDataChanged();
     }
+
+    public void setData(DrawingData data) {
+        mDrawing = data;
+        notifyDataChanged();
+    }
+
 
     @Override
     public void calcMinMax() {
@@ -124,6 +132,10 @@ public class CombinedData extends BarLineScatterCandleBubbleData<IBarLineScatter
 
     public CandleData getCandleData() {
         return mCandleData;
+    }
+
+    public DrawingData getDrawingData() {
+        return mDrawing;
     }
 
     /**

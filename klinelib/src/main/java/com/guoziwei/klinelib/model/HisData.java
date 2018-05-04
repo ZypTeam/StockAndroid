@@ -1,6 +1,7 @@
 package com.guoziwei.klinelib.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * chart data model
@@ -31,6 +32,10 @@ public class HisData implements Serializable{
     private double d;
     private double j;
 
+    public int groupId;
+
+     public List<Integer> width;
+    public List<String>  color;
     public double getDif() {
         return dif;
     }

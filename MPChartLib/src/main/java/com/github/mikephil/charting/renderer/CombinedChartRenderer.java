@@ -70,6 +70,10 @@ public class CombinedChartRenderer extends DataRenderer {
                 case SCATTER:
                     if (chart.getScatterData() != null)
                         mRenderers.add(new ScatterChartRenderer(chart, mAnimator, mViewPortHandler));
+
+                case DRAWING:
+                    if (chart.getDrawingData() != null)
+                        mRenderers.add(new DrawingChartRenderer(chart, mAnimator, mViewPortHandler));
                     break;
             }
         }

@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.renderer.DataRenderer;
+import com.github.mikephil.charting.renderer.DrawingChartRenderer;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.lang.ref.WeakReference;
@@ -71,6 +72,10 @@ public class AppCombinedChartRenderer extends DataRenderer {
                     if (chart.getScatterData() != null)
                         mRenderers.add(new ScatterChartRenderer(chart, mAnimator, mViewPortHandler));
                     break;
+                case DRAWING:
+                    if (chart.getDrawingData() != null)
+                        mRenderers.add(new DrawingChartRenderer(chart, mAnimator, mViewPortHandler));
+                    break;
             }
         }
     }
@@ -124,6 +129,8 @@ public class AppCombinedChartRenderer extends DataRenderer {
                 data = ((ScatterChartRenderer)renderer).mChart.getScatterData();
             else if (renderer instanceof BubbleChartRenderer)
                 data = ((BubbleChartRenderer)renderer).mChart.getBubbleData();
+            else if (renderer instanceof DrawingChartRenderer)
+                data = ((DrawingChartRenderer)renderer).mChart.getDrawingData();
 
             int dataIndex = data == null ? -1
                     : ((CombinedData)chart.getData()).getAllData().indexOf(data);

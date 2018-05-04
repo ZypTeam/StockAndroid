@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.guoziwei.klinelib.model.HisData;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.FiveDayModel;
+import com.guoziwei.klinelib.chart.FuTuModel;
 import com.yiyoupin.stock.ui.view.kline.model.KModel;
 import com.yiyoupin.stock.ui.view.kline.model.LineModel;
 
@@ -97,8 +98,6 @@ public class Util {
 //        }.getType());
 
 
-
-
         List<HisData> hisData = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             LineModel m = list.get(i);
@@ -108,11 +107,11 @@ public class Util {
             data.setOpen(i == 0 ? 0 : list.get(i - 1).getPrice());
 
 
-            if(!TextUtils.isEmpty(m.getTime())) {
+            if (!TextUtils.isEmpty(m.getTime())) {
                 try {
                     Date date = new Date(Long.parseLong(m.getTime()));
                     m.setTime(sFormat1.format(date));
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -166,10 +165,10 @@ public class Util {
 //                    if (!TextUtils.isEmpty(m.getTime()))
 //                        data.setDate(Long.parseLong(m.getTime()));
                     m.setTime(sFormat4.format(Long.parseLong(m.getTime())));
-                    Log.e("tag","setTimesetTime="+m.getTime());
+                    Log.e("tag", "setTimesetTime=" + m.getTime());
                     data.setDate(sFormat3.parse(time + m.getTime()).getTime());
                 } catch (Exception e) {
-                    Log.e("tag","setTimesetTime="+e);
+                    Log.e("tag", "setTimesetTime=" + e);
                     e.printStackTrace();
                 }
                 hisData.add(data);
@@ -221,5 +220,77 @@ public class Util {
             hisData.add(data);
         }
         return hisData;
+    }
+
+
+    public static FuTuModel getDrawing(Context mContext) {
+
+        InputStream is = mContext.getResources().openRawResource(R.raw.futu);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String json = writer.toString();
+        final FuTuModel model  = new Gson().fromJson(json, FuTuModel.class);
+
+        return model;
+
+    }
+
+
+    public static List<HisData> getDrawing1(Context mContext) {
+        InputStream is = mContext.getResources().openRawResource(R.raw.futu);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String json = writer.toString();
+        final FuTuModel model  = new Gson().fromJson(json, FuTuModel.class);
+
+        List<HisData> hisData = new ArrayList<>();
+
+        for(int i=0;i<model.data.stickline_ema.line_data.size();i++){
+            FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
+
+            HisData d = new HisData();
+            d.setOpen(lineData.high);
+            d.setClose(lineData.low);
+            d.width = lineData.width;
+            d.color = lineData.color;
+            d.groupId = i;
+            d.setDate(getStringToDate(lineData.stickline_date));
+            hisData.add(d);
+        }
+
+        return hisData;
+
+    }
+    public static long getStringToDate(String dateString) {
+        Date date = new Date();
+        try{
+            date = sFormat2.parse(dateString);
+        } catch(ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return date.getTime();
     }
 }
