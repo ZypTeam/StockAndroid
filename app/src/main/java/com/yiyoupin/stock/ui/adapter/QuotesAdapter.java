@@ -120,7 +120,7 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
 
         private CustomQuotesTitleView title;
         private View bottomLine;
-        private TextView name, code, cur_price;
+        private TextView name, code, cur_price,up_down;
 
         public QuotesChildViewHolder(View itemView) {
             super(itemView);
@@ -129,6 +129,7 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
             code = itemView.findViewById(R.id.code);
             cur_price = itemView.findViewById(R.id.cur_price);
             bottomLine = itemView.findViewById(R.id.bottom_line);
+            up_down = itemView.findViewById(R.id.up_down);
         }
 
         public void update(QuotesItemModel model, ExpandableGroup group, int position) {
@@ -142,15 +143,21 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
             title.setData(groupName);
             if ("涨幅榜".equals(groupName)) {
                 cur_price.setText(model.getTrade_volumn() + "");
+                up_down.setText(model.getOffset_size()+"");
             } else if (StringUtil.equals("跌幅榜", groupName)) {
+                up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getTrade_volumn() + "");
             } else if (StringUtil.equals("成交额榜", groupName)) {
+                up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getTrade_amount() + "");
             } else if (StringUtil.equals("换手率榜", groupName)) {
+                up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getChange_rate() + "");
             } else if (StringUtil.equals("量比榜", groupName)) {
+                up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getTrade_volumn() + "");
             } else if (StringUtil.equals("新股行情", groupName)) {
+                up_down.setText(model.getTrade_volumn()+"");
                 cur_price.setText(model.getTrade_amount() + "");
             }
 

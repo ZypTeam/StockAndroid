@@ -43,16 +43,22 @@ public class CustomQuotesTitleView extends ConstraintLayout {
     public void setData(String title) {
         if("涨幅榜".equals(title) ){
             textTitle2.setText("成交量（万股）");
+            textTitle3.setText("涨跌幅%");
         }else if (StringUtil.equals("跌幅榜",title)){
             textTitle2.setText("成交量（万股）");
+            textTitle3.setText("涨跌幅%");
         }else if (StringUtil.equals("成交额榜",title)){
             textTitle2.setText("成交金额（万股）");
+            textTitle3.setText("涨跌幅%");
         }else if (StringUtil.equals("换手率榜",title)){
             textTitle2.setText("换手率");
+            textTitle3.setText("涨跌幅%");
         }else if (StringUtil.equals("量比榜",title)){
             textTitle2.setText("成交量（万股）");
+            textTitle3.setText("涨跌幅%");
         }else if (StringUtil.equals("新股行情",title)){
             textTitle2.setText("成交额(万元)");
+            textTitle3.setText("成交量(万股)");
         }
     }
 }
