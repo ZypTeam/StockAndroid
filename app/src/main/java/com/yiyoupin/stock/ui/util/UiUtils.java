@@ -11,6 +11,7 @@ import com.yiyoupin.stock.model.UserModel;
 import com.yiyoupin.stock.ui.activity.AboutUsActivity;
 import com.yiyoupin.stock.ui.activity.AuthChangePassActivity;
 import com.yiyoupin.stock.ui.activity.AuthPhoneCodeActivity;
+import com.yiyoupin.stock.ui.activity.BayVipActivity;
 import com.yiyoupin.stock.ui.activity.ChangePassActivity;
 import com.yiyoupin.stock.ui.activity.ChartsDetailActivity;
 import com.yiyoupin.stock.ui.activity.ChartsListActivity;
@@ -190,6 +191,13 @@ public class UiUtils {
      * */
     public static final void goStockShowActivity(Context mContext,Bundle bundle){
         goActivity(mContext,bundle, StockShowActivity.class);
+    }
+
+    /**
+     *  购买vip
+     * */
+    public static final void goBuyVip(Context mContext,Bundle bundle){
+        goActivity(mContext,bundle, BayVipActivity.class);
     }
 
 

@@ -9,6 +9,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jusfoun.baselibrary.Util.StringUtil;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
@@ -19,6 +20,7 @@ import com.yiyoupin.stock.model.QuotesModel;
 import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.util.UiUtils;
+import com.yiyoupin.stock.ui.view.CustomQuotesTitleView;
 
 import java.util.List;
 
@@ -31,14 +33,15 @@ import static android.view.animation.Animation.RELATIVE_TO_SELF;
  * @describe
  */
 
-public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.QuotesGroupViewHolder,QuotesAdapter.QuotesChildViewHolder> {
+public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.QuotesGroupViewHolder, QuotesAdapter.QuotesChildViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
-    public QuotesAdapter(Context ctx,List<QuotesModel> list) {
+
+    public QuotesAdapter(Context ctx, List<QuotesModel> list) {
         super(list);
-        this.context=ctx;
-        inflater=LayoutInflater.from(ctx);
+        this.context = ctx;
+        inflater = LayoutInflater.from(ctx);
     }
 
     @Override
@@ -55,12 +58,12 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
 
     @Override
     public void onBindChildViewHolder(QuotesChildViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
-        holder.update(((QuotesModel)group).getStock_list().get(childIndex),group,childIndex);
+        holder.update(((QuotesModel) group).getStock_list().get(childIndex), group, childIndex);
     }
 
     @Override
     public void onBindGroupViewHolder(QuotesGroupViewHolder holder, int flatPosition, ExpandableGroup group) {
-        holder.update((QuotesModel) group,flatPosition);
+        holder.update((QuotesModel) group, flatPosition);
     }
 
     class QuotesGroupViewHolder extends GroupViewHolder {
@@ -68,19 +71,20 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
         private View line;
         private ImageView mArrow;
         private TextView name;
+
         public QuotesGroupViewHolder(View itemView) {
             super(itemView);
             mArrow = (ImageView) itemView.findViewById(R.id.arrow);
-            name=itemView.findViewById(R.id.name);
-            line=itemView.findViewById(R.id.line);
+            name = itemView.findViewById(R.id.name);
+            line = itemView.findViewById(R.id.line);
 
         }
 
         public void update(QuotesModel model, int position) {
             name.setText(model.getName());
-            if (position==0){
+            if (position == 0) {
                 line.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 line.setVisibility(View.GONE);
             }
         }
@@ -114,8 +118,9 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
 
     class QuotesChildViewHolder extends ChildViewHolder {
 
-        private View title,bottomLine;
-        private TextView name,code,cur_price;
+        private CustomQuotesTitleView title;
+        private View bottomLine;
+        private TextView name, code, cur_price;
 
         public QuotesChildViewHolder(View itemView) {
             super(itemView);
@@ -123,24 +128,39 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
             name = itemView.findViewById(R.id.name);
             code = itemView.findViewById(R.id.code);
             cur_price = itemView.findViewById(R.id.cur_price);
-            bottomLine=itemView.findViewById(R.id.bottom_line);
+            bottomLine = itemView.findViewById(R.id.bottom_line);
         }
 
-        public void update(QuotesItemModel model,ExpandableGroup group, int position) {
-            if (position==0){
+        public void update(QuotesItemModel model, ExpandableGroup group, int position) {
+            if (position == 0) {
                 title.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 title.setVisibility(View.GONE);
             }
 
-            if (position==group.getItemCount()-1){
+            String groupName = group.getTitle();
+            title.setData(groupName);
+            if ("涨幅榜".equals(groupName)) {
+                cur_price.setText(model.getTrade_volumn() + "");
+            } else if (StringUtil.equals("跌幅榜", groupName)) {
+                cur_price.setText(model.getTrade_volumn() + "");
+            } else if (StringUtil.equals("成交额榜", groupName)) {
+                cur_price.setText(model.getTrade_amount() + "");
+            } else if (StringUtil.equals("换手率榜", groupName)) {
+                cur_price.setText(model.getChange_rate() + "");
+            } else if (StringUtil.equals("量比榜", groupName)) {
+                cur_price.setText(model.getTrade_volumn() + "");
+            } else if (StringUtil.equals("新股行情", groupName)) {
+                cur_price.setText(model.getTrade_amount() + "");
+            }
+
+            if (position == group.getItemCount() - 1) {
                 bottomLine.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 bottomLine.setVisibility(View.GONE);
             }
             name.setText(model.getStock_name());
             code.setText(model.getStock_code());
-            cur_price.setText(model.getOffset_size());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

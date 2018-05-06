@@ -23,13 +23,12 @@ import com.yiyoupin.stock.comment.ViewLoadingListener;
 import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.model.UserModel;
-import com.yiyoupin.stock.ui.activity.GetPhoneCodeActivity;
 import com.yiyoupin.stock.ui.util.ImageLoderUtil;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.util.HashMap;
 
-import rx.Subscription;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -42,6 +41,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class MyInfoView extends ConstraintLayout {
 
+    protected TextView buyVip;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     protected TextView username;
@@ -89,20 +89,25 @@ public class MyInfoView extends ConstraintLayout {
         aboutUs = (TextView) findViewById(R.id.about_us);
         msgList = (TextView) findViewById(R.id.msg_list);
         exit = (TextView) findViewById(R.id.exit);
+        buyVip = (TextView) findViewById(R.id.buy_vip);
 
     }
 
     private void initAction() {
-        rxManage=new RxManage();
+        rxManage = new RxManage();
         rxManage.on(Constant.EDIT_USER, new Action1<Object>() {
             @Override
             public void call(Object o) {
-                userModel=UserInfoDelegate.getInstance().getUserInfo();
+                userModel = UserInfoDelegate.getInstance().getUserInfo();
                 updateView();
             }
         });
         iconHead.setOnClickListener(v -> {
 //            goActivity(null, LoginActivity.class);
+        });
+
+        buyVip.setOnClickListener(v -> {
+            UiUtils.goBuyVip(mContext,null);
         });
 
         editPersion.setOnClickListener(v -> {
@@ -124,7 +129,7 @@ public class MyInfoView extends ConstraintLayout {
         msgList.setOnClickListener(v -> {
             UiUtils.goMsgList(mContext);
         });
-        exit.setOnClickListener(new View.OnClickListener() {
+        exit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 exitLogin();
@@ -188,12 +193,12 @@ public class MyInfoView extends ConstraintLayout {
                             loadingListener.hideLoading();
                         }
                         if (userDataModel.getCode() == 0) {
-                            if (userDataModel.getData()==null
-                                    || TextUtils.isEmpty(userDataModel.getData().getId())){
+                            if (userDataModel.getData() == null
+                                    || TextUtils.isEmpty(userDataModel.getData().getId())) {
                                 return;
                             }
                             UserInfoDelegate.getInstance().saveUserInfo(userDataModel.getData());
-                            userModel=userDataModel.getData();
+                            userModel = userDataModel.getData();
                             updateView();
                         }
                     }
@@ -208,7 +213,7 @@ public class MyInfoView extends ConstraintLayout {
                 });
     }
 
-    private void updateView(){
+    private void updateView() {
         if (userModel != null) {
             username.setText(userModel.getName());
             consume.setText("消费金额:" + userModel.getConsume_total());
@@ -216,7 +221,7 @@ public class MyInfoView extends ConstraintLayout {
         }
     }
 
-    public <T extends BaseModel> void addNetwork(rx.Observable<T> observable, Action1<T> next, Action1<Throwable> error) {
+    public <T extends BaseModel> void addNetwork(Observable<T> observable, Action1<T> next, Action1<Throwable> error) {
         mCompositeSubscription.add(
                 observable.observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())

@@ -337,7 +337,7 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
             if (model instanceof QuotesItemModel) {
                 textTitle.setText(((QuotesItemModel) model).getStock_name());
                 textCount1.setText(((QuotesItemModel) model).getStock_price());
-                textCount2.setText(((QuotesItemModel) model).getOffset_size());
+                textCount2.setText(((QuotesItemModel) model).getOffset_size()+"");
                 textId.setText(((QuotesItemModel) model).getStock_code());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

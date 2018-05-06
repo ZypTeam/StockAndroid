@@ -2,8 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="30dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
     android:background="#202020"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -29,8 +27,7 @@
 
     <View
         android:id="@+id/line2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/name"
         android:background="@color/line_color"
         android:layout_width="1px"
         android:layout_height="match_parent"/>
@@ -43,22 +40,25 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/name"
         android:text="股票名称"
         android:textSize="12sp"
         android:textColor="#d3d3d3"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:paddingLeft="22dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/line1"
-        app:layout_constraintRight_toRightOf="@+id/line2"
-        android:layout_width="0dp"
+        android:layout_width="125dp"
         android:layout_height="match_parent" />
 
     <TextView
+        android:id="@+id/content"
         android:text="工商银行"
         android:textSize="12sp"
         android:textColor="#d3d3d3"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:paddingLeft="46dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/line2"

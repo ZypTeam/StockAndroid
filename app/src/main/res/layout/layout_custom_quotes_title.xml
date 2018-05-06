@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/text_title_2"
-        android:text="当前价"
+        android:text="成交量（万股）"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,6 +5,7 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
 
@@ -16,6 +17,8 @@ import com.yiyoupin.stock.R;
 
 public class FormView extends ConstraintLayout {
     protected View bottomLine;
+    protected TextView name;
+    protected TextView content;
 
     public FormView(Context context) {
         this(context, null);
@@ -33,13 +36,23 @@ public class FormView extends ConstraintLayout {
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_from_view, this);
         bottomLine = findViewById(R.id.bottom_line);
+        name = findViewById(R.id.name);
+        content = findViewById(R.id.content);
     }
 
-    public void setBottomLine(boolean show){
-        if (show){
+    public void setBottomLine(boolean show) {
+        if (show) {
             bottomLine.setVisibility(VISIBLE);
-        }else {
+        } else {
             bottomLine.setVisibility(GONE);
         }
+    }
+
+    public void setName(String text) {
+        name.setText(text);
+    }
+
+    public void setContent(String text) {
+        content.setText(text);
     }
 }
