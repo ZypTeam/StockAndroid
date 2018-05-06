@@ -235,4 +235,9 @@ public class MainActivity extends BaseStockActivity implements FragmentCallback 
                 });
 
     }
+
+    @Override
+    public boolean isNeedSwipe() {
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.jusfoun.baselibrary.base.BaseModel;
@@ -69,6 +70,18 @@ public class OptionalFrgament extends BaseStockFragment {
         titlebar.setLeftGone();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
+
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
     }
 
     private void refreshList(){
@@ -78,12 +91,17 @@ public class OptionalFrgament extends BaseStockFragment {
                 , new Action1<HomeListModel>() {
                     @Override
                     public void call(HomeListModel model) {
+                        recyclerView.refreshComplete();
+                        recyclerView.loadMoreComplete();
                         hideLoadDialog();
                         if (model.getCode() == 0) {
                             List<BaseModel> list=new ArrayList<>();
+
+                            Log.e("tag","getStock_listgetStock_list1="+model.getData().getStock_list().size());
                             for (StockModel stockModel : model.getData().getStock_list()) {
                                 list.add(stockModel);
                             }
+                            Log.e("tag","getStock_listgetStock_list2="+list.size());
                             adapter.refreshList(list);
                         }
                     }
@@ -91,6 +109,8 @@ public class OptionalFrgament extends BaseStockFragment {
                     @Override
                     public void call(Throwable throwable) {
                         hideLoadDialog();
+                        recyclerView.refreshComplete();
+                        recyclerView.loadMoreComplete();
                     }
                 });
     }

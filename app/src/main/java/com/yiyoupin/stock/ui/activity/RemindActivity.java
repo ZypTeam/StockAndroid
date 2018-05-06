@@ -5,12 +5,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jusfoun.baselibrary.net.Api;
+import com.jusfoun.baselibrary.permissiongen.Utils;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.delegate.HeaderStockInterceptor;
-import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.UserDataModel;
-import com.yiyoupin.stock.ui.util.UiUtils;
+import com.yiyoupin.stock.model.VipModel;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.RemindView;
 
@@ -36,7 +35,7 @@ public class RemindActivity extends BaseTakeActivity {
     protected BackTitleView titlebar;
 
 
-    private  String stock_code;
+    private String stock_code;
 
 
     @Override
@@ -69,7 +68,8 @@ public class RemindActivity extends BaseTakeActivity {
         titlebar.setRightText("保存", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setRemindNet();
+//                setRemindNet();
+                isVip();
             }
         });
 
@@ -85,33 +85,33 @@ public class RemindActivity extends BaseTakeActivity {
     }
 
 
-    protected  void setRemindNet(){
-        if(TextUtils.isEmpty(viewZhang.getText())){
-            Toast.makeText(mContext,"请输入股票涨到",Toast.LENGTH_SHORT).show();
+    protected void setRemindNet() {
+        if (TextUtils.isEmpty(viewZhang.getText())) {
+            Toast.makeText(mContext, "请输入股票涨到", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(TextUtils.isEmpty(viewZhang.getText())){
-            Toast.makeText(mContext,"请输入股票跌到",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(viewZhang.getText())) {
+            Toast.makeText(mContext, "请输入股票跌到", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(TextUtils.isEmpty(viewZhang.getText())){
-            Toast.makeText(mContext,"请输入日涨幅超",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(viewZhang.getText())) {
+            Toast.makeText(mContext, "请输入日涨幅超", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
-        if(TextUtils.isEmpty(viewZhang.getText())){
-            Toast.makeText(mContext,"请输入日跌幅超",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(viewZhang.getText())) {
+            Toast.makeText(mContext, "请输入日跌幅超", Toast.LENGTH_SHORT).show();
             return;
         }
         showLoadDialog();
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("up_to",viewZhang.getText() );
+        params.put("up_to", viewZhang.getText());
         params.put("down_to", viewDie.getText());
-        params.put("day_up_rate",viewRizhang.getText());
+        params.put("day_up_rate", viewRizhang.getText());
         params.put("day_down_rate", viewRidie.getText());
         params.put("up_to_remind", viewZhang.getState());
         params.put("down_to_remind", viewRidie.getState());
@@ -126,6 +126,36 @@ public class RemindActivity extends BaseTakeActivity {
                         if (userDataModel.getCode() == 0) {
                             showToast("保存成功");
                             finish();
+                        } else {
+                            showToast(userDataModel.getMsg());
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+
+    }
+
+
+    protected void isVip() {
+        showLoadDialog();
+
+        addNetwork(Api.getInstance().getService(ApiService.class).getVipState()
+                , new Action1<VipModel>() {
+                    @Override
+                    public void call(VipModel userDataModel) {
+                        hideLoadDialog();
+                        if (userDataModel.getCode() == 0) {
+
+
+                            if (userDataModel.data != null && "1".equals(userDataModel.data.isvip)) {
+                                setRemindNet();
+                            }else{
+                                goActivity(null,BayVipActivity.class);
+                            }
                         } else {
                             showToast(userDataModel.getMsg());
                         }

@@ -183,6 +183,11 @@
         <activity
             android:name=".ui.activity.AuthChangePassActivity"
             android:screenOrientation="portrait" />
+        <!--购买VIP-->
+        <activity
+            android:name=".ui.activity.BayVipActivity"
+            android:screenOrientation="portrait" />
+
 
         <!--qq分享-->
         <activity

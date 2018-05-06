@@ -60,12 +60,7 @@ public class SearchResultActivity extends BaseStockActivity {
     @Override
     public void initView() {
 
-        netError.setNetClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refresh(true,true);
-            }
-        });
+
         searchResult = (XRecyclerView) findViewById(R.id.search_result);
         titleView = (BackTitleView) findViewById(R.id.title_view);
         search = (TextView) findViewById(R.id.search);
@@ -79,6 +74,12 @@ public class SearchResultActivity extends BaseStockActivity {
         searchResult.setLayoutManager(new LinearLayoutManager(mContext));
         searchResult.setPullRefreshEnabled(false);
         searchResult.setLoadingMoreEnabled(true);
+        netError.setNetClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh(true,true);
+            }
+        });
 
         search.setOnClickListener(v -> {
             onBackPressed();

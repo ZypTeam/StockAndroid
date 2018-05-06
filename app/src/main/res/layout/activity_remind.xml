@@ -1,73 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1e1e1e"
     android:orientation="vertical">
 
     <com.yiyoupin.stock.ui.view.BackTitleView
+        android:id="@+id/titlebar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/titlebar"/>
+        android:layout_height="wrap_content" />
 
     <View
+        android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:layout_below="@+id/titlebar"
         android:background="@color/line_color_black" />
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/view_line">
 
-        <LinearLayout
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_zhang"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_zhang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_die"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_die"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_rizhang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_rizhang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_ridie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_ridie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_gonggao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_gonggao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_buy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_mai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_mai"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+        <com.yiyoupin.stock.ui.view.RemindView
+            android:id="@+id/view_vip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-            <com.yiyoupin.stock.ui.view.RemindView
-                android:id="@+id/view_vip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+    </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="30dp"
+        android:text="购买VIP服务器免费推送消息，非VIP服务器会员，暂不提供推送服务！"
+        android:textColor="@color/color_red"
+        android:textSize="15sp" />
+</RelativeLayout>

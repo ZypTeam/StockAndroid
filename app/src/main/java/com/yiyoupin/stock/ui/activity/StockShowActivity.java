@@ -125,7 +125,7 @@ public class StockShowActivity extends BaseStockActivity {
 
     @Override
     public void initAction() {
-        titlebar.setTitle("个股展示");
+
 
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
@@ -275,6 +275,12 @@ public class StockShowActivity extends BaseStockActivity {
 
                         if (model.data != null) {
                             viewTop.setData(model.data);
+
+                        }
+
+
+                        if(model.data!=null&&model.data.stock_detail!=null){
+                            titlebar.setTitle(model.data.stock_detail.stock_name);
                         }
 
                         if (model.data != null && model.data.my_tactics != null && model.data.my_tactics.size() > 0) {
@@ -331,5 +337,9 @@ public class StockShowActivity extends BaseStockActivity {
 
     }
 
+    @Override
+    public boolean isNeedSwipe() {
+        return false;
+    }
 
 }

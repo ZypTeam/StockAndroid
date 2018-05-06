@@ -108,8 +108,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 isShadow.setAlpha(1-fractionScreen);
             }
         });
+
         return container;
     }
+
+
+
 
     @Override
     protected void onDestroy() {

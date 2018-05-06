@@ -76,11 +76,13 @@ public class StocksTopView extends BaseView {
             textHuan.setText(model.stock_detail.offset_size);
             textLiang.setText(model.stock_detail.traNumber);
             textE.setText(model.stock_detail.traAmount);
+
+            textPrice.setText(model.stock_detail.stock_price);
+            textCount1.setText(model.stock_detail.offset_size);
+            textCount2.setText(model.stock_detail.increase);
         }
 //        if(model.trade_detail!=null) {
-//            textPrice.setText(model.trade_detail.stock_price);
-//            textCount1.setText(model.trade_detail.trade_volumn);
-//            textCount2.setText(model.trade_detail.offset_size);
+//
 //        }
     }
 }

@@ -27,6 +27,7 @@ import com.yiyoupin.stock.model.QuotesModel;
 import com.yiyoupin.stock.model.StrategiesMoreModel;
 import com.yiyoupin.stock.model.TechnologyMoreModel;
 import com.yiyoupin.stock.model.UserDataModel;
+import com.yiyoupin.stock.model.VipModel;
 import com.yiyoupin.stock.ui.HomeListModel;
 
 import java.util.Map;
@@ -387,5 +388,15 @@ public interface ApiService {
      */
     @GET("/stock/ftcl/detail.doo")
     Observable<UserDataModel> getFtNet();
+
+
+
+    /**
+     * 股票详情-K先图
+     * @param params
+     * @return
+     */
+    @GET("/stock/user/vip.do")
+    Observable<VipModel> getVipState();
 
 }

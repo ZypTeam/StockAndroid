@@ -173,23 +173,22 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
                     // calculate the body
 
                     barSpace = 0f;
-                    if(z==3){
+                    if(z==4){
                         mBodyBuffers[0] = xPos - 0.1f+ barSpace;
                         mBodyBuffers[2] = (xPos + 0.1f)-barSpace;
-                        mRenderPaint.setColor(Color.parseColor("#FFB6C1"));
-
-                    }else if(z==2){
+                    }
+                    if(z==3){
                         mBodyBuffers[0] = xPos - 0.2f+ barSpace;
                         mBodyBuffers[2] = (xPos + 0.2f)-barSpace;
-                        mRenderPaint.setColor(Color.parseColor("#DB7093"));
-                    }else if(z==1){
+                    }else if(z==2){
                         mBodyBuffers[0] = xPos - 0.3f+ barSpace;
                         mBodyBuffers[2] = (xPos + 0.3f)-barSpace;
-                        mRenderPaint.setColor(Color.parseColor("#8B008B"));
+                    }else if(z==1){
+                        mBodyBuffers[0] = xPos - 0.4f+ barSpace;
+                        mBodyBuffers[2] = (xPos + 0.4f)-barSpace;
                     }else if(z==0){
                         mBodyBuffers[0] = xPos - 0.5f+ barSpace;
                         mBodyBuffers[2] = (xPos + 0.5f)- barSpace;
-                        mRenderPaint.setColor(Color.parseColor("#0000FF"));
                     }
                     Log.e("tag","color="+Color.parseColor(e.color.get(z))+" "+e.color.get(z));
                     mRenderPaint.setColor(Color.parseColor(e.color.get(z)));
