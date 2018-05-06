@@ -1,5 +1,6 @@
 package com.yiyoupin.stock.ui.activity;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.comment.Constant;
+import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.model.SearchListModel;
 import com.yiyoupin.stock.model.SearchModel;
 import com.yiyoupin.stock.ui.adapter.SearchAdapter;
@@ -116,6 +118,12 @@ public class SearchResultActivity extends BaseStockActivity {
                     }
                     SharePrefenceUtils.getInstance().setSet(HISTORY, historySearch);
                 }
+
+                Bundle bundle = new Bundle();
+                bundle.putString(StockShowActivity.ID,model.getStock_id()+"");
+                bundle.putString(StockShowActivity.CODE, model.getStock_code());
+                bundle.putString(StockShowActivity.CHOICENESS_ID, "");
+                UiUtils.goStockShowActivity(mContext, bundle);
             }
         });
 
