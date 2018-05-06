@@ -43,8 +43,16 @@ public class NewsAdapter extends FragmentPagerAdapter {
 //        if (mTitles != null && mTitles.size() > 0) {
 //            return mTitles.get(position);
 //        }
-
+        if (position==0){
+            return "早晚报";
+        }else if(position==1){
+            return "停复牌";
+        }else if(position==2){
+            return "公告";
+        }
         return "公告";
+
+
     }
 
 

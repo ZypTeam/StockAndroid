@@ -78,13 +78,10 @@ public class NewsFragment extends BaseStockFragment {
 
         if(newModel!=null&&newModel.data!=null) {
             if (position == 0) {
-                Log.e("tag","newModelnewModel1");
                 adapter.refreshList(newModel.data.daily_list);
             }else if(position==1){
-                Log.e("tag","newModelnewModel2");
                 adapter.refreshList(newModel.data.stop_list);
             }else if(position==2){
-                Log.e("tag","newModelnewModel3");
                 adapter.refreshList(newModel.data.notice_list);
             }
         }

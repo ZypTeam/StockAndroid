@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.SearchModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.yiyoupin.stock.ui.util.TimeUtil;
 
 /**
  * @author zhaoyapeng
@@ -49,12 +51,24 @@ public class NewsItemAdapter<T> extends BaseAdapter<BaseModel> {
             if(model instanceof NewModel.NewsItemModel) {
                 textTitle.setText(((NewModel.NewsItemModel) model).title);
                 textTime.setText(((NewModel.NewsItemModel) model).daily_date);
+
+                if(!TextUtils.isEmpty(((NewModel.NewsItemModel) model).daily_date)){
+                    textTime.setText(TimeUtil.getDateToString(((NewModel.NewsItemModel) model).daily_date,"yyyy-MM-dd"));
+                }
             }else if(model instanceof NewModel.NewsItemStopModel){
                 textTitle.setText(((NewModel.NewsItemStopModel) model).stock_name);
                 textTime.setText(((NewModel.NewsItemStopModel) model).stop_time);
+
+
+                if(!TextUtils.isEmpty(((NewModel.NewsItemStopModel) model).stop_time)){
+                    textTime.setText(TimeUtil.getDateToString(((NewModel.NewsItemStopModel) model).stop_time,"yyyy-MM-dd"));
+                }
             }else if(model instanceof NewModel.NewsItemNoticeModel){
                 textTitle.setText(((NewModel.NewsItemNoticeModel) model).title);
-                textTime.setText(((NewModel.NewsItemNoticeModel) model).notice_time);
+                if(!TextUtils.isEmpty(((NewModel.NewsItemNoticeModel) model).notice_time)){
+                    textTime.setText(TimeUtil.getDateToString(((NewModel.NewsItemNoticeModel) model).notice_time,"yyyy-MM-dd"));
+                }
+
             }
         }
 

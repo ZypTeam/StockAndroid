@@ -21,6 +21,9 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
         public List<QuotesItemModel> history_stock;
         public TacticReviewModel tactic_review;
         public BuyselectionModel buyselection;
+        public BuyselectionModel tactic;
+
+
     }
 
 
@@ -38,6 +41,7 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
         public String yield_rate;
         public String choiceness_name;
         public String description;
+        public String tactics_name;
 
 
     }

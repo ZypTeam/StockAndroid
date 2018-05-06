@@ -30,7 +30,7 @@ import java.io.Serializable;
  */
 public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
 
-    public static int TYPE_STRATEGIES = 1;// 选个策略
+    public static int TYPE_STRATEGIES = 1;// 选股策略
     public static int TYPE_FEATURED = 2;// 买点精选
     public static int TYPE_FORM = 3;// 技术形态
     public static int TYPE_FORM_LIST = 4;// 技术形态列表
@@ -160,9 +160,15 @@ public class HomeListAdapter<T> extends BaseAdapter<BaseModel> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((HomeModel.BuyselectionItemModel) model).stock_id);
+//                        UiUtils.goStrategiesDetailActivity(bundle, mContext);
+
                         Bundle bundle = new Bundle();
-                        bundle.putString(StrategiesDetailActivity.CHOICENESS_ID, ((HomeModel.BuyselectionItemModel) model).stock_id);
-                        UiUtils.goStrategiesDetailActivity(bundle, mContext);
+                        bundle.putString(StockShowActivity.ID, ((HomeModel.BuyselectionItemModel) model).stock_id);
+                        bundle.putString(StockShowActivity.CODE, ((HomeModel.BuyselectionItemModel) model).stock_code);
+                        bundle.putString(StockShowActivity.CHOICENESS_ID, choiceness_id);
+                        UiUtils.goStockShowActivity(mContext, bundle);
                     }
                 });
             }

@@ -109,7 +109,7 @@ public class StrategiesDetailActivity extends BaseStockActivity {
     private void getTechnologyNet() {
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
-        map.put("choiceness_id", choiceness_id);
+        map.put("security_selection_id", choiceness_id);
         addNetwork(Api.getInstance().getService(ApiService.class).getStrategiesDetailNet(map)
                 , new Action1<StrategiesDetailModel>() {
                     @Override
@@ -120,13 +120,13 @@ public class StrategiesDetailActivity extends BaseStockActivity {
                                 todayAdapter.refreshList(model.data.today_stock);
                                 phoneAdapter.refreshList(model.data.to_phone_stock);
                                 hisAdapter.refreshList(model.data.history_stock);
-                                if (model.data.buyselection != null) {
-                                    if (!TextUtils.isEmpty(model.data.buyselection.choiceness_name)) {
-                                        textTitle.setText(model.data.buyselection.choiceness_name);
+                                if (model.data.tactic != null) {
+                                    if (!TextUtils.isEmpty(model.data.tactic.tactics_name)) {
+                                        textTitle.setText(model.data.tactic.tactics_name);
                                     }
 
-                                    if (!TextUtils.isEmpty(model.data.buyselection.description)) {
-                                        textDes.setText(model.data.buyselection.description);
+                                    if (!TextUtils.isEmpty(model.data.tactic.description)) {
+                                        textDes.setText(model.data.tactic.description);
                                     }
                                 }
                             }

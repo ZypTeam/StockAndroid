@@ -15,7 +15,6 @@ import com.yiyoupin.stock.R;
  */
 
 public class CustomQuotesTitleView extends ConstraintLayout {
-    protected View rootView;
     protected TextView textTitle1;
     protected TextView textTitle2;
     protected TextView textTitle3;

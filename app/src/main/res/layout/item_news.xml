@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:minLines="2"
             android:textColor="#eeeeee"
             android:textSize="15sp"
             android:lineSpacingExtra="5dp"/>

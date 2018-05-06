@@ -272,7 +272,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @GET("/stock/buyselection/detail.do")
+//    @GET("/stock/buyselection/detail.do")
+    @GET("/stock/securityselection/detail.do")
     Observable<StrategiesDetailModel> getStrategiesDetailNet(@QueryMap Map<String,String> params);
 
 
