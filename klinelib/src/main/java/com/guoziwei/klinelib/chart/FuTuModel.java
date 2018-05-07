@@ -2,6 +2,7 @@ package com.guoziwei.klinelib.chart;
 
 
 import com.guoziwei.klinelib.model.HisData;
+import com.jusfoun.baselibrary.base.BaseModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @Email zyp@jusfoun.com
  * @Description ${TODO}
  */
-public class FuTuModel implements Serializable {
+public class FuTuModel extends BaseModel implements Serializable {
 
     public FutuData data;
     public List<List<HisData>> lists;

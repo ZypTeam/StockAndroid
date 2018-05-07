@@ -383,12 +383,12 @@ public interface ApiService {
 
 
     /**
-     * 股票详情-K先图
+     * 股票详情-附图
      * @param params
      * @return
      */
-    @GET("/stock/ftcl/detail.doo")
-    Observable<UserDataModel> getFtNet();
+    @GET("/stock/ftcl/detail.do")
+    Observable<FuTuModel> getFtNet(@QueryMap Map<String,String> params);
 
 
 
