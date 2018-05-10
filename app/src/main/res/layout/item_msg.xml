@@ -22,6 +22,7 @@
         android:layout_height="wrap_content" />
     
     <TextView
+        android:id="@+id/content"
         app:layout_constraintTop_toBottomOf="@+id/time"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -32,7 +33,6 @@
         android:textSize="16sp"
         android:padding="16dp"
         android:background="@drawable/bg_msg_info"
-        android:text="截止二零一六年股票股票股票股票股票截止二零一六年股票股票股票股票股票"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 

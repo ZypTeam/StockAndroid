@@ -67,11 +67,7 @@ public class MsgListActivity extends BaseStockActivity {
             }
         });
 
-        List<MsgModel> list=new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new MsgModel());
-        }
-        adapter.refreshList(list);
+        refresh(true,true);
     }
 
     private void refresh(boolean showLoading, boolean refresh) {

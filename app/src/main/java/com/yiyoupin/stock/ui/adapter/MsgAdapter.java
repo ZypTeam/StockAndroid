@@ -2,6 +2,7 @@ package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.MsgModel;
@@ -30,13 +31,19 @@ public class MsgAdapter extends BaseAdapter<MsgModel> {
     }
 
     class ViewHolder extends BaseViewHolder<MsgModel> {
+        private TextView time;
+        private TextView content;
         public ViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
+            time=itemView.findViewById(R.id.time);
+            content=itemView.findViewById(R.id.content);
         }
 
         @Override
         public void update(MsgModel model) {
 
+            time.setText(model.getMessage_time());
+            content.setText(model.getMessage_content());
         }
     }
 }
