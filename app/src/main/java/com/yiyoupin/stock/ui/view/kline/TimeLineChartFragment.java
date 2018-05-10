@@ -1,12 +1,18 @@
 package com.yiyoupin.stock.ui.view.kline;
 
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.guoziwei.klinelib.chart.TimeLineView;
 import com.guoziwei.klinelib.model.HisData;
+import com.jusfoun.baselibrary.Util.PhoneUtil;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.MingXiModel;
 import com.yiyoupin.stock.model.StockDetailModel;
@@ -21,6 +27,8 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
 
     protected ViewPager viewpager;
+    protected ImageView imgStatus;
+    protected LinearLayout layoutMingxi;
     private TimeLineView mTimeLineView;
     private int mType;
 
@@ -52,12 +60,60 @@ public class TimeLineChartFragment extends BaseStockFragment {
         mTimeLineView.setCount(count, count, count);
 //        initData();
         viewpager = (ViewPager) rootView.findViewById(R.id.viewpager);
+        imgStatus = (ImageView) rootView.findViewById(R.id.img_status);
+        layoutMingxi = (LinearLayout) rootView.findViewById(R.id.layout_mingxi);
     }
 
     @Override
     public void initAction() {
-
+        imgStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (imgStatus.getTag() == null || imgStatus.getTag().equals("open")) {
+                    // close
+                    imgStatus.setTag("close");
+                    statrClose();
+                    imgStatus.setImageResource(R.drawable.img_open);
+                } else {
+                    imgStatus.setTag("open");
+                    statrOpen();
+                    imgStatus.setImageResource(R.drawable.img_close);
+                }
+            }
+        });
     }
+
+
+    private void statrClose() {
+
+        ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(layoutMingxi, "translationX", 0, PhoneUtil.dip2px(mContext, 126));
+        translationYAnimator.setDuration(500);
+        translationYAnimator.setInterpolator(new DecelerateInterpolator());
+        translationYAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+
+            }
+        });
+
+        translationYAnimator.start();
+    }
+
+    private void statrOpen() {
+
+        ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(layoutMingxi, "translationX", PhoneUtil.dip2px(mContext, 126), 0);
+        translationYAnimator.setDuration(500);
+        translationYAnimator.setInterpolator(new DecelerateInterpolator());
+        translationYAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+
+            }
+        });
+
+        translationYAnimator.start();
+    }
+
 
     protected void initData() {
 
@@ -106,9 +162,6 @@ public class TimeLineChartFragment extends BaseStockFragment {
     }
 
     public void setData(StockDetailModel.StockDetailDataModel model) {
-
-
-
 
 
         if (model != null && model.dapandata != null) {
@@ -184,9 +237,9 @@ public class TimeLineChartFragment extends BaseStockFragment {
             buyfiveModel.count = model.stock_detail.buyFive;
             list.add(buyfiveModel);
 
-            mingXiModel.list= list;
+            mingXiModel.list = list;
 
-            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(),mingXiModel,model));
+            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(), mingXiModel, model));
         }
 
     }

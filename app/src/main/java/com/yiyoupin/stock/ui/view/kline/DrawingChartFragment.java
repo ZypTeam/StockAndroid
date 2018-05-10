@@ -27,7 +27,7 @@ public class DrawingChartFragment extends BaseStockFragment {
 
     private DrawingChartView mKLineView;
     private int mDay;
-    private String stock_id = "", tactics_id = "";
+    private String stock_id = "", stock_code = "";
 
     public DrawingChartFragment() {
         // Required empty public constructor
@@ -38,7 +38,7 @@ public class DrawingChartFragment extends BaseStockFragment {
         Bundle bundle = new Bundle();
         bundle.putInt("day", day);
         bundle.putString("stock_id", stock_id);
-        bundle.putString("tactics_id", tactics_id);
+        bundle.putString("stock_code", tactics_id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -52,7 +52,7 @@ public class DrawingChartFragment extends BaseStockFragment {
     public void initDatas() {
         mDay = getArguments().getInt("day");
         stock_id = getArguments().getString("stock_id");
-        tactics_id = getArguments().getString("tactics_id");
+        stock_code = getArguments().getString("stock_code");
     }
 
     @Override
@@ -104,7 +104,7 @@ public class DrawingChartFragment extends BaseStockFragment {
             params.put("type", "3");
         }
         params.put("stock_id", stock_id);
-        params.put("tactics_id", tactics_id);
+        params.put("stock_code", stock_code);
 
         addNetwork(Api.getInstance().getService(ApiService.class).getFtNet(params)
                 , new Action1<FuTuModel>() {
