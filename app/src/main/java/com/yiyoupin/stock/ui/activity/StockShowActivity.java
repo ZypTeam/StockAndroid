@@ -131,7 +131,7 @@ public class StockShowActivity extends BaseStockActivity {
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
         fragments[0] = TimeLineChartFragment.newInstance(1);
         fragments[1] = FiveDayChartFragment.newInstance(stockID, choiceness_id);
-        fragments[2] = DrawingChartFragment.newInstance(1, stockID, choiceness_id);
+        fragments[2] = DrawingChartFragment.newInstance(1, stockID, stockCode);
         fragments[3] = KLineChartFragment.newInstance(7, stockID, choiceness_id);
         fragments[4] = KLineChartFragment.newInstance(30, stockID, choiceness_id);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};

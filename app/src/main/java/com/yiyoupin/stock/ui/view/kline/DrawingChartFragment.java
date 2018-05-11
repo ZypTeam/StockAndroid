@@ -27,7 +27,7 @@ public class DrawingChartFragment extends BaseStockFragment {
 
     private DrawingChartView mKLineView;
     private int mDay;
-    private String stock_id = "", tactics_id = "";
+    private String stock_id = "", stock_code = "";
 
     public DrawingChartFragment() {
         // Required empty public constructor
@@ -38,7 +38,7 @@ public class DrawingChartFragment extends BaseStockFragment {
         Bundle bundle = new Bundle();
         bundle.putInt("day", day);
         bundle.putString("stock_id", stock_id);
-        bundle.putString("tactics_id", tactics_id);
+        bundle.putString("stock_code", tactics_id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -52,7 +52,7 @@ public class DrawingChartFragment extends BaseStockFragment {
     public void initDatas() {
         mDay = getArguments().getInt("day");
         stock_id = getArguments().getString("stock_id");
-        tactics_id = getArguments().getString("tactics_id");
+        stock_code = getArguments().getString("stock_code");
     }
 
     @Override
@@ -104,28 +104,63 @@ public class DrawingChartFragment extends BaseStockFragment {
             params.put("type", "3");
         }
         params.put("stock_id", stock_id);
-        params.put("tactics_id", tactics_id);
+        params.put("stock_code", stock_code);
 
-        addNetwork(Api.getInstance().getService(ApiService.class).getKLineDetialNet(params)
-                , new Action1<KLineModel>() {
+        addNetwork(Api.getInstance().getService(ApiService.class).getFtNet(params)
+                , new Action1<FuTuModel>() {
                     @Override
-                    public void call(KLineModel model) {
+                    public void call(FuTuModel model) {
                         hideLoadDialog();
-                        if (model.data != null) {
 
-                            final List<HisData> hisData = Util.getK(model.data);
-                            int maxCount = hisData.size();
-                            int initCount = 80;
-                            int minCount = 80;
+                        List<List<HisData>> lists = new ArrayList<>();
+                        List<HisData> hisData = new ArrayList<>();
 
-                            if (hisData.size() < 80) {
-                                initCount = hisData.size();
-                                minCount = hisData.size();
-                            }
-                            mKLineView.setCount(initCount, maxCount, minCount);
-//                            mKLineView.initData(hisData);
-                            mKLineView.setLimitLine();
+                        for (int i = 0; i < model.data.stickline_bb.line_data.size(); i++) {
+                            FuTuModel.LineItemData lineData = model.data.stickline_bb.line_data.get(i);
+
+                            HisData d = new HisData();
+                            d.setOpen(lineData.high);
+                            d.setClose(lineData.low);
+                            d.width = lineData.width;
+                            d.color = lineData.color;
+                            d.groupId = i;
+                            d.setDate(Util.getStringToDate(lineData.stickline_date));
+                            hisData.add(d);
                         }
+
+
+                        lists.add(hisData);
+
+                        List<HisData> hisData1 = new ArrayList<>();
+                        for (int i = 0; i < model.data.stickline_ema.line_data.size(); i++) {
+                            FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
+
+                            HisData d = new HisData();
+                            d.setOpen(lineData.high);
+                            d.setClose(lineData.low);
+                            d.width = lineData.width;
+                            d.color = lineData.color;
+                            d.groupId = i;
+                            d.setDate(Util.getStringToDate(lineData.stickline_date));
+                            hisData1.add(d);
+                        }
+
+                        lists.add(hisData1);
+                        model.lists = lists;
+
+                        int maxCount = hisData.size();
+                        int initCount = 50;
+                        int minCount = 50;
+
+                        maxCount=50;
+                        if (hisData.size() <50) {
+//            initCount = hisData.size();
+//            minCount = hisData.size();
+                            maxCount=50;
+                        }
+                        mKLineView.setCount(initCount, maxCount, minCount);
+                        mKLineView.initData(model);
+                        mKLineView.setLimitLine();
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -141,55 +176,7 @@ public class DrawingChartFragment extends BaseStockFragment {
 
 
         FuTuModel model = Util.getDrawing(mContext);
+        getFiveDayDetialNet();
 
-        List<List<HisData>> lists = new ArrayList<>();
-        List<HisData> hisData = new ArrayList<>();
-
-        for (int i = 0; i < model.data.stickline_bb.line_data.size(); i++) {
-            FuTuModel.LineItemData lineData = model.data.stickline_bb.line_data.get(i);
-
-            HisData d = new HisData();
-            d.setOpen(lineData.high);
-            d.setClose(lineData.low);
-            d.width = lineData.width;
-            d.color = lineData.color;
-            d.groupId = i;
-            d.setDate(Util.getStringToDate(lineData.stickline_date));
-            hisData.add(d);
-        }
-
-
-        lists.add(hisData);
-
-        List<HisData> hisData1 = new ArrayList<>();
-        for (int i = 0; i < model.data.stickline_ema.line_data.size(); i++) {
-            FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
-
-            HisData d = new HisData();
-            d.setOpen(lineData.high);
-            d.setClose(lineData.low);
-            d.width = lineData.width;
-            d.color = lineData.color;
-            d.groupId = i;
-            d.setDate(Util.getStringToDate(lineData.stickline_date));
-            hisData1.add(d);
-        }
-
-        lists.add(hisData1);
-        model.lists = lists;
-
-        int maxCount = hisData.size();
-        int initCount = 50;
-        int minCount = 50;
-
-        maxCount=50;
-        if (hisData.size() <50) {
-//            initCount = hisData.size();
-//            minCount = hisData.size();
-            maxCount=50;
-        }
-        mKLineView.setCount(initCount, maxCount, minCount);
-        mKLineView.initData(model);
-        mKLineView.setLimitLine();
     }
 }
