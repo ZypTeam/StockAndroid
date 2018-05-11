@@ -25,7 +25,11 @@ import com.jusfoun.baselibrary.BaseApplication;
 import com.jusfoun.baselibrary.R;
 import com.jusfoun.baselibrary.Util.KeyBoardUtil;
 import com.jusfoun.baselibrary.Util.PhoneUtil;
+import com.jusfoun.baselibrary.event.IEvent;
 import com.jusfoun.baselibrary.view.SwipeBackLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.ref.WeakReference;
 
@@ -61,6 +65,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         initBase();
         rxManage=new RxManage();
 
+
+
     }
 
     @Override
@@ -83,6 +89,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     };
 
     private void initBase() {
+
+        EventBus.getDefault().register(this);
         // 将当前Activity压入栈
         mApplication = BaseApplication.getBaseApplication();
         mActivity = new WeakReference<Activity>(this);
@@ -121,6 +129,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         rxManage.clear();//fragment销毁清除rxbus事件及网络请求，防止内存泄漏
         KeyBoardUtil.hideSoftKeyboard(this);
         mApplication.removeTask(mActivity);
+
+        EventBus.getDefault().unregister(this);
     }
 
     public void showToast(String text){
@@ -184,5 +194,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initView();
     public abstract void initAction();
 
-
+    @Subscribe
+    public void onEvent(IEvent event) {
+    }
 }

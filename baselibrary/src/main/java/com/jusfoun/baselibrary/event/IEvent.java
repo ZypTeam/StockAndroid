@@ -1,4 +1,4 @@
-package com.yiyoupin.stock.ui.event;
+package com.jusfoun.baselibrary.event;
 
 /**
  * @author zhaoyapeng

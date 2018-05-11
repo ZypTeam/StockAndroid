@@ -6,19 +6,23 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jusfoun.baselibrary.event.IEvent;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.MyTacticsModel;
 import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.NewsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
+import com.yiyoupin.stock.ui.event.FuTuEvent;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.CeluePopupWindow;
@@ -80,6 +84,9 @@ public class StockShowActivity extends BaseStockActivity {
 
     private CeluePopupWindow celuePopupWindow;
 
+
+    public static String  NO_TACTICS_ID="0";
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -131,11 +138,11 @@ public class StockShowActivity extends BaseStockActivity {
 
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
-        fragments[0] = TimeLineChartFragment.newInstance(1);
-        fragments[1] = FiveDayChartFragment.newInstance(stockID, choiceness_id);
-        fragments[2] = DrawingChartFragment.newInstance(1, stockID, stockCode);
-        fragments[3] = KLineChartFragment.newInstance(7, stockID, choiceness_id,stockCode);
-        fragments[4] = KLineChartFragment.newInstance(30, stockID, choiceness_id,stockCode);
+        fragments[0] = TimeLineChartFragment.newInstance(stockCode,NO_TACTICS_ID,0);
+        fragments[1] = FiveDayChartFragment.newInstance(stockID, NO_TACTICS_ID,stockCode,1);
+        fragments[2] = KLineChartFragment.newInstance(1, stockID,NO_TACTICS_ID, stockCode,2);
+        fragments[3] = KLineChartFragment.newInstance(7, stockID, NO_TACTICS_ID,stockCode,3);
+        fragments[4] = KLineChartFragment.newInstance(30, stockID, NO_TACTICS_ID,stockCode,4);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);
@@ -194,15 +201,22 @@ public class StockShowActivity extends BaseStockActivity {
             @Override
             public void onClick(View view) {
                 celuePopupWindow.showAsDropDown(textCelueName);
+
+
             }
         });
 
 
         celuePopupWindow.setCallBack(new CeluePopupWindow.CallBack() {
             @Override
-            public void onClick(String id) {
-
+            public void onClick(MyTacticsModel model) {
                 celuePopupWindow.dismiss();
+                FuTuEvent event = new FuTuEvent();
+                event.currentIndex = viewPager.getCurrentItem();
+                event.tactics_id = model.tactics_id;
+
+                textCelueName.setText(model.tactics_name);
+                EventBus.getDefault().post(event);
             }
         });
         getDetailsNet();
@@ -291,8 +305,8 @@ public class StockShowActivity extends BaseStockActivity {
                             titlebar.setTitle(model.data.stock_detail.stock_name);
                         }
 
+                        textCelueName.setText("无策略");
                         if (model.data != null && model.data.my_tactics != null && model.data.my_tactics.size() > 0) {
-                            textCelueName.setText(model.data.my_tactics.get(0).tactics_name);
                             celuePopupWindow.setData(model.data.my_tactics);
                         }
 
@@ -349,6 +363,7 @@ public class StockShowActivity extends BaseStockActivity {
     public boolean isNeedSwipe() {
         return false;
     }
+
 
 
 

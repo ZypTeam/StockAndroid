@@ -3,15 +3,19 @@ package com.yiyoupin.stock.ui.view.kline;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.guoziwei.klinelib.chart.TimeLineView;
 import com.guoziwei.klinelib.model.HisData;
+import com.jusfoun.baselibrary.event.IEvent;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
 import com.yiyoupin.stock.model.FiveDayModel;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
+import com.yiyoupin.stock.ui.event.FuTuEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,18 +27,24 @@ public class FiveDayChartFragment extends BaseStockFragment {
 
 
     private TimeLineView mTimeLineView;
-    private String stock_id = "", tactics_id = "";
+    private String stock_id = "", tactics_id = "", stock_code = "";
+
+
+    protected MDrawingChartView viewDrawingChart;
+    private int currentIndex = 0;
 
 
     public FiveDayChartFragment() {
         // Required empty public constructor
     }
 
-    public static FiveDayChartFragment newInstance(String stock_id, String tactics_id) {
+    public static FiveDayChartFragment newInstance(String stock_id, String tactics_id, String stock_code,int currentIndex) {
         FiveDayChartFragment fragment = new FiveDayChartFragment();
         Bundle bundle = new Bundle();
         bundle.putString("stock_id", stock_id);
         bundle.putString("tactics_id", tactics_id);
+        bundle.putString("stock_code", stock_code);
+        bundle.putInt("currentIndex", currentIndex);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -53,6 +63,8 @@ public class FiveDayChartFragment extends BaseStockFragment {
     public void initDatas() {
         stock_id = getArguments().getString("stock_id");
         tactics_id = getArguments().getString("tactics_id");
+        stock_code = getArguments().getString("stock_code");
+        currentIndex = getArguments().getInt("currentIndex");
     }
 
     @Override
@@ -61,7 +73,7 @@ public class FiveDayChartFragment extends BaseStockFragment {
         mTimeLineView = (TimeLineView) rootView.findViewById(R.id.view_time_line);
 
         mTimeLineView.setDateFormat("yyyy-MM-dd");
-
+        viewDrawingChart = (MDrawingChartView) rootView.findViewById(R.id.view_drawing_chart);
 
     }
 
@@ -103,8 +115,32 @@ public class FiveDayChartFragment extends BaseStockFragment {
                 });
     }
 
-    @Override
+
     protected void refreshData() {
-        getFiveDayDetialNet();
+        getNetData(tactics_id);
+    }
+
+    @Override
+    public void onEvent(IEvent event) {
+        super.onEvent(event);
+
+        if (event instanceof FuTuEvent) {
+            this.tactics_id = ((FuTuEvent) event).tactics_id;
+            if (currentIndex == ((FuTuEvent) event).currentIndex) {
+                getNetData(((FuTuEvent) event).tactics_id);
+            } else {
+                isInit = true;
+            }
+        }
+    }
+
+    private void getNetData(String tactics_id) {
+        if (StockShowActivity.NO_TACTICS_ID.equals(tactics_id)) {
+            viewDrawingChart.setVisibility(View.GONE);
+            getFiveDayDetialNet();
+        } else {
+            viewDrawingChart.setVisibility(View.VISIBLE);
+            viewDrawingChart.setData(stock_code, tactics_id, 5);
+        }
     }
 }

@@ -52,7 +52,7 @@ public class ShowCelueAdapter extends BaseAdapter<MyTacticsModel> {
                 public void onClick(View view) {
 
                     if (callBack != null) {
-                        callBack.onClick(model.tactics_id);
+                        callBack.onClick(model);
                     }
                 }
             });

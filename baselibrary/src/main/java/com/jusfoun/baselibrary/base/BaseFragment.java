@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import com.jusfoun.baselibrary.R;
 import com.jusfoun.baselibrary.dialog.LoadingDialog;
+import com.jusfoun.baselibrary.event.IEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import rx.functions.Action1;
 
@@ -36,6 +40,8 @@ public abstract class BaseFragment extends Fragment {
         mContext=context;
         rxManage=new RxManage();
         initDatas();
+
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -52,6 +58,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         rxManage.clear();//fragment销毁清除rxbus事件及网络请求，防止内存泄漏
+        EventBus.getDefault().unregister(this);
     }
 
     public void showToast(String text){
@@ -114,5 +121,10 @@ public abstract class BaseFragment extends Fragment {
             loadingDialog.setCancelable(true);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
+    }
+
+
+    @Subscribe
+    public void onEvent(IEvent event) {
     }
 }

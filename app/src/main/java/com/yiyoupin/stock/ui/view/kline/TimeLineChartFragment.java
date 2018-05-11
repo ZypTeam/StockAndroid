@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -13,11 +14,14 @@ import android.widget.LinearLayout;
 import com.guoziwei.klinelib.chart.TimeLineView;
 import com.guoziwei.klinelib.model.HisData;
 import com.jusfoun.baselibrary.Util.PhoneUtil;
+import com.jusfoun.baselibrary.event.IEvent;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.MingXiModel;
 import com.yiyoupin.stock.model.StockDetailModel;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.adapter.DetailsFragmentAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
+import com.yiyoupin.stock.ui.event.FuTuEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +34,18 @@ public class TimeLineChartFragment extends BaseStockFragment {
     protected ImageView imgStatus;
     protected LinearLayout layoutMingxi;
     private TimeLineView mTimeLineView;
-    private int mType;
 
+    protected MDrawingChartView viewDrawingChart;
+    private int currentIndex = 0;
 
-    public static TimeLineChartFragment newInstance(int type) {
+    private String tactics_id = "", stock_code = "";
+
+    public static TimeLineChartFragment newInstance(String stock_code, String tactics_id,int currentIndex) {
         TimeLineChartFragment fragment = new TimeLineChartFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
+        bundle.putString("tactics_id", tactics_id);
+        bundle.putString("stock_code", stock_code);
+        bundle.putInt("currentIndex", currentIndex);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -49,7 +58,9 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
     @Override
     public void initDatas() {
-        mType = getArguments().getInt("type");
+        tactics_id = getArguments().getString("tactics_id");
+        stock_code = getArguments().getString("stock_code");
+        currentIndex = getArguments().getInt("currentIndex");
     }
 
     @Override
@@ -62,6 +73,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
         viewpager = (ViewPager) rootView.findViewById(R.id.viewpager);
         imgStatus = (ImageView) rootView.findViewById(R.id.img_status);
         layoutMingxi = (LinearLayout) rootView.findViewById(R.id.layout_mingxi);
+        viewDrawingChart = (MDrawingChartView) rootView.findViewById(R.id.view_drawing_chart);
     }
 
     @Override
@@ -154,12 +166,12 @@ public class TimeLineChartFragment extends BaseStockFragment {
         }, 1000, 1000);*/
     }
 
-    @Override
-    protected void refreshData() {
-//        final List<HisData> hisData = Util.get1Day(getContext());
-//        mTimeLineView.setLastClose(hisData.get(0).getClose());
-//        mTimeLineView.initData(hisData);
-    }
+//    @Override
+//    protected void refreshData() {
+////        final List<HisData> hisData = Util.get1Day(getContext());
+////        mTimeLineView.setLastClose(hisData.get(0).getClose());
+////        mTimeLineView.initData(hisData);
+//    }
 
     public void setData(StockDetailModel.StockDetailDataModel model) {
 
@@ -242,5 +254,33 @@ public class TimeLineChartFragment extends BaseStockFragment {
             viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(), mingXiModel, model));
         }
 
+    }
+
+    @Override
+    protected void refreshData() {
+        getNetData(tactics_id);
+    }
+
+    @Override
+    public void onEvent(IEvent event) {
+        super.onEvent(event);
+
+        if (event instanceof FuTuEvent) {
+            this.tactics_id = ((FuTuEvent) event).tactics_id;
+            if (currentIndex == ((FuTuEvent) event).currentIndex) {
+                getNetData(((FuTuEvent) event).tactics_id);
+            } else {
+                isInit = true;
+            }
+        }
+    }
+
+    private void getNetData(String tactics_id) {
+        if (StockShowActivity.NO_TACTICS_ID.equals(tactics_id)) {
+            viewDrawingChart.setVisibility(View.GONE);
+        } else {
+            viewDrawingChart.setVisibility(View.VISIBLE);
+            viewDrawingChart.setData(stock_code, tactics_id, 4);
+        }
     }
 }

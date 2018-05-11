@@ -10,6 +10,7 @@ import android.widget.PopupWindow;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.MyTacticsModel;
+import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.adapter.ShowCelueAdapter;
 
 import java.util.List;
@@ -61,11 +62,15 @@ public class CeluePopupWindow extends PopupWindow {
 
 
     public void setData(List<MyTacticsModel> list) {
+        MyTacticsModel myTacticsModel = new MyTacticsModel();
+        myTacticsModel.tactics_name="无策略";
+        myTacticsModel.tactics_id = StockShowActivity.NO_TACTICS_ID;
+        list.add(0,myTacticsModel);
         adapter.refreshList(list);
     }
 
     public interface CallBack {
-        void onClick(String id);
+        void onClick(MyTacticsModel model);
     }
 
     public void setCallBack(CallBack callBack) {

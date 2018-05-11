@@ -60,4 +60,13 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
+    <com.yiyoupin.stock.ui.view.kline.MDrawingChartView
+        android:id="@+id/view_drawing_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_main_black"
+        android:visibility="gone"
+        />
 </RelativeLayout>
