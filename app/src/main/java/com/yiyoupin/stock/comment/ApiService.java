@@ -10,6 +10,7 @@ import com.yiyoupin.stock.model.CheckVersionModel;
 import com.yiyoupin.stock.model.FiveDayModel;
 import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.model.KLineModel;
+import com.yiyoupin.stock.model.MIngXIDataModel;
 import com.yiyoupin.stock.model.MsgListModel;
 import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.NewsPaperListModel;
@@ -431,5 +432,14 @@ public interface ApiService {
      */
     @GET("/stock/user/vip.do")
     Observable<VipModel> getVipState();
+
+    /**
+     * 股票详情-明细
+     *
+     * @param params
+     * @return
+     */
+    @GET("/stock/trade_detail.do")
+    Observable<MIngXIDataModel> getMingXiNet(@QueryMap Map<String,String> params);
 
 }

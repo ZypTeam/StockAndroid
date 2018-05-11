@@ -100,6 +100,7 @@ public class FiveDayChartFragment extends BaseStockFragment {
                                 if (model.data.get(i) != null && model.data.get(i).dapandata != null)
                                     count += model.data.get(i).dapandata.size();
                             }
+                            count =250*5;
                             mTimeLineView.setCount(count, count, count);
                             final List<List<HisData>> hisData = Util.get5Day(model.data);
                             if (hisData.get(0) != null && hisData.get(0).get(0) != null)

@@ -5,11 +5,11 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.guoziwei.klinelib.chart.TimeLineView;
 import com.guoziwei.klinelib.model.HisData;
@@ -33,6 +33,8 @@ public class TimeLineChartFragment extends BaseStockFragment {
     protected ViewPager viewpager;
     protected ImageView imgStatus;
     protected LinearLayout layoutMingxi;
+    protected TextView textFive;
+    protected TextView textMingxi;
     private TimeLineView mTimeLineView;
 
     protected MDrawingChartView viewDrawingChart;
@@ -40,7 +42,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
     private String tactics_id = "", stock_code = "";
 
-    public static TimeLineChartFragment newInstance(String stock_code, String tactics_id,int currentIndex) {
+    public static TimeLineChartFragment newInstance(String stock_code, String tactics_id, int currentIndex) {
         TimeLineChartFragment fragment = new TimeLineChartFragment();
         Bundle bundle = new Bundle();
         bundle.putString("tactics_id", tactics_id);
@@ -74,6 +76,8 @@ public class TimeLineChartFragment extends BaseStockFragment {
         imgStatus = (ImageView) rootView.findViewById(R.id.img_status);
         layoutMingxi = (LinearLayout) rootView.findViewById(R.id.layout_mingxi);
         viewDrawingChart = (MDrawingChartView) rootView.findViewById(R.id.view_drawing_chart);
+        textFive = (TextView) rootView.findViewById(R.id.text_five);
+        textMingxi = (TextView) rootView.findViewById(R.id.text_mingxi);
     }
 
     @Override
@@ -91,6 +95,19 @@ public class TimeLineChartFragment extends BaseStockFragment {
                     statrOpen();
                     imgStatus.setImageResource(R.drawable.img_close);
                 }
+            }
+        });
+
+        textFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(0);
+            }
+        });
+        textMingxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(1);
             }
         });
     }
@@ -173,7 +190,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
 ////        mTimeLineView.initData(hisData);
 //    }
 
-    public void setData(StockDetailModel.StockDetailDataModel model) {
+    public void setData(StockDetailModel.StockDetailDataModel model, String stockID) {
 
 
         if (model != null && model.dapandata != null) {
@@ -251,7 +268,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
             mingXiModel.list = list;
 
-            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(), mingXiModel, model));
+            viewpager.setAdapter(new DetailsFragmentAdapter(getChildFragmentManager(), mingXiModel, stockID));
         }
 
     }

@@ -19,17 +19,17 @@ import com.yiyoupin.stock.ui.util.HomeFragmentUtil;
 public class DetailsFragmentAdapter extends FragmentPagerAdapter {
 
     private MingXiModel model;
-    private StockDetailModel.StockDetailDataModel stockDetailDataModel;
+    private String stockID;
 
-    public DetailsFragmentAdapter(FragmentManager fm, MingXiModel model,StockDetailModel.StockDetailDataModel stockDetailDataModel) {
+    public DetailsFragmentAdapter(FragmentManager fm, MingXiModel model,String stockID) {
         super(fm);
         this.model = model;
-        this.stockDetailDataModel = stockDetailDataModel;
+        this.stockID=stockID;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return DetailsFragment.getInstance(position,model,stockDetailDataModel);
+        return DetailsFragment.getInstance(position,model,stockID);
     }
 
     @Override

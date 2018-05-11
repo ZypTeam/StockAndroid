@@ -3,17 +3,16 @@ package com.yiyoupin.stock.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.jusfoun.baselibrary.base.BaseFragment;
 import com.jusfoun.baselibrary.net.Api;
-import com.jusfoun.baselibrary.widget.xRecyclerView.XRecyclerView;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.model.MIngXIDataModel;
 import com.yiyoupin.stock.model.MingXiModel;
 import com.yiyoupin.stock.model.StockDetailModel;
-import com.yiyoupin.stock.ui.HomeListModel;
 import com.yiyoupin.stock.ui.adapter.DetailsAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
@@ -34,14 +33,14 @@ public class DetailsFragment extends BaseStockFragment {
 
     private int type = 0;
     private MingXiModel model;
-    private StockDetailModel.StockDetailDataModel stockDetailDataModel;
-    public static BaseFragment getInstance(int type, MingXiModel model,StockDetailModel.StockDetailDataModel stockDetailDataModel) {
+    private String stockID;
+
+    public static BaseFragment getInstance(int type, MingXiModel model, String stockID) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
         bundle.putSerializable("model", model);
-        bundle.putSerializable("stockDetailDataModel", stockDetailDataModel);
-
+        bundle.putString("stockID", stockID);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -59,9 +58,11 @@ public class DetailsFragment extends BaseStockFragment {
             model = (MingXiModel) getArguments().getSerializable("model");
         }
 
-        if (getArguments().getSerializable("stockDetailDataModel") != null) {
-            stockDetailDataModel = (StockDetailModel.StockDetailDataModel) getArguments().getSerializable("stockDetailDataModel");
-        }
+        stockID = getArguments().getString("stockID");
+
+//        if (getArguments().getSerializable("stockDetailDataModel") != null) {
+//            stockDetailDataModel = (StockDetailModel.StockDetailDataModel) getArguments().getSerializable("stockDetailDataModel");
+//        }
         adapter = new DetailsAdapter(mContext);
     }
 
@@ -81,34 +82,40 @@ public class DetailsFragment extends BaseStockFragment {
 
     @Override
     protected void refreshData() {
+
         if (type == DetailsAdapter.TYPE_FIVE && model != null) {
             adapter.refreshList(model.list);
-        }else if(stockDetailDataModel!=null){
-            adapter.refreshList(stockDetailDataModel.trade_detail);
+        } else if (type == DetailsAdapter.TYPE_DETAILS) {
+//            adapter.refreshList(stockDetailDataModel.trade_detail);
+            getNewsList();
         }
     }
 
-//    private void getNewsList() {
-//        if (TextUtils.isEmpty(stockID)) {
-//            return;
-//        }
+    private void getNewsList() {
 //        showLoadDialog();
-//        HashMap<String, String> params = new HashMap();
-//        params.put("stock_id", stockID);
-//
-//
-//        addNetwork(Api.getInstance().getService(ApiService.class).getNewsList(params)
-//                , new Action1<HomeListModel>() {
-//                    @Override
-//                    public void call(HomeListModel model) {
-//                        hideLoadDialog();
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        hideLoadDialog();
-//                    }
-//                });
-//    }
+
+        Log.e("tag","stockIDstockID"+stockID);
+        HashMap<String, String> params = new HashMap();
+        params.put("stock_id", stockID);
+
+
+
+        addNetwork(Api.getInstance().getService(ApiService.class).getMingXiNet(params)
+                , new Action1<MIngXIDataModel>() {
+                    @Override
+                    public void call(MIngXIDataModel model) {
+                        hideLoadDialog();
+
+                        if (model.data != null) {
+                            adapter.refreshList(model.data);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+    }
 
 }

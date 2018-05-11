@@ -67,5 +67,6 @@ public class StockDetailModel extends BaseModel implements Serializable {
         public String stock_price;
         public String offset_size;
         public String trade_volumn;
+
     }
 }

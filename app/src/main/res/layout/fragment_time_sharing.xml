@@ -35,6 +35,7 @@
                 android:background="#2a2a2a">
 
                 <TextView
+                    android:id="@+id/text_five"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -44,6 +45,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/text_mingxi"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

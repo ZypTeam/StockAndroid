@@ -7,7 +7,9 @@ import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
+import com.yiyoupin.stock.model.MIngXIDataModel;
 import com.yiyoupin.stock.model.MingXiModel;
+import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
 
@@ -119,9 +121,9 @@ public class DetailsAdapter<T> extends BaseAdapter<BaseModel> {
         @Override
         public void update(Serializable model) {
 
-//            textTitle.setText(model.);
-            textNum1.setText("4.74");
-            textNum2.setText("2378");
+            textTitle.setText(((StockDetailModel.TradeDetailModel)model).trade_time);
+            textNum1.setText(((StockDetailModel.TradeDetailModel)model).stock_price);
+            textNum2.setText(((StockDetailModel.TradeDetailModel)model).trade_volumn);
         }
 
         private void initView(View rootView) {

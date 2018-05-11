@@ -6,13 +6,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jusfoun.baselibrary.event.IEvent;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
@@ -26,9 +24,9 @@ import com.yiyoupin.stock.ui.event.FuTuEvent;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
 import com.yiyoupin.stock.ui.view.CeluePopupWindow;
+import com.yiyoupin.stock.ui.view.NetErrorView;
 import com.yiyoupin.stock.ui.view.ShowBottomView;
 import com.yiyoupin.stock.ui.view.StocksTopView;
-import com.yiyoupin.stock.ui.view.kline.DrawingChartFragment;
 import com.yiyoupin.stock.ui.view.kline.FiveDayChartFragment;
 import com.yiyoupin.stock.ui.view.kline.KLineChartFragment;
 import com.yiyoupin.stock.ui.view.kline.SimpleFragmentPagerAdapter;
@@ -66,6 +64,7 @@ public class StockShowActivity extends BaseStockActivity {
     protected TextView textZhangdie2;
     protected TextView textCelueName;
     protected RelativeLayout layoutCelue;
+    protected NetErrorView netError;
     private NewsAdapter newsAdapter;
     private RelativeLayout bottomLineLayout;
 
@@ -85,7 +84,7 @@ public class StockShowActivity extends BaseStockActivity {
     private CeluePopupWindow celuePopupWindow;
 
 
-    public static String  NO_TACTICS_ID="0";
+    public static String NO_TACTICS_ID = "0";
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -129,6 +128,7 @@ public class StockShowActivity extends BaseStockActivity {
         textZhangdie2 = (TextView) findViewById(R.id.text_zhangdie2);
         textCelueName = (TextView) findViewById(R.id.text_celue_name);
         layoutCelue = (RelativeLayout) findViewById(R.id.layout_celue);
+        netError = (NetErrorView) findViewById(R.id.net_error);
 
     }
 
@@ -138,11 +138,11 @@ public class StockShowActivity extends BaseStockActivity {
 
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
-        fragments[0] = TimeLineChartFragment.newInstance(stockCode,NO_TACTICS_ID,0);
-        fragments[1] = FiveDayChartFragment.newInstance(stockID, NO_TACTICS_ID,stockCode,1);
-        fragments[2] = KLineChartFragment.newInstance(1, stockID,NO_TACTICS_ID, stockCode,2);
-        fragments[3] = KLineChartFragment.newInstance(7, stockID, NO_TACTICS_ID,stockCode,3);
-        fragments[4] = KLineChartFragment.newInstance(30, stockID, NO_TACTICS_ID,stockCode,4);
+        fragments[0] = TimeLineChartFragment.newInstance(stockCode, NO_TACTICS_ID, 0);
+        fragments[1] = FiveDayChartFragment.newInstance(stockID, NO_TACTICS_ID, stockCode, 1);
+        fragments[2] = KLineChartFragment.newInstance(1, stockID, NO_TACTICS_ID, stockCode, 2);
+        fragments[3] = KLineChartFragment.newInstance(7, stockID, NO_TACTICS_ID, stockCode, 3);
+        fragments[4] = KLineChartFragment.newInstance(30, stockID, NO_TACTICS_ID, stockCode, 4);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);
@@ -158,8 +158,6 @@ public class StockShowActivity extends BaseStockActivity {
 
         tabNews.setTabTextColors(0xffe2e2e2, mContext.getResources().getColor(R.color.color_red));
         tabNews.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
-
-
 
 
         layoutRemind.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +215,13 @@ public class StockShowActivity extends BaseStockActivity {
 
                 textCelueName.setText(model.tactics_name);
                 EventBus.getDefault().post(event);
+            }
+        });
+
+        netError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDetailsNet();
             }
         });
         getDetailsNet();
@@ -291,9 +296,10 @@ public class StockShowActivity extends BaseStockActivity {
                 , new Action1<StockDetailModel>() {
                     @Override
                     public void call(StockDetailModel model) {
+                        netError.setVisibility(View.GONE);
                         hideLoadDialog();
                         if (model.data != null && model.data.dapandata != null)
-                            ((TimeLineChartFragment) fragments[0]).setData(model.data);
+                            ((TimeLineChartFragment) fragments[0]).setData(model.data,stockID);
 
                         if (model.data != null) {
                             viewTop.setData(model.data);
@@ -301,7 +307,7 @@ public class StockShowActivity extends BaseStockActivity {
                         }
 
 
-                        if(model.data!=null&&model.data.stock_detail!=null){
+                        if (model.data != null && model.data.stock_detail != null) {
                             titlebar.setTitle(model.data.stock_detail.stock_name);
                         }
 
@@ -318,7 +324,7 @@ public class StockShowActivity extends BaseStockActivity {
                     @Override
                     public void call(Throwable throwable) {
                         hideLoadDialog();
-                        getNewsList();
+                        netError.setVisibility(View.VISIBLE);
                     }
                 });
     }
@@ -363,8 +369,6 @@ public class StockShowActivity extends BaseStockActivity {
     public boolean isNeedSwipe() {
         return false;
     }
-
-
 
 
 }
