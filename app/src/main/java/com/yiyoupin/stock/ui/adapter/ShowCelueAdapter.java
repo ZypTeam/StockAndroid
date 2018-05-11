@@ -1,7 +1,6 @@
 package com.yiyoupin.stock.ui.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,8 +8,7 @@ import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.MyTacticsModel;
 import com.yiyoupin.stock.ui.base.BaseAdapter;
 import com.yiyoupin.stock.ui.base.BaseViewHolder;
-
-import java.io.Serializable;
+import com.yiyoupin.stock.ui.view.CeluePopupWindow;
 
 /**
  * @author zhaoyapeng
@@ -20,6 +18,7 @@ import java.io.Serializable;
  */
 public class ShowCelueAdapter extends BaseAdapter<MyTacticsModel> {
     private Context mContext;
+
     public ShowCelueAdapter(Context context) {
         super(context);
         mContext = context;
@@ -32,21 +31,38 @@ public class ShowCelueAdapter extends BaseAdapter<MyTacticsModel> {
 
     @Override
     protected BaseViewHolder getViewHolder(int viewType, View view) {
-        return new ShowCelueViewHolder(view,mContext);
+        return new ShowCelueViewHolder(view, mContext);
     }
 
-    private class  ShowCelueViewHolder extends BaseViewHolder<MyTacticsModel>{
+    private class ShowCelueViewHolder extends BaseViewHolder<MyTacticsModel> {
 
         private TextView nameText;
+
         public ShowCelueViewHolder(View itemView, Context mContext) {
             super(itemView, mContext);
-            nameText= itemView.findViewById(R.id.text_name);
+            nameText = itemView.findViewById(R.id.text_name);
         }
 
         @Override
         public void update(MyTacticsModel model) {
             nameText.setText(model.tactics_name);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (callBack != null) {
+                        callBack.onClick(model.tactics_id);
+                    }
+                }
+            });
         }
+    }
+
+    CeluePopupWindow.CallBack callBack;
+
+    public void setCallBack(CeluePopupWindow.CallBack callBack) {
+        this.callBack = callBack;
     }
 
 }

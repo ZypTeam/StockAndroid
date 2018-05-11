@@ -2,21 +2,16 @@ package com.yiyoupin.stock.ui.view.kline;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.guoziwei.klinelib.chart.DrawingChartView;
 import com.guoziwei.klinelib.chart.KLineView;
 import com.guoziwei.klinelib.model.HisData;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.model.FiveDayModel;
 import com.yiyoupin.stock.model.KLineModel;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
@@ -29,20 +24,22 @@ import rx.functions.Action1;
 public class KLineChartFragment extends BaseStockFragment {
 
 
+    protected MDrawingChartView viewDrawingChart;
     private KLineView mKLineView;
     private int mDay;
-    private String stock_id = "", tactics_id = "";
+    private String stock_id = "", tactics_id = "",stock_code="";
 
     public KLineChartFragment() {
         // Required empty public constructor
     }
 
-    public static KLineChartFragment newInstance(int day,String stock_id,String tactics_id) {
+    public static KLineChartFragment newInstance(int day, String stock_id, String tactics_id,String stock_code) {
         KLineChartFragment fragment = new KLineChartFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("day", day);
         bundle.putString("stock_id", stock_id);
         bundle.putString("tactics_id", tactics_id);
+        bundle.putString("stock_code", stock_code);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,6 +54,7 @@ public class KLineChartFragment extends BaseStockFragment {
         mDay = getArguments().getInt("day");
         stock_id = getArguments().getString("stock_id");
         tactics_id = getArguments().getString("tactics_id");
+        stock_code = getArguments().getString("stock_code");
     }
 
     @Override
@@ -76,6 +74,7 @@ public class KLineChartFragment extends BaseStockFragment {
             }
         });
         ((RadioButton) rgIndex.getChildAt(0)).setChecked(true);
+        viewDrawingChart = (MDrawingChartView) rootView.findViewById(R.id.view_drawing_chart);
     }
 
     @Override
@@ -83,7 +82,6 @@ public class KLineChartFragment extends BaseStockFragment {
 
 
         mKLineView.setDateFormat("yyyy-MM-dd");
-
 
 
     }
@@ -119,11 +117,11 @@ public class KLineChartFragment extends BaseStockFragment {
 
     private void getFiveDayDetialNet() {
         HashMap<String, String> params = new HashMap();
-        if(mDay==1){
+        if (mDay == 1) {
             params.put("type", "1");
-        }else if(mDay==7){
+        } else if (mDay == 7) {
             params.put("type", "2");
-        }else if(mDay==30){
+        } else if (mDay == 30) {
             params.put("type", "3");
         }
         params.put("stock_id", stock_id);
@@ -138,14 +136,14 @@ public class KLineChartFragment extends BaseStockFragment {
 
                             final List<HisData> hisData = Util.getK(model.data);
                             int maxCount = hisData.size();
-                            int initCount =80;
-                            int minCount =80;
+                            int initCount = 80;
+                            int minCount = 80;
 
-                            if(hisData.size()<80){
+                            if (hisData.size() < 80) {
                                 initCount = hisData.size();
                                 minCount = hisData.size();
                             }
-                            mKLineView.setCount(initCount,maxCount,minCount);
+                            mKLineView.setCount(initCount, maxCount, minCount);
                             mKLineView.initData(hisData);
                             mKLineView.setLimitLine();
                         }
@@ -161,5 +159,13 @@ public class KLineChartFragment extends BaseStockFragment {
     @Override
     protected void refreshData() {
         getFiveDayDetialNet();
+        if (mDay == 1) {
+            viewDrawingChart.setData(stock_code,tactics_id,1);
+        } else if (mDay == 7) {
+            viewDrawingChart.setData(stock_code,tactics_id,2);
+        } else if (mDay == 30) {
+            viewDrawingChart.setData(stock_code,tactics_id,3);
+        }
+
     }
 }

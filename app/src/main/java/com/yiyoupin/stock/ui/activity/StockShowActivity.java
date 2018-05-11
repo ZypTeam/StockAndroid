@@ -31,6 +31,8 @@ import com.yiyoupin.stock.ui.view.kline.SimpleFragmentPagerAdapter;
 import com.yiyoupin.stock.ui.view.kline.TimeLineChartFragment;
 import com.yiyoupin.stock.ui.view.kline.view.NoTouchScrollViewpager;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 
 import rx.functions.Action1;
@@ -132,8 +134,8 @@ public class StockShowActivity extends BaseStockActivity {
         fragments[0] = TimeLineChartFragment.newInstance(1);
         fragments[1] = FiveDayChartFragment.newInstance(stockID, choiceness_id);
         fragments[2] = DrawingChartFragment.newInstance(1, stockID, stockCode);
-        fragments[3] = KLineChartFragment.newInstance(7, stockID, choiceness_id);
-        fragments[4] = KLineChartFragment.newInstance(30, stockID, choiceness_id);
+        fragments[3] = KLineChartFragment.newInstance(7, stockID, choiceness_id,stockCode);
+        fragments[4] = KLineChartFragment.newInstance(30, stockID, choiceness_id,stockCode);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);
@@ -196,8 +198,14 @@ public class StockShowActivity extends BaseStockActivity {
         });
 
 
-        getDetailsNet();
+        celuePopupWindow.setCallBack(new CeluePopupWindow.CallBack() {
+            @Override
+            public void onClick(String id) {
 
+                celuePopupWindow.dismiss();
+            }
+        });
+        getDetailsNet();
 
     }
 
@@ -341,5 +349,7 @@ public class StockShowActivity extends BaseStockActivity {
     public boolean isNeedSwipe() {
         return false;
     }
+
+
 
 }

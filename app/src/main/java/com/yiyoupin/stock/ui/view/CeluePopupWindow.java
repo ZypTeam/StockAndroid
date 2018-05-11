@@ -60,8 +60,16 @@ public class CeluePopupWindow extends PopupWindow {
     }
 
 
-
-    public void setData(List<MyTacticsModel> list){
+    public void setData(List<MyTacticsModel> list) {
         adapter.refreshList(list);
     }
+
+    public interface CallBack {
+        void onClick(String id);
+    }
+
+    public void setCallBack(CallBack callBack) {
+        adapter.setCallBack(callBack);
+    }
+
 }
