@@ -69,8 +69,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
     public void initView(View rootView) {
         mTimeLineView = (TimeLineView) rootView.findViewById(R.id.time_line_view);
         mTimeLineView.setDateFormat("HH:mm");
-        int count = 241;
-        mTimeLineView.setCount(count, count, count);
+
 //        initData();
         viewpager = (ViewPager) rootView.findViewById(R.id.viewpager);
         imgStatus = (ImageView) rootView.findViewById(R.id.img_status);
@@ -197,6 +196,14 @@ public class TimeLineChartFragment extends BaseStockFragment {
             final List<HisData> hisData = Util.get1Day(model.dapandata);
             if (hisData.size() > 0)
                 mTimeLineView.setLastClose(hisData.get(0).getClose());
+
+
+            int count = 241;
+            if(hisData.size()<count){
+                mTimeLineView.setCount(count, count, hisData.size());
+            }else{
+                mTimeLineView.setCount(count, count,count);
+            }
             mTimeLineView.initData(hisData);
         }
 

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
@@ -134,6 +135,8 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         axisLeftPrice.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+
+                Log.e("tag","getFormattedValue="+value+" "+DoubleUtil.getStringByDigits(value, mDigits));
                 return DoubleUtil.getStringByDigits(value, mDigits);
             }
         });
@@ -205,6 +208,9 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
 
         for (int i = 0; i < mData.size(); i++) {
             priceEntries.add(new Entry(i, (float) mData.get(i).getClose()));
+
+            Log.e("tag","priceEntries="+mData.get(i).getClose());
+            Log.e("tag","aveEntries="+mData.get(i).getAvePrice());
             aveEntries.add(new Entry(i, (float) mData.get(i).getAvePrice()));
         }
         if (!mData.isEmpty() && mData.size() < MAX_COUNT) {
@@ -239,6 +245,8 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
     }
 
     public void initDatas(List<List<HisData>> hisDatas) {
+
+        int indexX=0;
         // 设置标签数量，并让标签居中显示
         XAxis xAxis = mChartVolume.getXAxis();
         xAxis.setLabelCount(hisDatas.size() + 1, true);
@@ -248,6 +256,7 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 value += 1; // 这里不设置+1会有bug
+                Log.e("tag","DateUtil===s="+value);
                 if (mData.isEmpty()) {
                     return "";
                 }
@@ -255,6 +264,9 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
                     value = 0;
                 }
                 if (value < mData.size()) {
+
+                    Log.e("tag","DateUtils="+DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat));
+                    Log.e("tag","DateUtilsDateUtilsDateUtils="+mData.get((int) value).getDate());
                     return DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat);
                 }
                 return "";
@@ -265,6 +277,8 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         ArrayList<IBarDataSet> barSets = new ArrayList<>();
 
         for (List<HisData> hisData : hisDatas) {
+
+            Log.e("tag","hisDatashisDatashisDatas="+hisData.size());
             hisData = DataUtils.calculateHisData(hisData);
             ArrayList<Entry> priceEntries = new ArrayList<>(INIT_COUNT);
             ArrayList<Entry> aveEntries = new ArrayList<>(INIT_COUNT);
@@ -291,6 +305,8 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
             barSets.add(setBar(barPaddingEntries, INVISIABLE_LINE));
             barSets.add(setBar(barPaddingEntries, INVISIABLE_LINE));
             mData.addAll(hisData);
+
+            Log.e("tag","hisDatas111=");
         }
 
         LineData lineData = new LineData(sets);
@@ -313,6 +329,9 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         mChartVolume.notifyDataSetChanged();
         mChartVolume.moveViewToX(combinedData2.getEntryCount());
 
+
+        Log.e("tag","combinedDatacombinedData="+(combinedData.getXMax() + 0.5f));
+        Log.e("tag","mChartVolumemChartVolume="+(mChartVolume.getData().getXMax() + 0.5f));
         mChartPrice.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
         mChartVolume.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 0.5f);
 

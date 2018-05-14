@@ -152,12 +152,12 @@ public class DrawingChartFragment extends BaseStockFragment {
                         int initCount = 50;
                         int minCount = 50;
 
-                        maxCount=50;
-                        if (hisData.size() <50) {
-//            initCount = hisData.size();
-//            minCount = hisData.size();
-                            maxCount=50;
-                        }
+//                        maxCount=50;
+//                        if (hisData.size() <50) {
+////            initCount = hisData.size();
+////            minCount = hisData.size();
+//                            maxCount=50;
+//                        }
                         mKLineView.setCount(initCount, maxCount, minCount);
                         mKLineView.initData(model);
                         mKLineView.setLimitLine();

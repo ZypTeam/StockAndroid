@@ -59,17 +59,18 @@ public class DataUtils {
                 double total = hisData.getVol() * hisData.getClose() + list.get(i - 1).getTotal();
                 hisData.setTotal(total);
                 double avePrice = total / amountVol;
-                hisData.setAvePrice(avePrice);
+//                hisData.setAvePrice(avePrice);
             } else if (lastData != null) {
                 double total = hisData.getVol() * hisData.getClose() + lastData.getTotal();
                 hisData.setTotal(total);
                 double avePrice = total / amountVol;
-                hisData.setAvePrice(avePrice);
+//                hisData.setAvePrice(avePrice);
             } else {
                 hisData.setAmountVol(hisData.getVol());
-                hisData.setAvePrice(hisData.getClose());
+//                hisData.setAvePrice(hisData.getClose());
                 hisData.setTotal(hisData.getAmountVol() * hisData.getAvePrice());
             }
+
 
         }
         return list;

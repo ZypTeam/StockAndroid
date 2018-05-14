@@ -2,11 +2,8 @@ package com.yiyoupin.stock.ui.view.kline;
 
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.RadioGroup;
 
 import com.guoziwei.klinelib.chart.FuTuModel;
 import com.guoziwei.klinelib.model.HisData;
@@ -20,6 +17,7 @@ import com.yiyoupin.stock.ui.base.BaseView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.functions.Action1;
 
@@ -31,8 +29,6 @@ public class MDrawingChartView extends BaseView {
     private int type;
     private String tactics_id = "", stock_code = "";
     protected RxManage rxManage;
-
-
 
 
     public MDrawingChartView(Context context) {
@@ -49,7 +45,7 @@ public class MDrawingChartView extends BaseView {
 
     @Override
     protected void initData() {
-        rxManage =new RxManage();
+        rxManage = new RxManage();
     }
 
     @Override
@@ -65,16 +61,13 @@ public class MDrawingChartView extends BaseView {
         mKLineView.setDateFormat("yyyy-MM-dd");
     }
 
-    public void setData(String stock_code,String tactics_id,int type) {
+    public void setData(String stock_code, String tactics_id, int type) {
 //        FuTuModel model = Util.getDrawing(mContext);
         this.tactics_id = tactics_id;
         this.stock_code = stock_code;
-        this.type=type;
+        this.type = type;
         getFiveDayDetialNet();
     }
-
-
-
 
 
     public void showVolume() {
@@ -86,17 +79,69 @@ public class MDrawingChartView extends BaseView {
             }
         });
     }
+
     private void getFiveDayDetialNet() {
         HashMap<String, String> params = new HashMap();
         params.put("tactics_id", tactics_id);
         params.put("stock_code", stock_code);
-        params.put("type", type+"");
+        params.put("type", type + "");
 
         addNetwork(Api.getInstance().getService(ApiService.class).getFtNet(params)
                 , new Action1<FuTuModel>() {
                     @Override
                     public void call(FuTuModel model) {
 //                        hideLoadDialog();
+
+
+                        List<FuTuModel.LineItemData> mListbb= model.data.stickline_bb.line_data;
+                        List<FuTuModel.LineItemData> mListema = model.data.stickline_ema.line_data;
+
+                        List<FuTuModel.LineItemData> minList = new ArrayList<>();
+
+                        if (mListbb != null && mListema != null) {
+                            Map<String, FuTuModel.LineItemData> minMap = new HashMap<>();
+                            if (mListbb.size() > mListema.size()) {
+
+                                for (int i = 0; i < mListema.size(); i++) {
+                                    minMap.put(mListema.get(i).stickline_date, mListema.get(i));
+                                }
+
+
+                                for (int i = 0; i < mListbb.size(); i++) {
+                                    if (minMap.containsKey(mListbb.get(i).stickline_date)) {
+                                        minList.add(minMap.get(mListbb.get(i).stickline_date));
+                                    }else{
+                                        FuTuModel.LineItemData data = new FuTuModel.LineItemData();
+                                        data.high=-1;
+                                        data.low=-1;
+                                        data.stickline_date  = mListbb.get(i).stickline_date;
+                                        minList.add(data);
+                                    }
+                                }
+                                model.data.stickline_ema.line_data = minList;
+
+                            } else {
+
+
+                                for (int i = 0; i < mListbb.size(); i++) {
+                                    minMap.put(mListbb.get(i).stickline_date, mListbb.get(i));
+                                }
+                                for (int i = 0; i < mListema.size(); i++) {
+                                    if (minMap.containsKey(mListema.get(i).stickline_date)) {
+                                        minList.add(minMap.get(mListema.get(i).stickline_date));
+                                    }else{
+                                        FuTuModel.LineItemData data = new FuTuModel.LineItemData();
+                                        data.high=-1;
+                                        data.low=-1;
+                                        data.stickline_date=mListema.get(i).stickline_date;
+                                        minList.add(data);
+                                    }
+                                }
+                                model.data.stickline_bb.line_data = minList;
+                            }
+
+
+                        }
 
                         List<List<HisData>> lists = new ArrayList<>();
                         List<HisData> hisData = new ArrayList<>();
@@ -111,7 +156,7 @@ public class MDrawingChartView extends BaseView {
                             d.color = lineData.color;
                             d.groupId = i;
                             d.setDate(Util.getStringToDate(lineData.stickline_date));
-                            hisData.add(d);
+                            hisData.add(0, d);
                         }
 
 
@@ -128,23 +173,26 @@ public class MDrawingChartView extends BaseView {
                             d.color = lineData.color;
                             d.groupId = i;
                             d.setDate(Util.getStringToDate(lineData.stickline_date));
-                            hisData1.add(d);
+                            hisData1.add(0, d);
                         }
 
                         lists.add(hisData1);
                         model.lists = lists;
 
-                        int maxCount = hisData.size();
-                        int initCount = 50;
-                        int minCount = 50;
+//                        int maxCount = hisData.size();
+//                        if (hisData1.size() > hisData.size()) {
+//                            maxCount = hisData1.size();
+//                        }
+//                        int initCount = 80;
+//                        int minCount = 80;
 
-                        maxCount = 50;
-                        if (hisData.size() < 50) {
-//            initCount = hisData.size();
-//            minCount = hisData.size();
-                            maxCount = 50;
-                        }
-                        mKLineView.setCount(initCount, maxCount, minCount);
+//                        maxCount = 50;
+//                        if (hisData.size() < 50) {
+////            initCount = hisData.size();
+////            minCount = hisData.size();
+//                            maxCount = 50;
+//                        }
+//                        mKLineView.setCount(initCount, maxCount, minCount);
                         mKLineView.initData(model);
                         mKLineView.setLimitLine();
                     }

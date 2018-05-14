@@ -7,13 +7,10 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
-import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.dataprovider.*;
 import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
 import com.github.mikephil.charting.my.DrawingData;
-import com.github.mikephil.charting.renderer.LineScatterCandleRadarRenderer;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.Transformer;
@@ -48,7 +45,6 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
         mChart = chart;
 
 
-
         mRenderPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRenderPaint1.setStyle(Paint.Style.STROKE);
         mRenderPaint1.setColor(Color.BLACK);
@@ -77,7 +73,6 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
     protected void drawDataSet(Canvas c, ICandleDataSet dataSet) {
 
 
-
         Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
 
         float phaseY = mAnimator.getPhaseY();
@@ -87,18 +82,22 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
         mXBounds.set(mChart, dataSet);
 
         mRenderPaint.setStrokeWidth(dataSet.getShadowWidth());
+        mRenderPaint.setStyle(Paint.Style.FILL);
 
-        Log.e("tag","drawDataSet1"+mXBounds.min+" "+mXBounds.range);
+
+        Log.e("tag", "drawDataSet1" + mXBounds.min + " " + mXBounds.range);
         // draw the body
         for (int j = mXBounds.min; j <= mXBounds.range + mXBounds.min; j++) {
-            Log.e("tag","drawDataSet2");
+            Log.e("tag", "drawDataSet2");
             // get the entry
             CandleEntry e = dataSet.getEntryForIndex(j);
 
-            if (e == null)
+            if (e == null||e.width==null||e.color==null)
                 continue;
 
-            for(int z = 0;z<e.width.size();z++) {
+            for (int z = 0; z <e.width.size(); z++) {
+
+                Log.e("tag", "widthwidth=" + j + " " + e.width.size());
                 final float xPos = e.getX();
 
                 final float open = e.getOpen();
@@ -131,67 +130,77 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
                         mShadowBuffers[7] = mShadowBuffers[3];
                     }
 
-                    trans.pointValuesToPixel(mShadowBuffers);
+//                    trans.pointValuesToPixel(mShadowBuffers);
 
                     // draw the shadows
 
-                    if (dataSet.getShadowColorSameAsCandle()) {
+//                    if (dataSet.getShadowColorSameAsCandle()) {
+//
+//                        if (open > close)
+//                            mRenderPaint.setColor(
+//                                    dataSet.getDecreasingColor() == ColorTemplate.COLOR_NONE ?
+//                                            dataSet.getColor(j) :
+//                                            dataSet.getDecreasingColor()
+//                            );
+//
+//                        else if (open < close)
+//                            mRenderPaint.setColor(
+//                                    dataSet.getIncreasingColor() == ColorTemplate.COLOR_NONE ?
+//                                            dataSet.getColor(j) :
+//                                            dataSet.getIncreasingColor()
+//                            );
+//
+//                        else
+//                            mRenderPaint.setColor(
+//                                    dataSet.getNeutralColor() == ColorTemplate.COLOR_NONE ?
+//                                            dataSet.getColor(j) :
+//                                            dataSet.getNeutralColor()
+//                            );
+//
+//                    } else {
+//                        mRenderPaint.setColor(
+//                                dataSet.getShadowColor() == ColorTemplate.COLOR_NONE ?
+//                                        dataSet.getColor(j) :
+//                                        dataSet.getShadowColor()
+//                        );
+//                    }
 
-                        if (open > close)
-                            mRenderPaint.setColor(
-                                    dataSet.getDecreasingColor() == ColorTemplate.COLOR_NONE ?
-                                            dataSet.getColor(j) :
-                                            dataSet.getDecreasingColor()
-                            );
-
-                        else if (open < close)
-                            mRenderPaint.setColor(
-                                    dataSet.getIncreasingColor() == ColorTemplate.COLOR_NONE ?
-                                            dataSet.getColor(j) :
-                                            dataSet.getIncreasingColor()
-                            );
-
-                        else
-                            mRenderPaint.setColor(
-                                    dataSet.getNeutralColor() == ColorTemplate.COLOR_NONE ?
-                                            dataSet.getColor(j) :
-                                            dataSet.getNeutralColor()
-                            );
-
-                    } else {
-                        mRenderPaint.setColor(
-                                dataSet.getShadowColor() == ColorTemplate.COLOR_NONE ?
-                                        dataSet.getColor(j) :
-                                        dataSet.getShadowColor()
-                        );
-                    }
-
-                    mRenderPaint.setStyle(Paint.Style.FILL);
 
 //                c.drawLines(mShadowBuffers, mRenderPaint);
 
                     // calculate the body
 
                     barSpace = 0f;
-                    if(z==4){
-                        mBodyBuffers[0] = xPos - 0.1f+ barSpace;
-                        mBodyBuffers[2] = (xPos + 0.1f)-barSpace;
+
+                    if (z == 5) {
+                        mBodyBuffers[0] = xPos  + barSpace;
+                        mBodyBuffers[2] = (xPos) - barSpace;
                     }
-                    if(z==3){
-                        mBodyBuffers[0] = xPos - 0.2f+ barSpace;
-                        mBodyBuffers[2] = (xPos + 0.2f)-barSpace;
-                    }else if(z==2){
-                        mBodyBuffers[0] = xPos - 0.3f+ barSpace;
-                        mBodyBuffers[2] = (xPos + 0.3f)-barSpace;
-                    }else if(z==1){
-                        mBodyBuffers[0] = xPos - 0.4f+ barSpace;
-                        mBodyBuffers[2] = (xPos + 0.4f)-barSpace;
-                    }else if(z==0){
-                        mBodyBuffers[0] = xPos - 0.5f+ barSpace;
-                        mBodyBuffers[2] = (xPos + 0.5f)- barSpace;
+                    else if (z == 4) {
+                        mBodyBuffers[0] = xPos - 0.1f + barSpace;
+                        mBodyBuffers[2] = (xPos + 0.1f) - barSpace;
                     }
-                    Log.e("tag","color="+Color.parseColor(e.color.get(z))+" "+e.color.get(z));
-                    mRenderPaint.setColor(Color.parseColor(e.color.get(z)));
+                    else if (z == 3) {
+                        mBodyBuffers[0] = xPos - 0.2f + barSpace;
+                        mBodyBuffers[2] = (xPos + 0.2f) - barSpace;
+                    } else if (z == 2) {
+                        mBodyBuffers[0] = xPos - 0.3f + barSpace;
+                        mBodyBuffers[2] = (xPos + 0.3f) - barSpace;
+                    } else if (z == 1) {
+                        mBodyBuffers[0] = xPos - 0.4f + barSpace;
+                        mBodyBuffers[2] = (xPos + 0.4f) - barSpace;
+                    } else if (z == 0) {
+                        mBodyBuffers[0] = xPos - 0.5f + barSpace;
+                        mBodyBuffers[2] = (xPos + 0.5f) - barSpace;
+                    }
+//                    Log.e("tag", "color=" + Color.parseColor(e.color.get(z)) + " " + e.color.get(z));
+                    int colorIndex ;
+                    if(z>=e.color.size()){
+                        colorIndex = e.color.size()-1;
+                    }else{
+                        colorIndex = z;
+                    }
+                    mRenderPaint.setColor(Color.parseColor(e.color.get(colorIndex)));
 
                     mBodyBuffers[1] = close * phaseY;
                     mBodyBuffers[3] = open * phaseY;
@@ -209,10 +218,12 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
 
 //                        mRenderPaint.setStyle(dataSet.getDecreasingPaintStyle());
 
-                    c.drawRect(
-                            mBodyBuffers[0], mBodyBuffers[3],
-                            mBodyBuffers[2], mBodyBuffers[1],
-                            mRenderPaint);
+//                        c.save();
+                        c.drawRect(
+                                mBodyBuffers[0], mBodyBuffers[3],
+                                mBodyBuffers[2], mBodyBuffers[1],
+                                mRenderPaint);
+//                        c.restore();
 //
 //                        c.drawRoundRect(mBodyBuffers[0], mBodyBuffers[3],
 //                                mBodyBuffers[2], mBodyBuffers[1], 20f, 20f, mRenderPaint);
@@ -230,10 +241,10 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
 
                         mRenderPaint.setStyle(dataSet.getIncreasingPaintStyle());
 
-                    c.drawRect(
-                            mBodyBuffers[0], mBodyBuffers[1],
-                            mBodyBuffers[2], mBodyBuffers[3],
-                            mRenderPaint);
+                        c.drawRect(
+                                mBodyBuffers[0], mBodyBuffers[1],
+                                mBodyBuffers[2], mBodyBuffers[3],
+                                mRenderPaint);
 
 //                        c.drawRoundRect(mBodyBuffers[0], mBodyBuffers[1],
 //                                mBodyBuffers[2], mBodyBuffers[3], 20f, 20f, mRenderPaint);
@@ -247,17 +258,16 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
                             mRenderPaint.setColor(dataSet.getNeutralColor());
                         }
 
-                    c.drawLine(
-                            mBodyBuffers[0], mBodyBuffers[1],
-                            mBodyBuffers[2], mBodyBuffers[3],
-                            mRenderPaint);
+                        c.drawLine(
+                                mBodyBuffers[0], mBodyBuffers[1],
+                                mBodyBuffers[2], mBodyBuffers[3],
+                                mRenderPaint);
 //                        c.drawRoundRect(mBodyBuffers[0], mBodyBuffers[1],
 //                                mBodyBuffers[2], mBodyBuffers[3], 20f, 20f, mRenderPaint);
 //                        c.drawRoundRect(mBodyBuffers[0], mBodyBuffers[1],
 //                                mBodyBuffers[2], mBodyBuffers[3], 20f, 20f, mRenderPaint1);
                     }
                 } else {
-                    Log.e("tag", "drawDataSet4");
                     mRangeBuffers[0] = xPos;
                     mRangeBuffers[1] = high * phaseY;
                     mRangeBuffers[2] = xPos;

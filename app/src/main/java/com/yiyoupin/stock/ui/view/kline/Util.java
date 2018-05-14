@@ -40,6 +40,7 @@ public class Util {
     private static SimpleDateFormat sFormat3 = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
 
     private static SimpleDateFormat sFormat4 = new SimpleDateFormat("HHmm", Locale.getDefault());
+    private static SimpleDateFormat sFormat5 = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 
     public static List<HisData> getHisData(Context context) {
         InputStream is = context.getResources().openRawResource(R.raw.his_data);
@@ -105,7 +106,7 @@ public class Util {
             data.setClose(m.getPrice());
             data.setVol(m.getVolume());
             data.setOpen(i == 0 ? 0 : list.get(i - 1).getPrice());
-
+            data.setAvePrice(m.getAverage());
 
             if (!TextUtils.isEmpty(m.getTime())) {
                 try {
@@ -137,8 +138,8 @@ public class Util {
 
             List<LineModel> dapandataList = new ArrayList<>();
             dapandataList.addAll(fiveDayList.get(i).dapandata);
-            dapandataList.addAll(fiveDayList.get(i).dapandata);
-            dapandataList.addAll(fiveDayList.get(i).dapandata);
+//            dapandataList.addAll(fiveDayList.get(i).dapandata);
+//            dapandataList.addAll(fiveDayList.get(i).dapandata);
             model.put(fiveDayList.get(i).name, dapandataList);
             list.add(model);
         }
@@ -151,7 +152,7 @@ public class Util {
 
         for (int i = 0; i < list.size(); i++) {
 
-            List<HisData> hisData = new ArrayList<>(100);
+            List<HisData> hisData = new ArrayList<>();
             List<LineModel> lineModels = list.get(i).values().iterator().next();
             String time = list.get(i).keySet().iterator().next();
 
@@ -161,12 +162,14 @@ public class Util {
                 data.setClose(m.getPrice());
                 data.setVol(m.getVolume());
                 data.setOpen(j == 0 ? 0 : lineModels.get(j - 1).getPrice());
+                data.setAvePrice(m.getAverage());
+
                 try {
 //                    if (!TextUtils.isEmpty(m.getTime()))
 //                        data.setDate(Long.parseLong(m.getTime()));
-                    m.setTime(sFormat4.format(Long.parseLong(m.getTime())));
+//                    m.setTime(sFormat4.format(Long.parseLong(m.getTime())));
                     Log.e("tag", "setTimesetTime=" + m.getTime());
-                    data.setDate(sFormat3.parse(time + m.getTime()).getTime());
+                    data.setDate(Long.parseLong(m.getTime()));
                 } catch (Exception e) {
                     Log.e("tag", "setTimesetTime=" + e);
                     e.printStackTrace();
@@ -286,7 +289,7 @@ public class Util {
     public static long getStringToDate(String dateString) {
         Date date = new Date();
         try{
-            date = sFormat2.parse(dateString);
+            date = sFormat5.parse(dateString);
         } catch(ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

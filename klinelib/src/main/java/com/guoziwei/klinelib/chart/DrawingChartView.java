@@ -145,6 +145,7 @@ public class DrawingChartView extends BaseView implements CoupleChartGestureList
 
     protected void initChartPrice() {
         mChartPrice.setScaleEnabled(true);
+        mChartPrice.setScaleXEnabled(true);
         mChartPrice.setDrawBorders(false);
         mChartPrice.setBorderWidth(1);
         mChartPrice.setDragEnabled(true);
@@ -285,9 +286,12 @@ public class DrawingChartView extends BaseView implements CoupleChartGestureList
             longTrendLine.add(new Entry(i, (float) model.data.longtrendline.line_data.get(i).trend_data));
         }
 
+//
+//        LineData lineData = new LineData(
+//                setLine(NORMAL_LINE, trendLine),setLine(NORMAL_LINE, longTrendLine));
 
         LineData lineData = new LineData(
-                setLine(NORMAL_LINE, trendLine),setLine(NORMAL_LINE, longTrendLine));
+                setLine(INVISIABLE_LINE, trendLine));
 
         Log.e("tag","DrawingDataDrawingData="+sets.size());
         DrawingData candleData = new DrawingData(sets);

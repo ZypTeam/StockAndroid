@@ -31,7 +31,7 @@ public class HisData implements Serializable{
     private double k;
     private double d;
     private double j;
-
+    private String fiveXName;
     public int groupId;
 
      public List<Integer> width;
@@ -227,6 +227,14 @@ public class HisData implements Serializable{
 
     public void setJ(double j) {
         this.j = j;
+    }
+
+    public String getFiveXName() {
+        return fiveXName;
+    }
+
+    public void setFiveXName(String fiveXName) {
+        this.fiveXName = fiveXName;
     }
 
     @Override

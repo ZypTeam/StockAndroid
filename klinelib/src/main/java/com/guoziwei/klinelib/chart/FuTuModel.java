@@ -29,7 +29,7 @@ public class FuTuModel extends BaseModel implements Serializable {
         public List<LineItemData> line_data;
     }
 
-    public class LineItemData implements Serializable {
+    public static class LineItemData implements Serializable {
 
         public String stickline_date;
         public double high;
