@@ -3,6 +3,7 @@ package com.yiyoupin.stock.ui.view.kline;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.guoziwei.klinelib.chart.FuTuModel;
@@ -92,36 +93,34 @@ public class MDrawingChartView extends BaseView {
                     public void call(FuTuModel model) {
 //                        hideLoadDialog();
 
-
-                        List<FuTuModel.LineItemData> mListbb= model.data.stickline_bb.line_data;
+                        List<FuTuModel.LineItemData> mListbb = model.data.stickline_bb.line_data;
                         List<FuTuModel.LineItemData> mListema = model.data.stickline_ema.line_data;
 
                         List<FuTuModel.LineItemData> minList = new ArrayList<>();
+                        Map<String, FuTuModel.LineItemData> minMap = new HashMap<>();
 
                         if (mListbb != null && mListema != null) {
-                            Map<String, FuTuModel.LineItemData> minMap = new HashMap<>();
-                            if (mListbb.size() > mListema.size()) {
 
+                            if (mListbb.size() > mListema.size()) {
                                 for (int i = 0; i < mListema.size(); i++) {
                                     minMap.put(mListema.get(i).stickline_date, mListema.get(i));
                                 }
 
-
                                 for (int i = 0; i < mListbb.size(); i++) {
                                     if (minMap.containsKey(mListbb.get(i).stickline_date)) {
                                         minList.add(minMap.get(mListbb.get(i).stickline_date));
-                                    }else{
+                                    } else {
                                         FuTuModel.LineItemData data = new FuTuModel.LineItemData();
-                                        data.high=-1;
-                                        data.low=-1;
-                                        data.stickline_date  = mListbb.get(i).stickline_date;
+                                        data.high = -1;
+                                        data.low = -1;
+                                        data.stickline_date = mListbb.get(i).stickline_date;
                                         minList.add(data);
                                     }
                                 }
                                 model.data.stickline_ema.line_data = minList;
 
                             } else {
-
+                                Log.e("tag", "asdasdasdasd4");
 
                                 for (int i = 0; i < mListbb.size(); i++) {
                                     minMap.put(mListbb.get(i).stickline_date, mListbb.get(i));
@@ -129,11 +128,11 @@ public class MDrawingChartView extends BaseView {
                                 for (int i = 0; i < mListema.size(); i++) {
                                     if (minMap.containsKey(mListema.get(i).stickline_date)) {
                                         minList.add(minMap.get(mListema.get(i).stickline_date));
-                                    }else{
+                                    } else {
                                         FuTuModel.LineItemData data = new FuTuModel.LineItemData();
-                                        data.high=-1;
-                                        data.low=-1;
-                                        data.stickline_date=mListema.get(i).stickline_date;
+                                        data.high = -1;
+                                        data.low = -1;
+                                        data.stickline_date = mListema.get(i).stickline_date;
                                         minList.add(data);
                                     }
                                 }
@@ -142,42 +141,47 @@ public class MDrawingChartView extends BaseView {
 
 
                         }
-
                         List<List<HisData>> lists = new ArrayList<>();
-                        List<HisData> hisData = new ArrayList<>();
 
-                        for (int i = 0; i < model.data.stickline_bb.line_data.size(); i++) {
-                            FuTuModel.LineItemData lineData = model.data.stickline_bb.line_data.get(i);
+                        if (model.data != null && model.data.stickline_bb != null && model.data.stickline_bb.line_data != null) {
+                            List<HisData> hisData = new ArrayList<>();
+                            for (int i = 0; i < model.data.stickline_bb.line_data.size(); i++) {
+                                Log.e("tag", "asdasdasdas");
+                                FuTuModel.LineItemData lineData = model.data.stickline_bb.line_data.get(i);
 
-                            HisData d = new HisData();
-                            d.setOpen(lineData.high);
-                            d.setClose(lineData.low);
-                            d.width = lineData.width;
-                            d.color = lineData.color;
-                            d.groupId = i;
-                            d.setDate(Util.getStringToDate(lineData.stickline_date));
-                            hisData.add(0, d);
+                                HisData d = new HisData();
+                                d.setOpen(lineData.high);
+                                d.setClose(lineData.low);
+                                d.width = lineData.width;
+                                d.color = lineData.color;
+                                d.groupId = i;
+                                d.setDate(Util.getStringToDate(lineData.stickline_date));
+                                hisData.add(0, d);
+                            }
+
+                            lists.add(hisData);
                         }
 
+                        if (model.data != null && model.data.stickline_ema != null && model.data.stickline_ema.line_data != null) {
+                            List<HisData> hisData1 = new ArrayList<>();
+                            for (int i = 0; i < model.data.stickline_ema.line_data.size(); i++) {
+                                FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
 
-                        lists.add(hisData);
-
-                        List<HisData> hisData1 = new ArrayList<>();
-                        for (int i = 0; i < model.data.stickline_ema.line_data.size(); i++) {
-                            FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
-
-                            HisData d = new HisData();
-                            d.setOpen(lineData.high);
-                            d.setClose(lineData.low);
-                            d.width = lineData.width;
-                            d.color = lineData.color;
-                            d.groupId = i;
-                            d.setDate(Util.getStringToDate(lineData.stickline_date));
-                            hisData1.add(0, d);
+                                HisData d = new HisData();
+                                d.setOpen(lineData.high);
+                                d.setClose(lineData.low);
+                                d.width = lineData.width;
+                                d.color = lineData.color;
+                                d.groupId = i;
+                                d.setDate(Util.getStringToDate(lineData.stickline_date));
+                                hisData1.add(0, d);
+                            }
+                            lists.add(hisData1);
                         }
-
-                        lists.add(hisData1);
                         model.lists = lists;
+
+
+                        Log.e("tag", "asdasdasdasd8");
 
 //                        int maxCount = hisData.size();
 //                        if (hisData1.size() > hisData.size()) {
@@ -193,8 +197,11 @@ public class MDrawingChartView extends BaseView {
 //                            maxCount = 50;
 //                        }
 //                        mKLineView.setCount(initCount, maxCount, minCount);
-                        mKLineView.initData(model);
-                        mKLineView.setLimitLine();
+
+                        if (model.lists != null && model.lists.size() > 0) {
+                            mKLineView.initData(model);
+                            mKLineView.setLimitLine();
+                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override

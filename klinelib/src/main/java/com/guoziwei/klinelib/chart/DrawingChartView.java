@@ -260,40 +260,67 @@ public class DrawingChartView extends BaseView implements CoupleChartGestureList
 
         ArrayList<Entry> trendLine = new ArrayList<>();
         ArrayList<Entry> longTrendLine = new ArrayList<>();
-
+        ArrayList<Entry> paddingrendLine = new ArrayList<>();
         ArrayList<ICandleDataSet> sets = new ArrayList<>();
-        for(int j=0;j<hisDatas.size();j++) {
 
-            ArrayList<CandleEntry> lineCJEntries = new ArrayList<>();
-            List<HisData> hdList =  DataUtils.calculateHisData(hisDatas.get(j));
-            for (int i = 0; i < hdList.size(); i++) {
 
-                HisData hisData = hdList.get(i);
-                lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose(), hisData.width, hisData.color));
+        Log.e("tag","trendlinetrendline1=="+hisDatas.size());
+
+        try {
+            for (int j = 0; j < hisDatas.size(); j++) {
+
+                ArrayList<CandleEntry> lineCJEntries = new ArrayList<>();
+                List<HisData> hdList = DataUtils.calculateHisData(hisDatas.get(j));
+
+
+                for (int i = 0; i < hdList.size(); i++) {
+
+                    HisData hisData = hdList.get(i);
+                    if (j == 0) {
+                        paddingrendLine.add(new Entry(i, (float) hisData.getOpen()));
+                    }
+
+                    if(hisData.width==null){
+                        Log.e("tag", "trendlinetrendline3=="+hisData.width);
+                    }
+                    if(hisData.color==null){
+                        Log.e("tag", "trendlinetrendline4=="+hisData.color);
+                    }
+                    Log.e("tag", "trendlinetrendline2==" + hisData.getHigh() + " " + hisData.getLow() + " " + hisData.getOpen() + " " + hisData.getClose() + " " );
+                    lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose(), hisData.width, hisData.color));
+
+                }
+                sets.add(setKLine(NORMAL_LINE, lineCJEntries));
+                mData.addAll(hdList);
             }
-            sets.add(setKLine(NORMAL_LINE, lineCJEntries));
-            mData.addAll(hdList);
-        }
-
-
-        for(int i=0;i<model.data.trendline.line_data.size();i++){
-            trendLine.add(new Entry(i, (float) model.data.trendline.line_data.get(i).trend_data));
+        }catch (Exception e){
+            Log.e("tag", "trendlinetrendline5="+e);
         }
 
 
 
-        for(int i=0;i<model.data.longtrendline.line_data.size();i++){
-            longTrendLine.add(new Entry(i, (float) model.data.longtrendline.line_data.get(i).trend_data));
+        if(model.data!=null) {
+            if(model.data.trendline!=null&&model.data.trendline.line_data!=null&&model.data.trendline.line_data.size()>0) {
+                for (int i = 0; i < model.data.trendline.line_data.size(); i++) {
+                    trendLine.add(new Entry(i, (float) model.data.trendline.line_data.get(i).trend_data));
+                }
+            }
+            if(model.data.longtrendline!=null&&model.data.longtrendline.line_data!=null&&model.data.longtrendline.line_data.size()>0) {
+                for (int i = 0; i < model.data.longtrendline.line_data.size(); i++) {
+                    longTrendLine.add(new Entry(i, (float) model.data.longtrendline.line_data.get(i).trend_data));
+                }
+            }
         }
 
+
+        Log.e("tag","trendlinetrendline4==");
 //
 //        LineData lineData = new LineData(
 //                setLine(NORMAL_LINE, trendLine),setLine(NORMAL_LINE, longTrendLine));
 
         LineData lineData = new LineData(
-                setLine(INVISIABLE_LINE, trendLine));
+                setLine(INVISIABLE_LINE, paddingrendLine));
 
-        Log.e("tag","DrawingDataDrawingData="+sets.size());
         DrawingData candleData = new DrawingData(sets);
         CombinedData combinedData = new CombinedData();
         combinedData.setData(lineData);

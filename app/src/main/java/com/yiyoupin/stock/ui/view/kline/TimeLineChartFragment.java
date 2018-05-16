@@ -192,7 +192,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
     public void setData(StockDetailModel.StockDetailDataModel model, String stockID) {
 
 
-        if (model != null && model.dapandata != null) {
+        if (model != null && model.dapandata != null&& model.dapandata.size()>0) {
             final List<HisData> hisData = Util.get1Day(model.dapandata);
             if (hisData.size() > 0)
                 mTimeLineView.setLastClose(hisData.get(0).getClose());

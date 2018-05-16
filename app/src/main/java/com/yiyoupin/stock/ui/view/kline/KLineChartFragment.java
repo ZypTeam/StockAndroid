@@ -139,7 +139,7 @@ public class KLineChartFragment extends BaseStockFragment {
                     @Override
                     public void call(KLineModel model) {
                         hideLoadDialog();
-                        if (model.data != null) {
+                        if (model.data != null&&model.data.size()>0) {
 
                             final List<HisData> hisData = Util.getK(model.data);
                             int maxCount = hisData.size();

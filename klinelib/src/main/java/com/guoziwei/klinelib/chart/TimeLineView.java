@@ -330,8 +330,6 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         mChartVolume.moveViewToX(combinedData2.getEntryCount());
 
 
-        Log.e("tag","combinedDatacombinedData="+(combinedData.getXMax() + 0.5f));
-        Log.e("tag","mChartVolumemChartVolume="+(mChartVolume.getData().getXMax() + 0.5f));
         mChartPrice.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
         mChartVolume.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 0.5f);
 
@@ -365,7 +363,7 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
             lineDataSetMa.setColor(getResources().getColor(R.color.normal_line_color));
             lineDataSetMa.setCircleColor(mTransparentColor);
         } else if (type == AVE_LINE) {
-            lineDataSetMa.setColor(getResources().getColor(R.color.ave_color));
+            lineDataSetMa.setColor(getResources().getColor(R.color.white));
             lineDataSetMa.setCircleColor(mTransparentColor);
             lineDataSetMa.setHighlightEnabled(false);
         } else {

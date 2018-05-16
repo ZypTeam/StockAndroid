@@ -176,8 +176,10 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                     HisData hisData = (HisData) data;
                     if (hisData.getClose() < hisData.getOpen()) {
                         mRenderPaint.setColor(dataSet.getColors().get(1));
-                    } else {
+                    } else if(hisData.getClose() > hisData.getOpen()){
                         mRenderPaint.setColor(dataSet.getColors().get(0));
+                    }else{
+                        mRenderPaint.setColor(0xff7b6e72);
                     }
 
                     if (hisData.getClose() == 0f && hisData.getOpen() == 0f) {

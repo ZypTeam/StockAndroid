@@ -24,7 +24,8 @@
 
     <color name="increasing_color">@color/main_color_red</color>
     <color name="decreasing_color">@color/main_color_green</color>
-    <color name="normal_line_color">#be945c</color>
+    <!--<color name="normal_line_color">#be945c</color>-->
+    <color name="normal_line_color">#f5ad20</color>
     <color name="ave_color">#666</color>
     <color name="axis_color">#333</color>
     <color name="chart_info_color">#88000000</color>

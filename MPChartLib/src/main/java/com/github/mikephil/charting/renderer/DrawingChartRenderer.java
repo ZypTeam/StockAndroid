@@ -92,10 +92,10 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
             // get the entry
             CandleEntry e = dataSet.getEntryForIndex(j);
 
-            if (e == null||e.width==null||e.color==null)
+            if (e == null || e.width == null || e.color == null || e.width.size() == 0 || e.color.size() == 0)
                 continue;
 
-            for (int z = 0; z <e.width.size(); z++) {
+            for (int z = 0; z < e.width.size(); z++) {
 
                 Log.e("tag", "widthwidth=" + j + " " + e.width.size());
                 final float xPos = e.getX();
@@ -172,34 +172,59 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
 
                     barSpace = 0f;
 
-                    if (z == 5) {
-                        mBodyBuffers[0] = xPos  + barSpace;
-                        mBodyBuffers[2] = (xPos) - barSpace;
+                    int width = e.width.get(z);
+
+                    switch (width) {
+                        case 1:
+                            mBodyBuffers[0] = xPos - 0.5f + barSpace;
+                            mBodyBuffers[2] = (xPos + 0.5f) - barSpace;
+                            break;
+                        case 2:
+                            mBodyBuffers[0] = xPos - 0.4f + barSpace;
+                            mBodyBuffers[2] = (xPos + 0.4f) - barSpace;
+                            break;
+                        case 3:
+                            mBodyBuffers[0] = xPos - 0.3f + barSpace;
+                            mBodyBuffers[2] = (xPos + 0.3f) - barSpace;
+                            break;
+                        case 4:
+                            mBodyBuffers[0] = xPos - 0.2f + barSpace;
+                            mBodyBuffers[2] = (xPos + 0.2f) - barSpace;
+                            break;
+                        case 5:
+                            mBodyBuffers[0] = xPos - 0.1f + barSpace;
+                            mBodyBuffers[2] = (xPos + 0.1f) - barSpace;
+                        case 6:
+                            mBodyBuffers[0] = xPos + barSpace;
+                            mBodyBuffers[2] = (xPos) - barSpace;
+                            break;
+                        default:
+                            mBodyBuffers[0] = xPos + barSpace;
+                            mBodyBuffers[2] = (xPos) - barSpace;
+
+
                     }
-                    else if (z == 4) {
-                        mBodyBuffers[0] = xPos - 0.1f + barSpace;
-                        mBodyBuffers[2] = (xPos + 0.1f) - barSpace;
-                    }
-                    else if (z == 3) {
-                        mBodyBuffers[0] = xPos - 0.2f + barSpace;
-                        mBodyBuffers[2] = (xPos + 0.2f) - barSpace;
-                    } else if (z == 2) {
-                        mBodyBuffers[0] = xPos - 0.3f + barSpace;
-                        mBodyBuffers[2] = (xPos + 0.3f) - barSpace;
-                    } else if (z == 1) {
-                        mBodyBuffers[0] = xPos - 0.4f + barSpace;
-                        mBodyBuffers[2] = (xPos + 0.4f) - barSpace;
-                    } else if (z == 0) {
-                        mBodyBuffers[0] = xPos - 0.5f + barSpace;
-                        mBodyBuffers[2] = (xPos + 0.5f) - barSpace;
-                    }
-//                    Log.e("tag", "color=" + Color.parseColor(e.color.get(z)) + " " + e.color.get(z));
-                    int colorIndex ;
-                    if(z>=e.color.size()){
-                        colorIndex = e.color.size()-1;
-                    }else{
+//                    if (width == 6) {
+//
+//                    } else if (width == 5) {
+//
+//                    } else if (width == 4) {
+//
+//                    } else if (width == 3) {
+//
+//                    } else if (width == 2) {
+//
+//                    } else if (width == 1) {
+//
+//                    }
+
+                    int colorIndex;
+                    if (z >= e.color.size()) {
+                        colorIndex = e.color.size() - 1;
+                    } else {
                         colorIndex = z;
                     }
+                    Log.e("tag", "color=" + Color.parseColor(e.color.get(colorIndex)) + " " + e.color.get(colorIndex));
                     mRenderPaint.setColor(Color.parseColor(e.color.get(colorIndex)));
 
                     mBodyBuffers[1] = close * phaseY;
@@ -208,7 +233,7 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
                     trans.pointValuesToPixel(mBodyBuffers);
 
                     // draw body differently for increasing and decreasing entry
-                    if (open > close) { // decreasing
+                    if (open > close) { //
 
 //                        if (dataSet.getDecreasingColor() == ColorTemplate.COLOR_NONE) {
 //                            mRenderPaint.setColor(dataSet.getColor(j));
@@ -219,6 +244,8 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
 //                        mRenderPaint.setStyle(dataSet.getDecreasingPaintStyle());
 
 //                        c.save();
+
+                        Log.e("tag", "drawDataSet4");
                         c.drawRect(
                                 mBodyBuffers[0], mBodyBuffers[3],
                                 mBodyBuffers[2], mBodyBuffers[1],
@@ -232,7 +259,7 @@ public class DrawingChartRenderer extends LineScatterCandleRadarRenderer {
 //                        c.drawRoundRect(mBodyBuffers[0], mBodyBuffers[3],
 //                                mBodyBuffers[2], mBodyBuffers[1], 20f, 20f, mRenderPaint1);
                     } else if (open < close) {
-
+                        Log.e("tag", "drawDataSet5");
                         if (dataSet.getIncreasingColor() == ColorTemplate.COLOR_NONE) {
                             mRenderPaint.setColor(dataSet.getColor(j));
                         } else {
