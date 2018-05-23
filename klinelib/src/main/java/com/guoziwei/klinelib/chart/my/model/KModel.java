@@ -1,4 +1,4 @@
-package com.yiyoupin.stock.ui.view.kline.model;
+package com.guoziwei.klinelib.chart.my.model;
 
 /**
  * Created by Administrator on 2018/3/14 0014.

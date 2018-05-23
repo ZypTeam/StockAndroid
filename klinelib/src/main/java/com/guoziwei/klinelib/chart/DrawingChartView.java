@@ -223,8 +223,6 @@ public class DrawingChartView extends BaseView implements CoupleChartGestureList
         rightColorContentYAxisRenderer.setUseDefaultLabelXOffset(false);
         rightColorContentYAxisRenderer.setLabelColor(colorArray);
         mChartPrice.setRendererRightYAxis(rightColorContentYAxisRenderer);
-
-
     }
 
 

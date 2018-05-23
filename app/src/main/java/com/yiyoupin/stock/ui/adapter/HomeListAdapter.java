@@ -10,14 +10,13 @@ import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.model.QuotesItemModel;
-import com.yiyoupin.stock.model.SearchModel;
 import com.yiyoupin.stock.model.StockModel;
 import com.yiyoupin.stock.model.StrategiesMoreModel;
 import com.yiyoupin.stock.ui.activity.FromListActivity;
 import com.yiyoupin.stock.ui.activity.StockShowActivity;
 import com.yiyoupin.stock.ui.activity.StrategiesDetailActivity;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 import java.io.Serializable;

@@ -7,11 +7,10 @@ import android.widget.TextView;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.MIngXIDataModel;
 import com.yiyoupin.stock.model.MingXiModel;
 import com.yiyoupin.stock.model.StockDetailModel;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
 
 import java.io.Serializable;
 

@@ -20,6 +20,7 @@ import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.HomeBottomQuotesView;
+import com.yiyoupin.stock.ui.view.HomeCelueCardView;
 
 import rx.functions.Action1;
 
@@ -49,6 +50,10 @@ public class HomeFrgament extends BaseStockFragment {
     protected HomeBottomQuotesView viewShangzheng;
     protected HomeBottomQuotesView viewShenzheng;
     protected HomeBottomQuotesView viewChuangye;
+    protected HomeCelueCardView viewCradLeft;
+    protected HomeCelueCardView viewCradCenter;
+    protected HomeCelueCardView viewCradRight;
+    protected ImageView imgTrend;
     private View newspaper, charts, notice, replay;
 
     private HomeListAdapter adapter;
@@ -101,6 +106,10 @@ public class HomeFrgament extends BaseStockFragment {
         charts = rootView.findViewById(R.id.charts);
         notice = rootView.findViewById(R.id.notice);
         replay = rootView.findViewById(R.id.replay);
+        viewCradLeft = (HomeCelueCardView) rootView.findViewById(R.id.view_crad_left);
+        viewCradCenter = (HomeCelueCardView) rootView.findViewById(R.id.view_crad_center);
+        viewCradRight = (HomeCelueCardView) rootView.findViewById(R.id.view_crad_right);
+        imgTrend = (ImageView) rootView.findViewById(R.id.img_trend);
 
     }
 
@@ -113,27 +122,30 @@ public class HomeFrgament extends BaseStockFragment {
         layoutCelue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textCelue.setTextColor(0xffff4b36);
-                textJingxuan.setTextColor(mContext.getResources().getColor(R.color.write));
-                textXingtai.setTextColor(mContext.getResources().getColor(R.color.write));
+//                textCelue.setTextColor(0xffff4b36);
+//                textJingxuan.setTextColor(mContext.getResources().getColor(R.color.write));
+//                textXingtai.setTextColor(mContext.getResources().getColor(R.color.write));
+//
+//                lineCelue.setVisibility(View.VISIBLE);
+//                lineJingxuan.setVisibility(View.GONE);
+//                lineXingtai.setVisibility(View.GONE);
+//
+//                if (homeDataModel != null) {
+//                    adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
+//                    adapter.refreshList(homeDataModel.stocktactics);
+//                    adapter.notifyDataSetChanged();
+//
+//                    if(homeDataModel.stocktactics!=null&&homeDataModel.stocktactics.size()>5){
+//                        textMore.setVisibility(View.VISIBLE);
+//                    }else{
+//                        textMore.setVisibility(View.GONE);
+//                    }
+//
+//                }
 
-                lineCelue.setVisibility(View.VISIBLE);
-                lineJingxuan.setVisibility(View.GONE);
-                lineXingtai.setVisibility(View.GONE);
-
-                if (homeDataModel != null) {
-                    adapter.setType(HomeListAdapter.TYPE_STRATEGIES);
-                    adapter.refreshList(homeDataModel.stocktactics);
-                    adapter.notifyDataSetChanged();
-
-                    if(homeDataModel.stocktactics!=null&&homeDataModel.stocktactics.size()>5){
-                        textMore.setVisibility(View.VISIBLE);
-                    }else{
-                        textMore.setVisibility(View.GONE);
-                    }
-
-                }
-
+                Bundle bundle = new Bundle();
+                bundle.putInt(HomeMoreActivity.TYPE, HomeListAdapter.TYPE_STRATEGIES);
+                goActivity(bundle, HomeMoreActivity.class);
             }
         });
 
@@ -156,25 +168,30 @@ public class HomeFrgament extends BaseStockFragment {
         layoutJingxuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textCelue.setTextColor(mContext.getResources().getColor(R.color.write));
-                textJingxuan.setTextColor(0xffff4b36);
-                textXingtai.setTextColor(mContext.getResources().getColor(R.color.write));
+//                textCelue.setTextColor(mContext.getResources().getColor(R.color.write));
+//                textJingxuan.setTextColor(0xffff4b36);
+//                textXingtai.setTextColor(mContext.getResources().getColor(R.color.write));
+//
+//                lineCelue.setVisibility(View.GONE);
+//                lineJingxuan.setVisibility(View.VISIBLE);
+//                lineXingtai.setVisibility(View.GONE);
+//
+//
+//                if (homeDataModel != null) {
+//                    adapter.setType(HomeListAdapter.TYPE_FEATURED);
+//                    adapter.refreshList(homeDataModel.buyselection);
+//                    adapter.notifyDataSetChanged();
+//                    if(homeDataModel.buyselection!=null&&homeDataModel.buyselection.size()>5){
+//                        textMore.setVisibility(View.VISIBLE);
+//                    }else{
+//                        textMore.setVisibility(View.GONE);
+//                    }
+//                }
 
-                lineCelue.setVisibility(View.GONE);
-                lineJingxuan.setVisibility(View.VISIBLE);
-                lineXingtai.setVisibility(View.GONE);
 
-
-                if (homeDataModel != null) {
-                    adapter.setType(HomeListAdapter.TYPE_FEATURED);
-                    adapter.refreshList(homeDataModel.buyselection);
-                    adapter.notifyDataSetChanged();
-                    if(homeDataModel.buyselection!=null&&homeDataModel.buyselection.size()>5){
-                        textMore.setVisibility(View.VISIBLE);
-                    }else{
-                        textMore.setVisibility(View.GONE);
-                    }
-                }
+                Bundle bundle = new Bundle();
+                bundle.putInt(HomeMoreActivity.TYPE, HomeListAdapter.TYPE_FEATURED);
+                goActivity(bundle, HomeMoreActivity.class);
             }
         });
 
@@ -204,25 +221,29 @@ public class HomeFrgament extends BaseStockFragment {
             @Override
             public void onClick(View view) {
 
-                textCelue.setTextColor(mContext.getResources().getColor(R.color.write));
-                textJingxuan.setTextColor(mContext.getResources().getColor(R.color.write));
-                textXingtai.setTextColor(0xffff4b36);
+//                textCelue.setTextColor(mContext.getResources().getColor(R.color.write));
+//                textJingxuan.setTextColor(mContext.getResources().getColor(R.color.write));
+//                textXingtai.setTextColor(0xffff4b36);
+//
+//                lineCelue.setVisibility(View.GONE);
+//                lineJingxuan.setVisibility(View.GONE);
+//                lineXingtai.setVisibility(View.VISIBLE);
+//
+//                if (homeDataModel != null) {
+//                    adapter.setType(HomeListAdapter.TYPE_FORM);
+//                    adapter.refreshList(homeDataModel.technology);
+//                    adapter.notifyDataSetChanged();
+//
+//                    if(homeDataModel.technology!=null&&homeDataModel.technology.size()>5){
+//                        textMore.setVisibility(View.VISIBLE);
+//                    }else{
+//                        textMore.setVisibility(View.GONE);
+//                    }
+//                }
 
-                lineCelue.setVisibility(View.GONE);
-                lineJingxuan.setVisibility(View.GONE);
-                lineXingtai.setVisibility(View.VISIBLE);
-
-                if (homeDataModel != null) {
-                    adapter.setType(HomeListAdapter.TYPE_FORM);
-                    adapter.refreshList(homeDataModel.technology);
-                    adapter.notifyDataSetChanged();
-
-                    if(homeDataModel.technology!=null&&homeDataModel.technology.size()>5){
-                        textMore.setVisibility(View.VISIBLE);
-                    }else{
-                        textMore.setVisibility(View.GONE);
-                    }
-                }
+                Bundle bundle = new Bundle();
+                bundle.putInt(HomeMoreActivity.TYPE, HomeListAdapter.TYPE_FORM);
+                goActivity(bundle, HomeMoreActivity.class);
 
             }
         });
@@ -262,12 +283,27 @@ public class HomeFrgament extends BaseStockFragment {
                                 homeDataModel = model.data;
                                 adapter.refreshList(model.data.stocktactics);
 
+                                if(model.data.stocktactics!=null){
+                                    if(model.data.stocktactics.size()>=1){
+                                        viewCradLeft.setVisibility(View.VISIBLE);
+                                        viewCradLeft.setData(model.data.stocktactics.get(0),0);
+                                    }
+                                    if(model.data.stocktactics.size()>2){
+                                        viewCradCenter.setVisibility(View.VISIBLE);
+                                        viewCradCenter.setData(model.data.stocktactics.get(1),0);
+                                    }
+                                    if(model.data.stocktactics.size()>3){
+                                        viewCradRight.setVisibility(View.VISIBLE);
+                                        viewCradRight.setData(model.data.stocktactics.get(2),0);
+                                    }
 
-                                if(homeDataModel.stocktactics!=null&&homeDataModel.stocktactics.size()>5){
-                                    textMore.setVisibility(View.VISIBLE);
-                                }else{
-                                    textMore.setVisibility(View.GONE);
                                 }
+
+//                                if (homeDataModel.stocktactics != null && homeDataModel.stocktactics.size() > 5) {
+//                                    textMore.setVisibility(View.VISIBLE);
+//                                } else {
+//                                    textMore.setVisibility(View.GONE);
+//                                }
 
                                 if (model.data.plateindex != null) {
                                     if (model.data.plateindex.size() >= 1) {

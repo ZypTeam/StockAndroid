@@ -1,11 +1,21 @@
 package com.guoziwei.klinelib.util;
 
+import android.util.Log;
+
+import com.guoziwei.klinelib.chart.FuTuModel;
+import com.guoziwei.klinelib.chart.my.Util;
 import com.guoziwei.klinelib.model.HisData;
 import com.guoziwei.klinelib.model.KDJ;
 import com.guoziwei.klinelib.model.MACD;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by dell on 2017/11/9.
@@ -121,6 +131,7 @@ public class DataUtils {
 
     /**
      * calculate MA value, return a double list
+     *
      * @param dayCount for example: 5, 10, 20, 30
      */
     public static List<Double> calculateMA(int dayCount, List<HisData> data) {
@@ -160,5 +171,124 @@ public class DataUtils {
         return result;
     }
 
+
+    public static FuTuModel detailData(FuTuModel model) {
+
+        if(model==null){
+            return model;
+        }
+        if(model.data!=null){
+            if(model.data.stickline_bb==null){
+                model.data.stickline_bb = model.new LineData();
+            }
+            if(model.data.stickline_bb.line_data==null){
+                model.data.stickline_bb.line_data = new ArrayList<>();
+            }
+
+            if(model.data.stickline_ema==null){
+                model.data.stickline_ema = model.new LineData();
+            }
+            if(model.data.stickline_ema.line_data==null){
+                model.data.stickline_ema.line_data = new ArrayList<>();
+            }
+        }
+        List<FuTuModel.LineItemData> mListbb = model.data.stickline_bb.line_data;
+        List<FuTuModel.LineItemData> mListema = model.data.stickline_ema.line_data;
+
+        List<FuTuModel.LineItemData> minList = new ArrayList<>();
+        Map<String, FuTuModel.LineItemData> minMap = new HashMap<>();
+        if (mListbb != null && mListema != null) {
+            if (mListbb.size() > mListema.size()) {
+                for (int i = 0; i < mListema.size(); i++) {
+                    minMap.put(mListema.get(i).stickline_date, mListema.get(i));
+                }
+                for (int i = 0; i < mListbb.size(); i++) {
+                    if (minMap.containsKey(mListbb.get(i).stickline_date)) {
+                        minList.add(minMap.get(mListbb.get(i).stickline_date));
+                    } else {
+                        FuTuModel.LineItemData data = new FuTuModel.LineItemData();
+                        data.high = -1;
+                        data.low = -1;
+                        data.stickline_date = mListbb.get(i).stickline_date;
+                        minList.add(data);
+                    }
+                }
+                model.data.stickline_ema.line_data = minList;
+
+            } else if(mListema.size() > mListbb.size()){
+
+                for (int i = 0; i < mListbb.size(); i++) {
+                    minMap.put(mListbb.get(i).stickline_date, mListbb.get(i));
+                }
+                for (int i = 0; i < mListema.size(); i++) {
+                    if (minMap.containsKey(mListema.get(i).stickline_date)) {
+                        minList.add(minMap.get(mListema.get(i).stickline_date));
+                    } else {
+                        FuTuModel.LineItemData data = new FuTuModel.LineItemData();
+                        data.high = -1;
+                        data.low = -1;
+                        data.stickline_date = mListema.get(i).stickline_date;
+                        minList.add(data);
+                    }
+                }
+                model.data.stickline_bb.line_data = minList;
+            }
+
+
+        }
+        List<List<HisData>> lists = new ArrayList<>();
+
+        if (model.data != null && model.data.stickline_bb != null && model.data.stickline_bb.line_data != null) {
+            List<HisData> hisData = new ArrayList<>();
+            for (int i = 0; i < model.data.stickline_bb.line_data.size(); i++) {
+                FuTuModel.LineItemData lineData = model.data.stickline_bb.line_data.get(i);
+
+                HisData d = new HisData();
+                d.setOpen(lineData.high);
+                d.setClose(lineData.low);
+                d.width = lineData.width;
+                d.color = lineData.color;
+                d.groupId = i;
+
+                d.setDate(getStringToDate(lineData.stickline_date));
+                hisData.add(0, d);
+            }
+
+            lists.add(hisData);
+        }
+
+        if (model.data != null && model.data.stickline_ema != null && model.data.stickline_ema.line_data != null) {
+            List<HisData> hisData1 = new ArrayList<>();
+            for (int i = 0; i < model.data.stickline_ema.line_data.size(); i++) {
+                FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
+
+                HisData d = new HisData();
+                d.setOpen(lineData.high);
+                d.setClose(lineData.low);
+                d.width = lineData.width;
+                d.color = lineData.color;
+                d.groupId = i;
+                d.setDate(getStringToDate(lineData.stickline_date));
+                hisData1.add(0, d);
+            }
+            lists.add(hisData1);
+        }
+        model.lists = lists;
+        return model;
+    }
+    private static SimpleDateFormat sFormat5 = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+
+    public  static long getStringToDate(String dateString) {
+        Date date = new Date();
+        try{
+            date = sFormat5.parse(dateString);
+        } catch(ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        return date.getTime();
+    }
 
 }

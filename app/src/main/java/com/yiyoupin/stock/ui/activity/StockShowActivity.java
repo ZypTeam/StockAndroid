@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.model.MyTacticsModel;
+import com.guoziwei.klinelib.view.MyTacticsModel;
 import com.yiyoupin.stock.model.NewModel;
 import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.ui.HomeListModel;
@@ -23,7 +24,7 @@ import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.event.FuTuEvent;
 import com.yiyoupin.stock.ui.util.UiUtils;
 import com.yiyoupin.stock.ui.view.BackTitleView;
-import com.yiyoupin.stock.ui.view.CeluePopupWindow;
+import com.guoziwei.klinelib.view.CeluePopupWindow;
 import com.yiyoupin.stock.ui.view.NetErrorView;
 import com.yiyoupin.stock.ui.view.ShowBottomView;
 import com.yiyoupin.stock.ui.view.StocksTopView;
@@ -62,8 +63,8 @@ public class StockShowActivity extends BaseStockActivity {
     protected TextView textPrice;
     protected TextView textZhangdie1;
     protected TextView textZhangdie2;
-    protected TextView textCelueName;
-    protected RelativeLayout layoutCelue;
+
+
     protected NetErrorView netError;
     private NewsAdapter newsAdapter;
     private RelativeLayout bottomLineLayout;
@@ -81,7 +82,7 @@ public class StockShowActivity extends BaseStockActivity {
     private boolean fromSeach = false;
     private Fragment[] fragments;
 
-    private CeluePopupWindow celuePopupWindow;
+
 
 
     public static String NO_TACTICS_ID = "0";
@@ -104,7 +105,7 @@ public class StockShowActivity extends BaseStockActivity {
         choiceness_id = getIntent().getStringExtra(CHOICENESS_ID);
         fragments = new Fragment[5];
 
-        celuePopupWindow = new CeluePopupWindow(mContext);
+
 
     }
 
@@ -126,8 +127,7 @@ public class StockShowActivity extends BaseStockActivity {
         textPrice = (TextView) findViewById(R.id.text_bottom_price);
         textZhangdie1 = (TextView) findViewById(R.id.text_zhangdie1);
         textZhangdie2 = (TextView) findViewById(R.id.text_zhangdie2);
-        textCelueName = (TextView) findViewById(R.id.text_celue_name);
-        layoutCelue = (RelativeLayout) findViewById(R.id.layout_celue);
+
         netError = (NetErrorView) findViewById(R.id.net_error);
 
     }
@@ -139,15 +139,15 @@ public class StockShowActivity extends BaseStockActivity {
         tab.setTabTextColors(0xff9a9a9a, mContext.getResources().getColor(R.color.color_red));
         tab.setSelectedTabIndicatorColor(mContext.getResources().getColor(R.color.color_red));
         fragments[0] = TimeLineChartFragment.newInstance(stockCode, NO_TACTICS_ID, 0);
-        fragments[1] = FiveDayChartFragment.newInstance(stockID, NO_TACTICS_ID, stockCode, 1);
-        fragments[2] = KLineChartFragment.newInstance(1, stockID, NO_TACTICS_ID, stockCode, 2);
-        fragments[3] = KLineChartFragment.newInstance(7, stockID, NO_TACTICS_ID, stockCode, 3);
-        fragments[4] = KLineChartFragment.newInstance(30, stockID, NO_TACTICS_ID, stockCode, 4);
+        fragments[1] = FiveDayChartFragment.newInstance(NO_TACTICS_ID, NO_TACTICS_ID, stockCode, 1);
+        fragments[2] = KLineChartFragment.newInstance(1, NO_TACTICS_ID, NO_TACTICS_ID, stockCode, 2);
+        fragments[3] = KLineChartFragment.newInstance(7, NO_TACTICS_ID, NO_TACTICS_ID, stockCode, 3);
+        fragments[4] = KLineChartFragment.newInstance(30, NO_TACTICS_ID, NO_TACTICS_ID, stockCode, 4);
         String[] titles = {"分时图", "5日", "日K", "周K", "月"};
         viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(fragments.length);
-
         tab.setupWithViewPager(viewPager);
+        titlebar.setTitleColor(mContext.getResources().getColor(R.color.white));
 //        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -195,28 +195,7 @@ public class StockShowActivity extends BaseStockActivity {
             }
         });
 
-        layoutCelue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                celuePopupWindow.showAsDropDown(textCelueName);
 
-
-            }
-        });
-
-
-        celuePopupWindow.setCallBack(new CeluePopupWindow.CallBack() {
-            @Override
-            public void onClick(MyTacticsModel model) {
-                celuePopupWindow.dismiss();
-                FuTuEvent event = new FuTuEvent();
-                event.currentIndex = viewPager.getCurrentItem();
-                event.tactics_id = model.tactics_id;
-
-                textCelueName.setText(model.tactics_name);
-                EventBus.getDefault().post(event);
-            }
-        });
 
         netError.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,6 +203,8 @@ public class StockShowActivity extends BaseStockActivity {
                 getDetailsNet();
             }
         });
+
+
         getDetailsNet();
 
     }
@@ -298,8 +279,13 @@ public class StockShowActivity extends BaseStockActivity {
                     public void call(StockDetailModel model) {
                         netError.setVisibility(View.GONE);
                         hideLoadDialog();
-                        if (model.data != null && model.data.dapandata != null)
-                            ((TimeLineChartFragment) fragments[0]).setData(model.data,stockID);
+                        if (model.data != null && model.data.dapandata != null) {
+                            ((TimeLineChartFragment) fragments[0]).setData(model.data, stockID);
+                            ((FiveDayChartFragment) fragments[1]).setCelueListData(model.data);
+                            ((KLineChartFragment) fragments[2]).setCelueListData(model.data);
+                            ((KLineChartFragment) fragments[3]).setCelueListData(model.data);
+                            ((KLineChartFragment) fragments[4]).setCelueListData(model.data);
+                        }
 
                         if (model.data != null) {
                             viewTop.setData(model.data);
@@ -309,12 +295,18 @@ public class StockShowActivity extends BaseStockActivity {
 
                         if (model.data != null && model.data.stock_detail != null) {
                             titlebar.setTitle(model.data.stock_detail.stock_name);
+
+                            try {
+                                if (Float.parseFloat(model.data.stock_detail.offset_size) > 0) {
+                                    titlebar.setTitleColor(0xfffe4a2e);
+                                } else {
+                                    titlebar.setTitleColor(0xff2eac39);
+                                }
+                            }catch (Exception e){
+
+                            }
                         }
 
-                        textCelueName.setText("无策略");
-                        if (model.data != null && model.data.my_tactics != null && model.data.my_tactics.size() > 0) {
-                            celuePopupWindow.setData(model.data.my_tactics);
-                        }
 
                         setBottomTitleData();
 

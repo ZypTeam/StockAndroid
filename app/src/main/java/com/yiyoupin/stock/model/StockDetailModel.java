@@ -1,8 +1,8 @@
 package com.yiyoupin.stock.model;
 
-import com.guoziwei.klinelib.model.HisData;
+import com.guoziwei.klinelib.view.MyTacticsModel;
 import com.jusfoun.baselibrary.base.BaseModel;
-import com.yiyoupin.stock.ui.view.kline.model.LineModel;
+import com.guoziwei.klinelib.chart.my.model.LineModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,6 +24,7 @@ public class StockDetailModel extends BaseModel implements Serializable {
         public StockTopModel stock_detail;
         public List<TradeDetailModel> trade_detail;
         public List<MyTacticsModel>my_tactics;
+        public List<MyTacticsModel>my_tactics_fu;
     }
 
     public class StockTopModel extends BaseModel implements Serializable {

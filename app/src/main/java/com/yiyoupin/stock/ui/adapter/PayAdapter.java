@@ -5,8 +5,8 @@ import android.view.View;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.PayModel;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
 
 /**
  * @author wangcc

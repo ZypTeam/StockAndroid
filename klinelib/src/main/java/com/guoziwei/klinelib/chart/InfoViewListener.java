@@ -1,6 +1,7 @@
 package com.guoziwei.klinelib.chart;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -46,11 +47,15 @@ public class InfoViewListener implements OnChartValueSelectedListener {
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
+
+        Log.e("tag","onValueSelected==1");
         int x = (int) e.getX();
         if (x < mList.size()) {
+            Log.e("tag","onValueSelected==2");
             mInfoView.setVisibility(View.VISIBLE);
             mInfoView.setData(mLastClose, mList.get(x));
         }
+        Log.e("tag","onValueSelected==3");
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mInfoView.getLayoutParams();
         if (h.getXPx() < mWidth / 2) {
             lp.gravity = Gravity.RIGHT;

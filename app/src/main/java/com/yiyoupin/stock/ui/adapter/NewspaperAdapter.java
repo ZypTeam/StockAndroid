@@ -6,8 +6,8 @@ import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.NewspaperModel;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
 import com.yiyoupin.stock.ui.util.UiUtils;
 
 /**

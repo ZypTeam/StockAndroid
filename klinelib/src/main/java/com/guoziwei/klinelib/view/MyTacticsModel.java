@@ -1,4 +1,4 @@
-package com.yiyoupin.stock.model;
+package com.guoziwei.klinelib.view;
 
 import com.jusfoun.baselibrary.base.BaseModel;
 

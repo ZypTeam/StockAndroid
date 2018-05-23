@@ -3,27 +3,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.guoziwei.klinelib.chart.AppCombinedChart
-        android:id="@+id/vol_chart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_chart_height"
-        android:layout_gravity="bottom" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <FrameLayout
+        <com.guoziwei.klinelib.chart.my.CelueMenuView
+            android:id="@+id/view_meun_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.guoziwei.klinelib.chart.AppCombinedChart
+                android:id="@+id/price_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.guoziwei.klinelib.chart.AppCombinedChart
+                android:id="@+id/price_chart_celue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <com.guoziwei.klinelib.chart.LineChartInfoView
+                android:id="@+id/line_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <com.guoziwei.klinelib.chart.my.CelueMenuView
+            android:id="@+id/view_meun_fu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <com.guoziwei.klinelib.chart.AppCombinedChart
-            android:id="@+id/price_chart"
+            android:id="@+id/vol_chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="@dimen/bottom_chart_height" />
 
-        <com.guoziwei.klinelib.chart.LineChartInfoView
-            android:id="@+id/line_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-    </FrameLayout>
+        <com.guoziwei.klinelib.chart.AppCombinedChart
+            android:id="@+id/fu_chart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_chart_height"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 
 </FrameLayout>

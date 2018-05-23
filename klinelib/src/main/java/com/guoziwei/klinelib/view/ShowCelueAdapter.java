@@ -1,14 +1,13 @@
-package com.yiyoupin.stock.ui.adapter;
+package com.guoziwei.klinelib.view;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.MyTacticsModel;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
-import com.yiyoupin.stock.ui.view.CeluePopupWindow;
+import com.guoziwei.klinelib.R;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
+
 
 /**
  * @author zhaoyapeng
@@ -44,7 +43,7 @@ public class ShowCelueAdapter extends BaseAdapter<MyTacticsModel> {
         }
 
         @Override
-        public void update(MyTacticsModel model) {
+        public void update(final MyTacticsModel model) {
             nameText.setText(model.tactics_name);
 
             itemView.setOnClickListener(new View.OnClickListener() {

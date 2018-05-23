@@ -3,16 +3,15 @@ package com.yiyoupin.stock.ui.view.kline;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.guoziwei.klinelib.chart.DrawingChartView;
 import com.guoziwei.klinelib.chart.FuTuModel;
+import com.guoziwei.klinelib.chart.my.Util;
 import com.guoziwei.klinelib.model.HisData;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
-import com.yiyoupin.stock.model.KLineModel;
 import com.yiyoupin.stock.ui.base.BaseStockFragment;
 
 import java.util.ArrayList;
@@ -175,7 +174,7 @@ public class DrawingChartFragment extends BaseStockFragment {
 //        getFiveDayDetialNet();
 
 
-        FuTuModel model = Util.getDrawing(mContext);
+//        FuTuModel model = Util.getDrawing(mContext);
         getFiveDayDetialNet();
 
     }

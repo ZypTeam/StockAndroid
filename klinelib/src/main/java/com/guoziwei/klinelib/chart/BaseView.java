@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.Chart;
@@ -37,9 +38,10 @@ class BaseView extends LinearLayout {
 
     public int MAX_COUNT = 150;
     public int MIN_COUNT = 10;
-    public int INIT_COUNT = 80;
+    public int INIT_COUNT = 150;
 
-    protected List<HisData> mData = new ArrayList<>(300);
+    protected List<HisData> mData = new ArrayList<>();
+
 
     public BaseView(Context context) {
         this(context, null);
@@ -64,6 +66,7 @@ class BaseView extends LinearLayout {
         chart.setDragEnabled(true);
         chart.setScaleYEnabled(false);
         chart.setAutoScaleMinMaxEnabled(true);
+        chart.getDescription().setEnabled(false);
         chart.setDragDecelerationEnabled(false);
         chart.setHighlightPerDragEnabled(false);
         Legend lineChartLegend = chart.getLegend();
@@ -91,8 +94,10 @@ class BaseView extends LinearLayout {
                     value = 0;
                 }
                 if (value < mData.size()) {
+
                     return DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat);
                 }
+
                 return "";
             }
         });

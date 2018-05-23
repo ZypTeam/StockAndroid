@@ -106,6 +106,15 @@ public class RemindActivity extends BaseTakeActivity {
             Toast.makeText(mContext, "请输入日跌幅超", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(viewBuy.getText())) {
+            Toast.makeText(mContext, "请输入买点提醒", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(viewMai.getText())) {
+            Toast.makeText(mContext, "请输入卖点提醒", Toast.LENGTH_SHORT).show();
+            return;
+        }
         showLoadDialog();
 
         HashMap<String, String> params = new HashMap<>();

@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.components.AxisBase;
@@ -29,12 +31,19 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.my.DrawingData;
 import com.github.mikephil.charting.utils.Transformer;
 import com.guoziwei.klinelib.R;
+import com.guoziwei.klinelib.chart.my.CelLueCallBack;
+import com.guoziwei.klinelib.chart.my.CelueMenuView;
+import com.guoziwei.klinelib.chart.my.Util;
+import com.guoziwei.klinelib.chart.my.model.StrategiesKMFModel;
 import com.guoziwei.klinelib.model.HisData;
 import com.guoziwei.klinelib.util.DataUtils;
 import com.guoziwei.klinelib.util.DisplayUtils;
 import com.guoziwei.klinelib.util.DoubleUtil;
+import com.guoziwei.klinelib.view.CeluePopupWindow;
+import com.guoziwei.klinelib.view.MyTacticsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +85,13 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
     protected AppCombinedChart mChartMacd;
     protected AppCombinedChart mChartKdj;
 
+
     protected ChartInfoView mChartInfoView;
     protected Context mContext;
+
+    protected AppCombinedChart mainFuChart, fuFuChart;
+    private CelueMenuView mainMenuView, fuMenuView;
+    private CeluePopupWindow fuCeluePopupWindow, mainCeluePopupWindow;
 
     /**
      * last price
@@ -111,13 +125,75 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartMacd = (AppCombinedChart) findViewById(R.id.macd_chart);
         mChartKdj = (AppCombinedChart) findViewById(R.id.kdj_chart);
         mChartInfoView = (ChartInfoView) findViewById(R.id.k_info);
-        mChartInfoView.setChart(mChartPrice, mChartVolume, mChartMacd, mChartKdj);
+
+        mainFuChart = (AppCombinedChart) findViewById(R.id.chart_main);
+        fuFuChart = (AppCombinedChart) findViewById(R.id.chart_fu);
+
+        mainMenuView = (CelueMenuView) findViewById(R.id.view_meun_main);
+        fuMenuView = (CelueMenuView) findViewById(R.id.view_meun_fu);
+
+        mChartInfoView.setChart(mChartPrice, mChartVolume, mChartMacd, mChartKdj, mainFuChart, fuFuChart);
 
         mChartPrice.setNoDataText(context.getString(R.string.loading));
-        initChartPrice();
+
+        fuCeluePopupWindow = new CeluePopupWindow(mContext);
+        mainCeluePopupWindow = new CeluePopupWindow(mContext);
+
+        fuMenuView.setOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fuCeluePopupWindow.showAsDropDown(fuMenuView);
+            }
+        });
+
+        fuCeluePopupWindow.setCallBack(new CeluePopupWindow.CallBack() {
+            @Override
+            public void onClick(MyTacticsModel model) {
+                fuCeluePopupWindow.dismiss();
+//                FuTuEvent event = new FuTuEvent();
+//                event.currentIndex = viewPager.getCurrentItem();
+//                event.tactics_id = model.tactics_id;
+
+                Log.e("tag", "fuCeluePopupWindow1");
+                if (celLueCallBack != null) {
+                    Log.e("tag", "fuCeluePopupWindow2");
+                    celLueCallBack.fuTuCallback(model.tactics_id);
+                }
+                fuMenuView.setTitleText(model.tactics_name);
+            }
+        });
+
+
+        mainMenuView.setOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainCeluePopupWindow.showAsDropDown(mainMenuView);
+            }
+        });
+
+        mainCeluePopupWindow.setCallBack(new CeluePopupWindow.CallBack() {
+            @Override
+            public void onClick(MyTacticsModel model) {
+                mainCeluePopupWindow.dismiss();
+//                FuTuEvent event = new FuTuEvent();
+//                event.currentIndex = viewPager.getCurrentItem();
+//                event.tactics_id = model.tactics_id;
+                Log.e("tag", "fuCeluePopupWindow3");
+                if (celLueCallBack != null) {
+                    Log.e("tag", "fuCeluePopupWindow4");
+                    celLueCallBack.mainCallback(model.tactics_id);
+                }
+                mainMenuView.setTitleText(model.tactics_name);
+            }
+        });
+
+
+        initChartPrice(mChartPrice);
+        initChartPrice(mainFuChart);
         initBottomChart(mChartVolume);
         initBottomChart(mChartMacd);
         initBottomChart(mChartKdj);
+        initBottomChart(fuFuChart);
         setOffset();
         initChartListener();
     }
@@ -141,7 +217,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
     }
 
 
-    protected void initChartPrice() {
+    protected void initChartPrice(AppCombinedChart mChartPrice) {
         mChartPrice.setScaleEnabled(true);
         mChartPrice.setDrawBorders(false);
         mChartPrice.setBorderWidth(1);
@@ -225,19 +301,36 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
 
     private void initChartListener() {
-        mChartPrice.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartPrice, mChartVolume, mChartMacd, mChartKdj));
-        mChartVolume.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartVolume, mChartPrice, mChartMacd, mChartKdj));
-        mChartMacd.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartMacd, mChartPrice, mChartVolume, mChartKdj));
-        mChartKdj.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartKdj, mChartPrice, mChartVolume, mChartMacd));
-        mChartPrice.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartVolume, mChartMacd, mChartKdj));
-        mChartVolume.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartPrice, mChartMacd, mChartKdj));
-        mChartMacd.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartPrice, mChartVolume, mChartKdj));
-        mChartKdj.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartPrice, mChartVolume, mChartMacd));
+        mChartPrice.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartPrice, mChartVolume, mChartMacd, mChartKdj, mainFuChart, fuFuChart));
+        mChartVolume.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartVolume, mChartPrice, mChartMacd, mChartKdj, mainFuChart, fuFuChart));
+        mChartMacd.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartMacd, mChartPrice, mChartVolume, mChartKdj, mainFuChart, fuFuChart));
+        mChartKdj.setOnChartGestureListener(new CoupleChartGestureListener(this, mChartKdj, mChartPrice, mChartVolume, mChartMacd, mainFuChart, fuFuChart));
+        mainFuChart.setOnChartGestureListener(new CoupleChartGestureListener(this, mainFuChart, mChartVolume, mChartMacd, mChartKdj, mChartPrice, fuFuChart));
+        fuFuChart.setOnChartGestureListener(new CoupleChartGestureListener(this, fuFuChart, mChartVolume, mChartMacd, mChartKdj, mChartPrice, mainFuChart));
+
+
+        mChartPrice.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartVolume, mChartMacd, mChartKdj, mainFuChart, fuFuChart));
+        mChartVolume.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartPrice, mChartMacd, mChartKdj, mainFuChart, fuFuChart));
+        mChartMacd.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartPrice, mChartVolume, mChartKdj, mainFuChart, fuFuChart));
+        mChartKdj.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartPrice, mChartVolume, mChartMacd, mainFuChart, fuFuChart));
+        mainFuChart.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartVolume, mChartMacd, mChartKdj, mChartPrice, fuFuChart));
+        fuFuChart.setOnChartValueSelectedListener(new InfoViewListener(mContext, mLastClose, mData, mChartInfoView, mChartVolume, mChartMacd, mChartKdj, mChartPrice, mainFuChart));
+
 
         mChartPrice.setOnTouchListener(new ChartInfoViewHandler(mChartPrice));
         mChartVolume.setOnTouchListener(new ChartInfoViewHandler(mChartVolume));
         mChartMacd.setOnTouchListener(new ChartInfoViewHandler(mChartMacd));
         mChartKdj.setOnTouchListener(new ChartInfoViewHandler(mChartKdj));
+        mainFuChart.setOnTouchListener(new ChartInfoViewHandler(mainFuChart));
+        fuFuChart.setOnTouchListener(new ChartInfoViewHandler(fuFuChart));
+    }
+
+
+    public void initNormalData(List<HisData> hisDatas) {
+        initData(hisDatas);
+        initChartVolumeData();
+        initChartMacdData();
+        initChartKdjData();
     }
 
     public void initData(List<HisData> hisDatas) {
@@ -294,33 +387,154 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartPrice.notifyDataSetChanged();
 //        mChartPrice.moveViewToX(combinedData.getEntryCount());
         moveToLast(mChartPrice);
-        initChartVolumeData();
-        initChartMacdData();
-        initChartKdjData();
 
+
+//        initChartVolumeData();
+//        initChartMacdData();
+//        initChartKdjData();
 
         mChartPrice.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
-        mChartVolume.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 0.5f);
-        mChartMacd.getXAxis().setAxisMaximum(mChartMacd.getData().getXMax() + 0.5f);
-        mChartKdj.getXAxis().setAxisMaximum(mChartKdj.getData().getXMax() + 0.5f);
-
         mChartPrice.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
-        mChartVolume.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
-        mChartMacd.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
-        mChartKdj.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+
 
         lineData.removeDataSet(0);
 
         HisData hisData = getLastData();
-        setDescription(mChartVolume, "成交量 " + hisData.getVol());
-        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
-                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
-        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
-                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
-        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
-                hisData.getK(), hisData.getD(), hisData.getJ()));
+//        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
+//                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
 
 
+    }
+
+
+    public void setData(StrategiesKMFModel.StrategiesTimeMFDataModel model) {
+
+        if (model.mainData != null) {
+            if (model.mainData.type == 1) {
+                final List<HisData> hisData = Util.getK(model.mainData.data1);
+//                if (hisData.size() < 80) {
+//                    setCount(hisData.size(),150,10);
+//                }
+
+                    initNormalData(hisData);
+                } else if (model.mainData.type == 2) {
+                    drawFu(model.mainData.data2, mainFuChart, true);
+                }
+            }
+            if (model.incidentalData != null) {
+                if (model.incidentalData.type == 1) {
+//                List<HisData> hisData = Util.getK(model.incidentalData.data1);
+                    initChartVolumeData();
+                } else if (model.incidentalData.type == 2) {
+                    drawFu(model.incidentalData.data2, fuFuChart, false);
+                }
+            }
+
+        }
+
+    public void drawFu(FuTuModel.FutuData futuData, AppCombinedChart appCombinedChart, boolean isMain) {
+        appCombinedChart.setVisibility(VISIBLE);
+        if (isMain) {
+            mChartPrice.setVisibility(GONE);
+        } else {
+            mChartVolume.setVisibility(GONE);
+        }
+
+        FuTuModel model = new FuTuModel();
+        model.data = futuData;
+        model = DataUtils.detailData(model);
+
+        List<List<HisData>> hisDatas = model.lists;
+
+        Log.e("tag", "hisDatas===" + hisDatas.size());
+        mData.clear();
+//        mData.addAll();
+
+//        ArrayList<CandleEntry> lineCJEntries = new ArrayList<>(INIT_COUNT);
+
+
+//        ArrayList<Entry> ma5Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma10Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma20Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> paddingEntries = new ArrayList<>(INIT_COUNT);
+
+        ArrayList<Entry> trendLine = new ArrayList<>();
+        ArrayList<Entry> longTrendLine = new ArrayList<>();
+        ArrayList<Entry> paddingrendLine = new ArrayList<>();
+        ArrayList<ICandleDataSet> sets = new ArrayList<>();
+        try {
+            for (int j = 0; j < hisDatas.size(); j++) {
+                ArrayList<CandleEntry> lineCJEntries = new ArrayList<>();
+                List<HisData> hdList = DataUtils.calculateHisData(hisDatas.get(j));
+                for (int i = 0; i < hdList.size(); i++) {
+                    HisData hisData = hdList.get(i);
+                    if (j == 0) {
+                        paddingrendLine.add(new Entry(i, (float) hisData.getOpen()));
+                    }
+                    lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose(), hisData.width, hisData.color));
+                }
+                sets.add(setKLine(NORMAL_LINE, lineCJEntries));
+                mData.addAll(hdList);
+            }
+        } catch (Exception e) {
+            Log.e("tag", "trendlinetrendline5=" + e);
+        }
+
+
+        if (model.data != null) {
+            if (model.data.trendline != null && model.data.trendline.line_data != null && model.data.trendline.line_data.size() > 0) {
+                for (int i = 0; i < model.data.trendline.line_data.size(); i++) {
+                    trendLine.add(new Entry(i, (float) model.data.trendline.line_data.get(i).trend_data));
+                }
+            }
+            if (model.data.longtrendline != null && model.data.longtrendline.line_data != null && model.data.longtrendline.line_data.size() > 0) {
+                for (int i = 0; i < model.data.longtrendline.line_data.size(); i++) {
+                    longTrendLine.add(new Entry(i, (float) model.data.longtrendline.line_data.get(i).trend_data));
+                }
+            }
+        }
+
+
+        LineData lineData = new LineData(
+                setLine(INVISIABLE_LINE, paddingrendLine));
+
+        DrawingData candleData = new DrawingData(sets);
+        CombinedData combinedData = new CombinedData();
+        combinedData.setData(lineData);
+        combinedData.setData(candleData);
+        appCombinedChart.setData(combinedData);
+
+        appCombinedChart.setVisibleXRange(MAX_COUNT, MIN_COUNT);
+        appCombinedChart.notifyDataSetChanged();
+//        mChartPrice.moveViewToX(combinedData.getEntryCount());
+        moveToLast(appCombinedChart);
+
+//        initChartMacdData();
+//        initChartKdjData();
+        appCombinedChart.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
+
+//        mChartFu.getXAxis().setAxisMaximum(mChartFu.getData().getXMax() + 0.5f);
+
+//        mChartMacd.getXAxis().setAxisMaximum(mChartMacd.getData().getXMax() + 0.5f);
+//        mChartKdj.getXAxis().setAxisMaximum(mChartKdj.getData().getXMax() + 0.5f);
+        appCombinedChart.resetZoom();
+        Log.e("tag", "MAX_COUNT * 1f / INIT_COUNTMAX_COUNT * 1f / INIT_COUNT=" + MAX_COUNT * 1f / (INIT_COUNT * 1f));
+        appCombinedChart.zoom(MAX_COUNT * 1f / (INIT_COUNT * 1f), 0, 0, 0);
+
+//        mChartFu.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+
+//        mChartMacd.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+//        mChartKdj.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+
+//        lineData.removeDataSet(0);
+
+//        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
+//                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
+//        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
+//                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
+//        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
+//                hisData.getK(), hisData.getD(), hisData.getJ()));
     }
 
 
@@ -419,6 +633,9 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
     }
 
     private void initChartVolumeData() {
+
+        fuFuChart.setVisibility(GONE);
+        mChartVolume.setVisibility(VISIBLE);
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         ArrayList<BarEntry> paddingEntries = new ArrayList<>();
         for (int i = 0; i < mData.size(); i++) {
@@ -443,6 +660,12 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartVolume.notifyDataSetChanged();
 //        mChartVolume.moveViewToX(combinedData.getEntryCount());
         moveToLast(mChartVolume);
+
+        mChartVolume.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 0.5f);
+        mChartVolume.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+        HisData hisData = getLastData();
+        setDescription(mChartVolume, "成交量 " + hisData.getVol());
+
 
     }
 
@@ -477,6 +700,13 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartMacd.notifyDataSetChanged();
 //        mChartMacd.moveViewToX(combinedData.getEntryCount());
         moveToLast(mChartMacd);
+
+        mChartMacd.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 0.5f);
+        mChartMacd.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+        HisData hisData = getLastData();
+        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
+                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
+
     }
 
     private void initChartKdjData() {
@@ -510,6 +740,11 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
         mChartKdj.notifyDataSetChanged();
         moveToLast(mChartKdj);
+
+        HisData hisData = getLastData();
+        mChartKdj.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
+//        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
+//                hisData.getK(), hisData.getD(), hisData.getJ()));
     }
 
 
@@ -632,13 +867,13 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartKdj.invalidate();
 
 
-        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
-                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
-        setDescription(mChartVolume, "成交量 " + hisData.getVol());
-        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
-                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
-        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
-                hisData.getK(), hisData.getD(), hisData.getJ()));
+//        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
+//                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
+//        setDescription(mChartVolume, "成交量 " + hisData.getVol());
+//        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
+//                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
+//        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
+//                hisData.getK(), hisData.getD(), hisData.getJ()));
 
     }
 
@@ -647,12 +882,15 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
      * align two chart
      */
     private void setOffset() {
-        int chartHeight = getResources().getDimensionPixelSize(R.dimen.bottom_chart_height);
+        int chartHeight = getResources().getDimensionPixelSize(R.dimen.bottom_chart_height_celue);
         mChartPrice.setViewPortOffsets(0, 0, 0, chartHeight);
+        mainFuChart.setViewPortOffsets(0, 0, 0, chartHeight);
+
         int bottom = DisplayUtils.dip2px(mContext, 20);
         mChartVolume.setViewPortOffsets(0, 0, 0, bottom);
         mChartMacd.setViewPortOffsets(0, 0, 0, bottom);
         mChartKdj.setViewPortOffsets(0, 0, 0, bottom);
+        fuFuChart.setViewPortOffsets(0, 0, 0, bottom);
     }
 
 
@@ -687,12 +925,33 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         int maxX = (int) chart.getHighestVisibleX();
         int x = Math.min(maxX, mData.size() - 1);
         HisData hisData = mData.get(x < 0 ? 0 : x);
-        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
-                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
-        setDescription(mChartVolume, "成交量 " + hisData.getVol());
-        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
-                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
-        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
-                hisData.getK(), hisData.getD(), hisData.getJ()));
+//        setDescription(mChartPrice, String.format(Locale.getDefault(), "MA5:%.2f  MA10:%.2f  MA20:%.2f  MA30:%.2f",
+//                hisData.getMa5(), hisData.getMa10(), hisData.getMa20(), hisData.getMa30()));
+//        setDescription(mChartVolume, "成交量 " + hisData.getVol());
+//        setDescription(mChartMacd, String.format(Locale.getDefault(), "MACD:%.2f  DEA:%.2f  DIF:%.2f",
+//                hisData.getMacd(), hisData.getDea(), hisData.getDif()));
+//        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
+//                hisData.getK(), hisData.getD(), hisData.getJ()));
+
     }
+
+    private CelLueCallBack celLueCallBack;
+
+    public void setCelLueCallBack(CelLueCallBack celLueCallBack) {
+        this.celLueCallBack = celLueCallBack;
+    }
+
+    public void setCelueListData(List<MyTacticsModel> my_tactics, List<MyTacticsModel> my_tactics_fu) {
+        fuMenuView.setTitleText("无策略");
+        mainMenuView.setTitleText("无策略");
+
+        if (my_tactics != null && my_tactics.size() > 0) {
+            mainCeluePopupWindow.setData(my_tactics);
+        }
+
+        if (my_tactics_fu != null && my_tactics_fu.size() > 0) {
+            fuCeluePopupWindow.setData(my_tactics_fu);
+        }
+    }
+
 }

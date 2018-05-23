@@ -8,9 +8,8 @@ import android.widget.TextView;
 import com.jusfoun.baselibrary.base.BaseModel;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.NewModel;
-import com.yiyoupin.stock.model.SearchModel;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
 import com.yiyoupin.stock.ui.util.TimeUtil;
 
 /**

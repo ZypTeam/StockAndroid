@@ -1,4 +1,4 @@
-package com.yiyoupin.stock.ui.view.kline.model;
+package com.guoziwei.klinelib.chart.my.model;
 
 import java.io.Serializable;
 

@@ -1,7 +1,8 @@
 package com.yiyoupin.stock.model;
 
+import com.guoziwei.klinelib.view.MyTacticsModel;
 import com.jusfoun.baselibrary.base.BaseModel;
-import com.yiyoupin.stock.ui.view.kline.model.LineModel;
+import com.guoziwei.klinelib.chart.my.model.LineModel;
 
 import java.io.Serializable;
 import java.util.List;

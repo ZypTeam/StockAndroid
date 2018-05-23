@@ -33,4 +33,6 @@
     <color name="highlight_color">#be945c</color>
     <color name="limit_color">#adadad</color>
     <color name="white">#fff</color>
+
+    <color name="bg_main_black">#171616</color>
 </resources>

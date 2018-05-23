@@ -1,4 +1,4 @@
-package com.yiyoupin.stock.ui.view;
+package com.guoziwei.klinelib.view;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.PopupWindow;
 
-import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.MyTacticsModel;
-import com.yiyoupin.stock.ui.activity.StockShowActivity;
-import com.yiyoupin.stock.ui.adapter.ShowCelueAdapter;
+import com.guoziwei.klinelib.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +23,7 @@ public class CeluePopupWindow extends PopupWindow {
     protected RecyclerView recyclerView;
     private Context mContext;
     private ShowCelueAdapter adapter;
+    private List<MyTacticsModel> list = new ArrayList<>();
 
     public CeluePopupWindow(Context context) {
         super(context);
@@ -62,11 +61,15 @@ public class CeluePopupWindow extends PopupWindow {
 
 
     public void setData(List<MyTacticsModel> list) {
+        this.list.clear();
+
+
         MyTacticsModel myTacticsModel = new MyTacticsModel();
-        myTacticsModel.tactics_name="无策略";
-        myTacticsModel.tactics_id = StockShowActivity.NO_TACTICS_ID;
-        list.add(0,myTacticsModel);
-        adapter.refreshList(list);
+        myTacticsModel.tactics_name = "无策略";
+        myTacticsModel.tactics_id = "0";
+        this.list.add(myTacticsModel);
+        this.list.addAll(list);
+        adapter.refreshList(this.list);
     }
 
     public interface CallBack {

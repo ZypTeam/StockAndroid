@@ -38,7 +38,7 @@
     </RadioGroup>
 
 
-    <com.yiyoupin.stock.ui.view.kline.MDrawingChartView
+    <com.guoziwei.klinelib.chart.my.MDrawingChartView
         android:id="@+id/view_drawing_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

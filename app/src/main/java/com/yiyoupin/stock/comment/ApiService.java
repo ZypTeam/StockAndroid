@@ -1,13 +1,15 @@
 package com.yiyoupin.stock.comment;
 
 import com.guoziwei.klinelib.chart.FuTuModel;
+import com.guoziwei.klinelib.chart.my.model.StrategiesFiveTimeMFModel;
+import com.guoziwei.klinelib.chart.my.model.StrategiesKMFModel;
 import com.jusfoun.baselibrary.base.NoDataModel;
 import com.yiyoupin.stock.model.AboutModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
 import com.yiyoupin.stock.model.CheckVersionModel;
-import com.yiyoupin.stock.model.FiveDayModel;
+import com.guoziwei.klinelib.chart.my.model.FiveDayModel;
 import com.yiyoupin.stock.model.HomeModel;
 import com.yiyoupin.stock.model.KLineModel;
 import com.yiyoupin.stock.model.MIngXIDataModel;
@@ -22,6 +24,7 @@ import com.yiyoupin.stock.model.SearchListModel;
 import com.yiyoupin.stock.model.StockDetailModel;
 import com.yiyoupin.stock.model.StrategiesDetailModel;
 import com.yiyoupin.stock.model.StrategiesMoreModel;
+import com.guoziwei.klinelib.chart.my.model.StrategiesTimeMFModel;
 import com.yiyoupin.stock.model.TechnologyMoreModel;
 import com.yiyoupin.stock.model.UploadDataModel;
 import com.yiyoupin.stock.model.UserDataModel;
@@ -363,8 +366,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @GET("/stock/five-detail.do")
-    Observable<FiveDayModel> getFiveDayDetialNet(@QueryMap Map<String, String> params);
+    @GET("/stock/five-detail/cl.do")
+    Observable<StrategiesFiveTimeMFModel> getFiveDayDetialNet(@QueryMap Map<String, String> params);
 
 
     /**
@@ -373,8 +376,8 @@ public interface ApiService {
      * @param params
      * @return
      */
-    @GET("/stock/k-detail.do")
-    Observable<KLineModel> getKLineDetialNet(@QueryMap Map<String, String> params);
+    @GET("/stock/k-detail/cl.do")
+    Observable<StrategiesKMFModel> getKLineDetialNet(@QueryMap Map<String, String> params);
 
     /**
      * 检查更新
@@ -441,5 +444,15 @@ public interface ApiService {
      */
     @GET("/stock/trade_detail.do")
     Observable<MIngXIDataModel> getMingXiNet(@QueryMap Map<String,String> params);
+
+
+    /**
+     * 股票详情
+     *
+     * @param params
+     * @return
+     */
+    @GET("/stock/time-detail/cl.do")
+    Observable<StrategiesTimeMFModel> getStockTimeSharingFX(@QueryMap Map<String, String> params);
 
 }

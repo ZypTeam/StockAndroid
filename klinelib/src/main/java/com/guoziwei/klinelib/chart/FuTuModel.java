@@ -18,7 +18,7 @@ public class FuTuModel extends BaseModel implements Serializable {
     public FutuData data;
     public List<List<HisData>> lists;
 
-    public class FutuData implements Serializable {
+    public static class FutuData implements Serializable {
         public LineData stickline_bb;
         public LineData stickline_ema;
         public TrendLineListmData trendline;

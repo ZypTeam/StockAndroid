@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:text="量"
+                android:text="量比"
                 android:textColor="#d6d6d6"
                 android:textSize="15sp" />
 

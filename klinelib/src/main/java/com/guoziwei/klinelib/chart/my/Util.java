@@ -1,4 +1,4 @@
-package com.yiyoupin.stock.ui.view.kline;
+package com.guoziwei.klinelib.chart.my;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -6,12 +6,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.guoziwei.klinelib.chart.my.model.FiveDayModel;
 import com.guoziwei.klinelib.model.HisData;
-import com.yiyoupin.stock.R;
-import com.yiyoupin.stock.model.FiveDayModel;
 import com.guoziwei.klinelib.chart.FuTuModel;
-import com.yiyoupin.stock.ui.view.kline.model.KModel;
-import com.yiyoupin.stock.ui.view.kline.model.LineModel;
+import com.guoziwei.klinelib.chart.my.model.KModel;
+import com.guoziwei.klinelib.chart.my.model.LineModel;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -42,41 +41,41 @@ public class Util {
     private static SimpleDateFormat sFormat4 = new SimpleDateFormat("HHmm", Locale.getDefault());
     private static SimpleDateFormat sFormat5 = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 
-    public static List<HisData> getHisData(Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.his_data);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String json = writer.toString();
-        final List<Model> list = new Gson().fromJson(json, new TypeToken<List<Model>>() {
-        }.getType());
-        List<HisData> hisData = new ArrayList<>(100);
-        for (Model m : list) {
-            HisData data = new HisData();
-            data.setHigh(m.getHigh());
-            data.setLow(m.getLow());
-            data.setOpen(m.getOpen());
-            data.setClose(m.getClose());
-            data.setVol(m.getVol());
-            try {
-                data.setDate(sFormat.parse(m.getsDate()).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            hisData.add(data);
-        }
-        return hisData;
-    }
+//    public static List<HisData> getHisData(Context context) {
+//        InputStream is = context.getResources().openRawResource(R.raw.his_data);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try {
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        String json = writer.toString();
+//        final List<Model> list = new Gson().fromJson(json, new TypeToken<List<Model>>() {
+//        }.getType());
+//        List<HisData> hisData = new ArrayList<>(100);
+//        for (Model m : list) {
+//            HisData data = new HisData();
+//            data.setHigh(m.getHigh());
+//            data.setLow(m.getLow());
+//            data.setOpen(m.getOpen());
+//            data.setClose(m.getClose());
+//            data.setVol(m.getVol());
+//            try {
+//                data.setDate(sFormat.parse(m.getsDate()).getTime());
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            hisData.add(data);
+//        }
+//        return hisData;
+//    }
 
 
     public static List<HisData> get1Day(List<LineModel> list) {
@@ -168,10 +167,8 @@ public class Util {
 //                    if (!TextUtils.isEmpty(m.getTime()))
 //                        data.setDate(Long.parseLong(m.getTime()));
 //                    m.setTime(sFormat4.format(Long.parseLong(m.getTime())));
-                    Log.e("tag", "setTimesetTime=" + m.getTime());
                     data.setDate(Long.parseLong(m.getTime()));
                 } catch (Exception e) {
-                    Log.e("tag", "setTimesetTime=" + e);
                     e.printStackTrace();
                 }
                 hisData.add(data);
@@ -226,66 +223,66 @@ public class Util {
     }
 
 
-    public static FuTuModel getDrawing(Context mContext) {
+//    public static FuTuModel getDrawing(Context mContext) {
+//
+//        InputStream is = mContext.getResources().openRawResource(R.raw.futu);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try {
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        String json = writer.toString();
+//        final FuTuModel model  = new Gson().fromJson(json, FuTuModel.class);
+//
+//        return model;
+//
+//    }
 
-        InputStream is = mContext.getResources().openRawResource(R.raw.futu);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        String json = writer.toString();
-        final FuTuModel model  = new Gson().fromJson(json, FuTuModel.class);
-
-        return model;
-
-    }
-
-
-    public static List<HisData> getDrawing1(Context mContext) {
-        InputStream is = mContext.getResources().openRawResource(R.raw.futu);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String json = writer.toString();
-        final FuTuModel model  = new Gson().fromJson(json, FuTuModel.class);
-
-        List<HisData> hisData = new ArrayList<>();
-
-        for(int i=0;i<model.data.stickline_ema.line_data.size();i++){
-            FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
-
-            HisData d = new HisData();
-            d.setOpen(lineData.high);
-            d.setClose(lineData.low);
-            d.width = lineData.width;
-            d.color = lineData.color;
-            d.groupId = i;
-            d.setDate(getStringToDate(lineData.stickline_date));
-            hisData.add(d);
-        }
-
-        return hisData;
-
-    }
+//    public static List<HisData> getDrawing1(Context mContext) {
+//        InputStream is = mContext.getResources().openRawResource(R.raw.futu);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try {
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        String json = writer.toString();
+//        final FuTuModel model  = new Gson().fromJson(json, FuTuModel.class);
+//
+//        List<HisData> hisData = new ArrayList<>();
+//
+//        for(int i=0;i<model.data.stickline_ema.line_data.size();i++){
+//            FuTuModel.LineItemData lineData = model.data.stickline_ema.line_data.get(i);
+//
+//            HisData d = new HisData();
+//            d.setOpen(lineData.high);
+//            d.setClose(lineData.low);
+//            d.width = lineData.width;
+//            d.color = lineData.color;
+//            d.groupId = i;
+//            d.setDate(getStringToDate(lineData.stickline_date));
+//            hisData.add(d);
+//        }
+//
+//        return hisData;
+//
+//    }
     public static long getStringToDate(String dateString) {
         Date date = new Date();
         try{

@@ -7,12 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.guoziwei.klinelib.chart.TimeLineView;
-import com.guoziwei.klinelib.model.HisData;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.ui.base.BaseView;
-import com.yiyoupin.stock.ui.view.kline.Util;
-
-import java.util.List;
 
 /**
  * @author zhaoyapeng

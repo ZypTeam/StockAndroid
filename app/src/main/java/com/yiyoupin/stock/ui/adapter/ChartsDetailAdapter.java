@@ -6,10 +6,8 @@ import android.widget.TextView;
 
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.model.ChartItemModel;
-import com.yiyoupin.stock.model.ChartsModel;
-import com.yiyoupin.stock.ui.base.BaseAdapter;
-import com.yiyoupin.stock.ui.base.BaseViewHolder;
-import com.yiyoupin.stock.ui.view.FormView;
+import com.jusfoun.baselibrary.base.BaseAdapter;
+import com.jusfoun.baselibrary.base.BaseViewHolder;
 
 /**
  * @author wangcc

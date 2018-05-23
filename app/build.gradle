@@ -24,7 +24,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.yiyoupin
-            buildConfigField "boolean", "LOG_MODE", "false"
+            buildConfigField "boolean", "LOG_MODE", "true"
             resValue("string","url","http://119.90.56.115:8091")
         }
         debug {

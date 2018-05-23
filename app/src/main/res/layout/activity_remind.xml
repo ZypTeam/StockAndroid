@@ -21,8 +21,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@+id/view_line">
+        android:layout_below="@+id/view_line"
+        android:orientation="vertical">
 
         <com.yiyoupin.stock.ui.view.RemindView
             android:id="@+id/view_zhang"
@@ -53,14 +53,12 @@
         <com.yiyoupin.stock.ui.view.RemindView
             android:id="@+id/view_buy"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" />
 
         <com.yiyoupin.stock.ui.view.RemindView
             android:id="@+id/view_mai"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" />
 
         <com.yiyoupin.stock.ui.view.RemindView
             android:id="@+id/view_vip"
