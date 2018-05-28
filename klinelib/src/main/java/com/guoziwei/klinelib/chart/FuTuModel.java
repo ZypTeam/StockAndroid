@@ -39,15 +39,25 @@ public class FuTuModel extends BaseModel implements Serializable {
 
         public List<Integer> width;
         public List<String> color;
+
+        public String trend_date;
+        public double trend_data;
     }
 
 
-    public class TrendLineListmData implements Serializable {
-        public List<TrendLineItemData> line_data;
+    public static class TrendLineListmData implements Serializable {
+        public List<LineItemData> line_data;
+
+
+        public String line_type;
+        public String line_name;
+        public String line_color;
+
+
     }
 
 
-    public class TrendLineItemData implements Serializable {
+    public static class TrendLineItemData implements Serializable {
 
         public String trend_date;
         public double trend_data;

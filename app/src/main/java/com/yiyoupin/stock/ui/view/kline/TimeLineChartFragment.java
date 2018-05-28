@@ -48,7 +48,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
     private int currentIndex = 0;
 
     private String main_tactics_id = "", stock_code = "";
-    private String Incidental_tactics_id;
+    private String Incidental_tactics_id="0";
 
     public static TimeLineChartFragment newInstance(String stock_code, String tactics_id, int currentIndex) {
         TimeLineChartFragment fragment = new TimeLineChartFragment();
@@ -72,6 +72,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
         main_tactics_id = getArguments().getString("tactics_id");
         stock_code = getArguments().getString("stock_code");
         currentIndex = getArguments().getInt("currentIndex");
+        Incidental_tactics_id =  getArguments().getString("Incidental_tactics_id");
     }
 
     @Override
@@ -124,6 +125,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
             @Override
             public void mainCallback(String tactics_id) {
               main_tactics_id = tactics_id;
+                Log.e("tag","mainCeluePopupWindow3");
               getDetailsNet();
             }
 
@@ -218,10 +220,10 @@ public class TimeLineChartFragment extends BaseStockFragment {
         if (model != null && model.dapandata != null && model.dapandata.size() > 0) {
             final List<HisData> hisData = Util.get1Day(model.dapandata);
             if (hisData.size() > 0)
-                mTimeLineView.setLastClose(hisData.get(0).getClose());
+//                mTimeLineView.setLastClose(hisData.get(0).getClose());
 
 
-            int count = 241;
+//            int count = 241;
 //            if (hisData.size() < count) {
 //                mTimeLineView.setCount(count, count, hisData.size());
 //            } else {
@@ -337,7 +339,7 @@ public class TimeLineChartFragment extends BaseStockFragment {
 
 
     private void getDetailsNet() {
-
+        Log.e("tag","mainCeluePopupWindow4");
         showLoadDialog();
         HashMap<String, String> params = new HashMap();
         params.put("main_tactics_id", main_tactics_id);

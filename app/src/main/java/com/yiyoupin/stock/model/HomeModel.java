@@ -30,6 +30,8 @@ public class HomeModel extends BaseModel implements Serializable {
         public String plate_index;
         public String plate_growth;
         public String plate_growth_rate;
+        public String plate_code;
+        public String plate_id;
     }
 
     public class StocktacticsItemModel extends BaseModel implements Serializable{

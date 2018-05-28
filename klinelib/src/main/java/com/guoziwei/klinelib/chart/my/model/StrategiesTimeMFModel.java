@@ -29,16 +29,18 @@ public class StrategiesTimeMFModel extends BaseModel implements Serializable{
 
         public List<LineModel> data1;
 
-        public FuTuModel.FutuData data2;
+        public FuAllModel data2;
     }
 
     public static class StrategiesTimeMFMainFuDataModel extends BaseModel implements Serializable{
 
         public  int type;
 
-        public List<KModel> data1;
+        public List<LineModel> data1;
 
-        public FuTuModel.FutuData data2;
+        public FuAllModel data2;
+
+        public List<KModel> data3;
     }
 }
 

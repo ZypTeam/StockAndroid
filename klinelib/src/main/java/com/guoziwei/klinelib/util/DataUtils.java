@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.guoziwei.klinelib.chart.FuTuModel;
 import com.guoziwei.klinelib.chart.my.Util;
+import com.guoziwei.klinelib.chart.my.model.FuAllModel;
 import com.guoziwei.klinelib.model.HisData;
 import com.guoziwei.klinelib.model.KDJ;
 import com.guoziwei.klinelib.model.MACD;
@@ -34,10 +35,13 @@ public class DataUtils {
         List<Double> ma10List = calculateMA(10, list);
         List<Double> ma20List = calculateMA(20, list);
         List<Double> ma30List = calculateMA(30, list);
+
         MACD macd = new MACD(list);
         List<Double> bar = macd.getMACD();
         List<Double> dea = macd.getDEA();
         List<Double> dif = macd.getDIF();
+
+
         KDJ kdj = new KDJ(list);
         ArrayList<Double> d = kdj.getD();
         ArrayList<Double> k = kdj.getK();
@@ -289,6 +293,37 @@ public class DataUtils {
 
 
         return date.getTime();
+    }
+
+
+    public static List<List<HisData>> detailFuData(FuAllModel model) {
+
+        if(model==null||model.column==null){
+            return null;
+        }
+        List<List<HisData>> lists = new ArrayList<>();
+
+        for(int i=0;i<model.column.size();i++){
+            List<HisData> hisData = new ArrayList<>();
+
+            if(model.column.get(i)!=null) {
+                for (int j = 0; j < model.column.get(i).line_data.size(); j++) {
+                    FuTuModel.LineItemData lineData =  model.column.get(i).line_data.get(j);
+
+                    HisData d = new HisData();
+                    d.setOpen(lineData.high);
+                    d.setClose(lineData.low);
+                    d.width = lineData.width;
+                    d.color = lineData.color;
+                    d.groupId = i;
+
+                    d.setDate(getStringToDate(lineData.stickline_date));
+                    hisData.add(0, d);
+                }
+                lists.add(hisData);
+            }
+        }
+        return lists;
     }
 
 }

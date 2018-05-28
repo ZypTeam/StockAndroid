@@ -1,6 +1,7 @@
 package com.guoziwei.klinelib.chart.my.model;
 
 import com.guoziwei.klinelib.chart.FuTuModel;
+import com.guoziwei.klinelib.model.HisData;
 import com.jusfoun.baselibrary.base.BaseModel;
 
 import java.io.Serializable;
@@ -29,20 +30,23 @@ public class StrategiesFiveTimeMFModel extends BaseModel implements Serializable
 
         public List<FiveDayModel.FiveDayItemModel> data1;
 
-        public FuTuModel.FutuData data2;
+        public FuAllModel data2;
     }
 
     public static class StrategiesTimeMFMainFuDataModel extends BaseModel implements Serializable{
 
         public  int type;
 
-        public List<KModel> data1;
+        public List<KLineListData> data1;
 
-        public FuTuModel.FutuData data2;
+        public FuAllModel data2;
+
+
+        public List<KModel> data3;
     }
 
     public static class KLineListData extends BaseModel implements Serializable{
-        public List<KModel> dapandata;
+        public List<LineModel> dapandata;
     }
 
 

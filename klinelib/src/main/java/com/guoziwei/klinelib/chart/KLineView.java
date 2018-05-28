@@ -37,6 +37,7 @@ import com.guoziwei.klinelib.R;
 import com.guoziwei.klinelib.chart.my.CelLueCallBack;
 import com.guoziwei.klinelib.chart.my.CelueMenuView;
 import com.guoziwei.klinelib.chart.my.Util;
+import com.guoziwei.klinelib.chart.my.model.FuAllModel;
 import com.guoziwei.klinelib.chart.my.model.StrategiesKMFModel;
 import com.guoziwei.klinelib.model.HisData;
 import com.guoziwei.klinelib.util.DataUtils;
@@ -154,9 +155,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 //                event.currentIndex = viewPager.getCurrentItem();
 //                event.tactics_id = model.tactics_id;
 
-                Log.e("tag", "fuCeluePopupWindow1");
                 if (celLueCallBack != null) {
-                    Log.e("tag", "fuCeluePopupWindow2");
                     celLueCallBack.fuTuCallback(model.tactics_id);
                 }
                 fuMenuView.setTitleText(model.tactics_name);
@@ -178,9 +177,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 //                FuTuEvent event = new FuTuEvent();
 //                event.currentIndex = viewPager.getCurrentItem();
 //                event.tactics_id = model.tactics_id;
-                Log.e("tag", "fuCeluePopupWindow3");
                 if (celLueCallBack != null) {
-                    Log.e("tag", "fuCeluePopupWindow4");
                     celLueCallBack.mainCallback(model.tactics_id);
                 }
                 mainMenuView.setTitleText(model.tactics_name);
@@ -328,9 +325,9 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
     public void initNormalData(List<HisData> hisDatas) {
         initData(hisDatas);
-        initChartVolumeData();
-        initChartMacdData();
-        initChartKdjData();
+//        initChartVolumeData();
+//        initChartMacdData();
+//        initChartKdjData();
     }
 
     public void initData(List<HisData> hisDatas) {
@@ -418,36 +415,42 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
                     initNormalData(hisData);
                 } else if (model.mainData.type == 2) {
-                    drawFu(model.mainData.data2, mainFuChart, true);
+                    drawFus(model.mainData.data2, mainFuChart, true);
                 }
             }
             if (model.incidentalData != null) {
                 if (model.incidentalData.type == 1) {
-//                List<HisData> hisData = Util.getK(model.incidentalData.data1);
-                    initChartVolumeData();
+                List<HisData> hisData = Util.getK(model.incidentalData.data1);
+                    initChartVolumeData(hisData);
                 } else if (model.incidentalData.type == 2) {
-                    drawFu(model.incidentalData.data2, fuFuChart, false);
+                    drawFus(model.incidentalData.data2, fuFuChart, false);
+                }else if(model.incidentalData.type==3){
+                    final List<HisData> hisData = Util.getK(model.incidentalData.data3);
+                    initChartMacdData(hisData);
                 }
             }
 
         }
 
-    public void drawFu(FuTuModel.FutuData futuData, AppCombinedChart appCombinedChart, boolean isMain) {
+
+
+    public void drawFus(FuAllModel futuData, AppCombinedChart appCombinedChart, boolean isMain) {
         appCombinedChart.setVisibility(VISIBLE);
         if (isMain) {
             mChartPrice.setVisibility(GONE);
         } else {
             mChartVolume.setVisibility(GONE);
+            mChartMacd.setVisibility(GONE);
         }
 
-        FuTuModel model = new FuTuModel();
-        model.data = futuData;
-        model = DataUtils.detailData(model);
 
-        List<List<HisData>> hisDatas = model.lists;
+
+        Log.e("tag", "trend");
+
+        List<List<HisData>> hisDatas =  DataUtils.detailFuData(futuData);
 
         Log.e("tag", "hisDatas===" + hisDatas.size());
-        mData.clear();
+//        mData.clear();
 //        mData.addAll();
 
 //        ArrayList<CandleEntry> lineCJEntries = new ArrayList<>(INIT_COUNT);
@@ -459,11 +462,13 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 //        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
 //        ArrayList<Entry> paddingEntries = new ArrayList<>(INIT_COUNT);
 
-        ArrayList<Entry> trendLine = new ArrayList<>();
-        ArrayList<Entry> longTrendLine = new ArrayList<>();
         ArrayList<Entry> paddingrendLine = new ArrayList<>();
         ArrayList<ICandleDataSet> sets = new ArrayList<>();
+        List<ILineDataSet> lineList = new ArrayList<>();
+
         try {
+
+            Log.e("tag", "trend1");
             for (int j = 0; j < hisDatas.size(); j++) {
                 ArrayList<CandleEntry> lineCJEntries = new ArrayList<>();
                 List<HisData> hdList = DataUtils.calculateHisData(hisDatas.get(j));
@@ -474,30 +479,35 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
                     }
                     lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose(), hisData.width, hisData.color));
                 }
+
+                if(j==0){
+                    lineList.add(setLine(INVISIABLE_LINE,paddingrendLine));
+                }
                 sets.add(setKLine(NORMAL_LINE, lineCJEntries));
-                mData.addAll(hdList);
+//                mData.addAll(hdList);
             }
+            Log.e("tag", "trend2");
         } catch (Exception e) {
-            Log.e("tag", "trendlinetrendline5=" + e);
+
         }
 
 
-        if (model.data != null) {
-            if (model.data.trendline != null && model.data.trendline.line_data != null && model.data.trendline.line_data.size() > 0) {
-                for (int i = 0; i < model.data.trendline.line_data.size(); i++) {
-                    trendLine.add(new Entry(i, (float) model.data.trendline.line_data.get(i).trend_data));
-                }
-            }
-            if (model.data.longtrendline != null && model.data.longtrendline.line_data != null && model.data.longtrendline.line_data.size() > 0) {
-                for (int i = 0; i < model.data.longtrendline.line_data.size(); i++) {
-                    longTrendLine.add(new Entry(i, (float) model.data.longtrendline.line_data.get(i).trend_data));
-                }
-            }
-        }
 
+        if(futuData!=null&&futuData.line!=null&&futuData.line.size()>0){
+            for(int i = 0;i<futuData.line.size();i++){
+                ArrayList<Entry> longTrendLine = new ArrayList<>();
+
+                for(int j=0;j<futuData.line.get(i).line_data.size();j++) {
+                    longTrendLine.add(new Entry(j, (float) futuData.line.get(i).line_data.get(j).trend_data));
+                }
+
+                lineList.add( initLineAndColor(NORMAL_LINE, longTrendLine,futuData.line.get(i).line_color));
+            }
+
+        }
 
         LineData lineData = new LineData(
-                setLine(INVISIABLE_LINE, paddingrendLine));
+                lineList);
 
         DrawingData candleData = new DrawingData(sets);
         CombinedData combinedData = new CombinedData();
@@ -519,7 +529,6 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 //        mChartMacd.getXAxis().setAxisMaximum(mChartMacd.getData().getXMax() + 0.5f);
 //        mChartKdj.getXAxis().setAxisMaximum(mChartKdj.getData().getXMax() + 0.5f);
         appCombinedChart.resetZoom();
-        Log.e("tag", "MAX_COUNT * 1f / INIT_COUNTMAX_COUNT * 1f / INIT_COUNT=" + MAX_COUNT * 1f / (INIT_COUNT * 1f));
         appCombinedChart.zoom(MAX_COUNT * 1f / (INIT_COUNT * 1f), 0, 0, 0);
 
 //        mChartFu.zoom(MAX_COUNT * 1f / INIT_COUNT, 0, 0, 0);
@@ -536,7 +545,6 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 //        setDescription(mChartKdj, String.format(Locale.getDefault(), "K:%.2f  D:%.2f  J:%.2f",
 //                hisData.getK(), hisData.getD(), hisData.getJ()));
     }
-
 
     private BarDataSet setBar(ArrayList<BarEntry> barEntries, int type) {
         BarDataSet barDataSet = new BarDataSet(barEntries, "vol");
@@ -632,8 +640,11 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         return set;
     }
 
-    private void initChartVolumeData() {
+    private void initChartVolumeData(List<HisData> hisDatas) {
 
+        mData.clear();
+        mData.addAll(DataUtils.calculateHisData(hisDatas));
+        mChartMacd.setVisibility(GONE);
         fuFuChart.setVisibility(GONE);
         mChartVolume.setVisibility(VISIBLE);
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -669,7 +680,16 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
     }
 
-    private void initChartMacdData() {
+    private void initChartMacdData(List<HisData> hisDatas) {
+
+        mData.clear();
+        mData.addAll(DataUtils.calculateHisData(hisDatas));
+
+
+        fuFuChart.setVisibility(GONE);
+        mChartVolume.setVisibility(GONE);
+        mChartMacd.setVisibility(VISIBLE);
+
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         ArrayList<BarEntry> paddingEntries = new ArrayList<>();
         ArrayList<Entry> difEntries = new ArrayList<>();
@@ -952,6 +972,27 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         if (my_tactics_fu != null && my_tactics_fu.size() > 0) {
             fuCeluePopupWindow.setData(my_tactics_fu);
         }
+    }
+
+    private LineDataSet initLineAndColor(int type, ArrayList<Entry> lineEntries,String color) {
+        if(TextUtils.isEmpty(color)){
+            color = "#ffffff";
+        }
+        LineDataSet lineDataSetMa = new LineDataSet(lineEntries, "ma" + type);
+        lineDataSetMa.setDrawValues(false);
+
+        lineDataSetMa.setColor(Color.parseColor(color));
+        lineDataSetMa.setCircleColor(ContextCompat.getColor(mContext, R.color.normal_line_color));
+
+
+        lineDataSetMa.setAxisDependency(YAxis.AxisDependency.LEFT);
+        lineDataSetMa.setLineWidth(1f);
+        lineDataSetMa.setCircleRadius(1f);
+
+        lineDataSetMa.setDrawCircles(false);
+        lineDataSetMa.setDrawCircleHole(false);
+
+        return lineDataSetMa;
     }
 
 }

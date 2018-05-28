@@ -126,6 +126,8 @@ public class RemindActivity extends BaseTakeActivity {
         params.put("down_to_remind", viewRidie.getState());
         params.put("day_up_rate_remind", viewRizhang.getState());
         params.put("day_down_rate_remind", viewRizhang.getState());
+        params.put("buy_remind", viewBuy.getState());
+        params.put("sale_remind", viewMai.getState());
         params.put("stock_code", stock_code);
         addNetwork(Api.getInstance().getService(ApiService.class).setRemindNet(params)
                 , new Action1<UserDataModel>() {

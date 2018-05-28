@@ -142,11 +142,11 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
             String groupName = group.getTitle();
             title.setData(groupName);
             if ("涨幅榜".equals(groupName)) {
-                cur_price.setText(model.getTrade_volumn() + "");
+                cur_price.setText(model.getClose() + "");
                 up_down.setText(model.getOffset_size()+"");
             } else if (StringUtil.equals("跌幅榜", groupName)) {
                 up_down.setText(model.getOffset_size()+"");
-                cur_price.setText(model.getTrade_volumn() + "");
+                cur_price.setText(model.getClose() + "");
             } else if (StringUtil.equals("成交额榜", groupName)) {
                 up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getTrade_amount() + "");

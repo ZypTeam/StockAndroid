@@ -29,7 +29,8 @@ public class StrategiesKMFModel extends BaseModel implements Serializable{
 
         public List<KModel> data1;
 
-        public FuTuModel.FutuData data2;
+        public FuAllModel data2;
+
     }
 
     public static class StrategieskMFMainFuDataModel extends BaseModel implements Serializable{
@@ -38,7 +39,9 @@ public class StrategiesKMFModel extends BaseModel implements Serializable{
 
         public List<KModel> data1;
 
-        public FuTuModel.FutuData data2;
+        public FuAllModel data2;
+
+        public List<KModel> data3;
     }
 }
 
