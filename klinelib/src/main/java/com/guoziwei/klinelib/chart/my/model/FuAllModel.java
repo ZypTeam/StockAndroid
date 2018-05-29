@@ -21,6 +21,8 @@ public class FuAllModel extends BaseModel implements Serializable {
 
     public List<FiveDayModel.FiveDayItemModel> five_basic;
 
+    public List<KModel> k_basic;
+
 }
 
 

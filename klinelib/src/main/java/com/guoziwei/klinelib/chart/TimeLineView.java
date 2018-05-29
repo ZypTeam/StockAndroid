@@ -151,12 +151,11 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         fuCeluePopupWindow = new CeluePopupWindow(mContext);
         mainCeluePopupWindow = new CeluePopupWindow(mContext);
 
-
         fuMenuView.setOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fuCeluePopupWindow.showAsDropDown(fuMenuView);
 
+                fuCeluePopupWindow.showAsDropDown(fuMenuView);
 
             }
         });
@@ -332,15 +331,15 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
             Log.e("tag", "priceEntriespriceEntries=" + mData.get(i).getClose() + " " + mData.get(i).getAvePrice());
         }
 
-//        if (!mData.isEmpty() && mData.size() < MAX_COUNT) {
-//            for (int i = mData.size(); i < MAX_COUNT; i++) {
-//                paddingEntries.add(new Entry(i, (float) mData.get(mData.size() - 1).getClose()));
-//            }
-//        }
+        if (!mData.isEmpty() && mData.size() < MAX_COUNT) {
+            for (int i = mData.size(); i < MAX_COUNT; i++) {
+                paddingEntries.add(new Entry(i, (float) mData.get(mData.size() - 1).getClose()));
+            }
+        }
         ArrayList<ILineDataSet> sets = new ArrayList<>();
         sets.add(setLine(NORMAL_LINE, priceEntries));
         sets.add(setLine(AVE_LINE, aveEntries));
-//        sets.add(setLine(INVISIABLE_LINE, paddingEntries));
+        sets.add(setLine(INVISIABLE_LINE, paddingEntries));
         LineData lineData = new LineData(sets);
 
         CombinedData combinedData = new CombinedData();
@@ -361,45 +360,7 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
     }
 
 
-    public void setDatas(StrategiesFiveTimeMFModel.StrategiesTimeMFDataModel model) {
-        if (model.mainData != null) {
-            if (model.mainData.type == 1) {
-                List<List<HisData>> hisDatas = Util.get5Day(model.mainData.data1);
-                int count = 0;
-                for (int i = 0; i < hisDatas.size(); i++) {
-                    count += hisDatas.get(i).size();
-                }
-                setCount(count, count, count);
 
-                Log.e("tag", "setDatassetDatas111");
-                initDatas(hisDatas);
-
-            } else if (model.mainData.type == 2) {
-                drawFus(model.mainData.data2, mCulueChartPrice, true);
-            }
-        }
-        if (model.incidentalData != null) {
-            if (model.incidentalData.type == 1) {
-                List<LineModel> list = new ArrayList<>();
-                if (model.incidentalData.data1 != null) {
-                    for (int i = 0; i < model.incidentalData.data1.size(); i++) {
-                        if (model.incidentalData.data1.get(i).dapandata != null)
-                            list.addAll(model.incidentalData.data1.get(i).dapandata);
-                    }
-                }
-//                List<HisData> hisData = Util.getK(model.incidentalData.data1);
-                List<HisData> hisData = Util.get1DayVolume(list);
-
-                initChartVolumeData(hisData);
-            } else if (model.incidentalData.type == 2) {
-                drawFus(model.incidentalData.data2, mChartFu, false);
-            } else if (model.incidentalData.type == 3) {
-                final List<HisData> hisData = Util.getK(model.incidentalData.data3);
-                initChartMacdData(hisData);
-            }
-        }
-
-    }
 
     public void initDatas(List<List<HisData>> hisDatas) {
 //
@@ -580,27 +541,30 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         mData.addAll(DataUtils.calculateHisData(hisDatas));
 
 
-        XAxis xAxis = mChartVolume.getXAxis();
-        xAxis.setLabelCount(hisDatas.size() + 1, true);
-        xAxis.setAvoidFirstLastClipping(false);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                value += 1; // 这里不设置+1会有bug
-                Log.e("tag", "DateUtil===s=" + value);
-                if (mData.isEmpty()) {
-                    return "";
-                }
-                if (value < 0) {
-                    value = 0;
-                }
-                if (value < mData.size()) {
-                    return DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat);
-                }
-                return "";
-            }
-        });
+//        XAxis xAxis = mChartVolume.getXAxis();
+//        xAxis.setLabelCount(hisDatas.size() + 1, true);
+//        xAxis.setAvoidFirstLastClipping(false);
+//        xAxis.setCenterAxisLabels(true);
+//        xAxis.setValueFormatter(new IAxisValueFormatter() {
+//            @Override
+//            public String getFormattedValue(float value, AxisBase axis) {
+//                value += 1; // 这里不设置+1会有bug
+//                Log.e("tag", "DateUtil===s=" + value);
+//                if (mData.isEmpty()) {
+//                    return "";
+//                }
+//                if (value < 0) {
+//                    value = 0;
+//                }
+//                if (value < mData.size()) {
+//
+//                    Log.e("tag", "DateUtilDateUtil===s=" + DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat));
+//
+//                    return DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat);
+//                }
+//                return "";
+//            }
+//        });
 
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -857,29 +821,6 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         mCulueChartPrice.setRendererRightYAxis(rightColorContentYAxisRenderer);
     }
 
-    public void setData(StrategiesTimeMFModel.StrategiesTimeMFDataModel model) {
-
-        if (model.mainData != null) {
-            if (model.mainData.type == 1) {
-                final List<HisData> hisData = Util.get1Day(model.mainData.data1);
-                initNormalData(hisData);
-            } else if (model.mainData.type == 2) {
-                drawFus(model.mainData.data2, mCulueChartPrice, true);
-            }
-        }
-        if (model.incidentalData != null) {
-            if (model.incidentalData.type == 1) {
-                List<HisData> hisData = Util.get1Day(model.incidentalData.data1);
-                initChartVolumeData(hisData);
-            } else if (model.incidentalData.type == 2) {
-                drawFus(model.incidentalData.data2, mChartFu, false);
-            } else if (model.incidentalData.type == 3) {
-                final List<HisData> hisData = Util.getK(model.incidentalData.data3);
-                initChartMacdData(hisData);
-            }
-        }
-
-    }
 
     public void drawFu(FuTuModel.FutuData futuData, AppCombinedChart appCombinedChart, boolean isMain) {
         appCombinedChart.setVisibility(VISIBLE);
@@ -991,7 +932,7 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
     public void drawFus(FuAllModel futuData, AppCombinedChart appCombinedChart, boolean isMain) {
         appCombinedChart.setVisibility(VISIBLE);
         if (isMain) {
-            mChartPrice.setVisibility(GONE);
+//            mChartPrice.setVisibility(GONE);
         } else {
             mChartVolume.setVisibility(GONE);
             mChartMacd.setVisibility(GONE);
@@ -1079,7 +1020,7 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
 
             ArrayList<Entry> priceEntries = new ArrayList<>(INIT_COUNT);
             ArrayList<Entry> aveEntries = new ArrayList<>(INIT_COUNT);
-            for (int i = 0; i < mData.size(); i++) {
+            for (int i = 0; i < futuData.time_basic.size(); i++) {
                 priceEntries.add(new Entry(i, (float) futuData.time_basic.get(i).getPrice()));
                 aveEntries.add(new Entry(i, (float) futuData.time_basic.get(i).getAverage()));
             }
@@ -1179,25 +1120,25 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
         xAxis.setLabelCount(hisDatas.size() + 1, true);
         xAxis.setAvoidFirstLastClipping(false);
         xAxis.setCenterAxisLabels(true);
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                value += 1; // 这里不设置+1会有bug
-                Log.e("tag", "DateUtil===s=" + value);
-                if (mData.isEmpty()) {
-                    return "";
-                }
-                if (value < 0) {
-                    value = 0;
-                }
-                if (value < mData.size()) {
-                    Log.e("tag", "DateUtils=" + DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat));
-                    Log.e("tag", "DateUtilsDateUtilsDateUtils=" + mData.get((int) value).getDate());
-                    return DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat);
-                }
-                return "";
-            }
-        });
+//        xAxis.setValueFormatter(new IAxisValueFormatter() {
+//            @Override
+//            public String getFormattedValue(float value, AxisBase axis) {
+//                value += 1; // 这里不设置+1会有bug
+//                Log.e("tag", "DateUtil===s=" + value);
+//                if (mData.isEmpty()) {
+//                    return "";
+//                }
+//                if (value < 0) {
+//                    value = 0;
+//                }
+//                if (value < mData.size()) {
+//                    Log.e("tag", "DateUtils=" + DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat));
+//                    Log.e("tag", "DateUtilsDateUtilsDateUtils=" + mData.get((int) value).getDate());
+//                    return DateUtils.formatDate(mData.get((int) value).getDate(), mDateFormat);
+//                }
+//                return "";
+//            }
+//        });
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         ArrayList<BarEntry> paddingEntries = new ArrayList<>();
@@ -1258,6 +1199,69 @@ public class TimeLineView extends BaseView implements CoupleChartGestureListener
 
     public void setCelLueCallBack(CelLueCallBack celLueCallBack) {
         this.celLueCallBack = celLueCallBack;
+    }
+
+    public void setData(StrategiesTimeMFModel.StrategiesTimeMFDataModel model) {
+
+        if (model.mainData != null) {
+            if (model.mainData.type == 1) {
+                final List<HisData> hisData = Util.get1Day(model.mainData.data1);
+                initNormalData(hisData);
+            } else if (model.mainData.type == 2) {
+                drawFus(model.mainData.data2, mChartPrice, true);
+            }
+        }
+        if (model.incidentalData != null) {
+            if (model.incidentalData.type == 1) {
+                List<HisData> hisData = Util.get1Day(model.incidentalData.data1);
+                initChartVolumeData(hisData);
+            } else if (model.incidentalData.type == 2) {
+                drawFus(model.incidentalData.data2, mChartFu, false);
+            } else if (model.incidentalData.type == 3) {
+                final List<HisData> hisData = Util.getK(model.incidentalData.data3);
+                initChartMacdData(hisData);
+            }
+        }
+
+    }
+
+    public void setDatas(StrategiesFiveTimeMFModel.StrategiesTimeMFDataModel model) {
+        if (model.mainData != null) {
+            if (model.mainData.type == 1) {
+                List<List<HisData>> hisDatas = Util.get5Day(model.mainData.data1);
+                int count = 0;
+                for (int i = 0; i < hisDatas.size(); i++) {
+                    count += hisDatas.get(i).size();
+                }
+                setCount(count, count, count);
+
+                initDatas(hisDatas);
+
+            } else if (model.mainData.type == 2) {
+                drawFus(model.mainData.data2, mCulueChartPrice, true);
+            }
+        }
+        if (model.incidentalData != null) {
+            if (model.incidentalData.type == 1) {
+                List<LineModel> list = new ArrayList<>();
+                if (model.incidentalData.data1 != null) {
+                    for (int i = 0; i < model.incidentalData.data1.size(); i++) {
+                        if (model.incidentalData.data1.get(i).dapandata != null)
+                            list.addAll(model.incidentalData.data1.get(i).dapandata);
+                    }
+                }
+//                List<HisData> hisData = Util.getK(model.incidentalData.data1);
+                List<HisData> hisData = Util.get1DayVolume(list);
+
+                initChartVolumeData(hisData);
+            } else if (model.incidentalData.type == 2) {
+                drawFus(model.incidentalData.data2, mChartFu, false);
+            } else if (model.incidentalData.type == 3) {
+                final List<HisData> hisData = Util.getK(model.incidentalData.data3);
+                initChartMacdData(hisData);
+            }
+        }
+
     }
 
 }

@@ -335,31 +335,31 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mData.addAll(DataUtils.calculateHisData(hisDatas));
 
         ArrayList<CandleEntry> lineCJEntries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma5Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma10Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma20Entries = new ArrayList<>(INIT_COUNT);
-        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma5Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma10Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma20Entries = new ArrayList<>(INIT_COUNT);
+//        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
         ArrayList<Entry> paddingEntries = new ArrayList<>(INIT_COUNT);
 
         for (int i = 0; i < mData.size(); i++) {
             HisData hisData = mData.get(i);
             lineCJEntries.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose()));
-
-            if (!Double.isNaN(hisData.getMa5())) {
-                ma5Entries.add(new Entry(i, (float) hisData.getMa5()));
-            }
-
-            if (!Double.isNaN(hisData.getMa10())) {
-                ma10Entries.add(new Entry(i, (float) hisData.getMa10()));
-            }
-
-            if (!Double.isNaN(hisData.getMa20())) {
-                ma20Entries.add(new Entry(i, (float) hisData.getMa20()));
-            }
-
-            if (!Double.isNaN(hisData.getMa30())) {
-                ma30Entries.add(new Entry(i, (float) hisData.getMa30()));
-            }
+//
+//            if (!Double.isNaN(hisData.getMa5())) {
+//                ma5Entries.add(new Entry(i, (float) hisData.getMa5()));
+//            }
+//
+//            if (!Double.isNaN(hisData.getMa10())) {
+//                ma10Entries.add(new Entry(i, (float) hisData.getMa10()));
+//            }
+//
+//            if (!Double.isNaN(hisData.getMa20())) {
+//                ma20Entries.add(new Entry(i, (float) hisData.getMa20()));
+//            }
+//
+//            if (!Double.isNaN(hisData.getMa30())) {
+//                ma30Entries.add(new Entry(i, (float) hisData.getMa30()));
+//            }
         }
 
         if (!mData.isEmpty() && mData.size() < MAX_COUNT) {
@@ -369,11 +369,8 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         }
 
         LineData lineData = new LineData(
-                setLine(INVISIABLE_LINE, paddingEntries),
-                setLine(MA5, ma5Entries),
-                setLine(MA10, ma10Entries),
-                setLine(MA20, ma20Entries),
-                setLine(MA30, ma30Entries));
+                setLine(INVISIABLE_LINE, paddingEntries)
+            );
         CandleData candleData = new CandleData(setKLine(NORMAL_LINE, lineCJEntries));
         CombinedData combinedData = new CombinedData();
         combinedData.setData(lineData);
@@ -443,13 +440,10 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
             mChartMacd.setVisibility(GONE);
         }
 
+        CombinedData combinedData = new CombinedData();
 
-
-        Log.e("tag", "trend");
 
         List<List<HisData>> hisDatas =  DataUtils.detailFuData(futuData);
-
-        Log.e("tag", "hisDatas===" + hisDatas.size());
 //        mData.clear();
 //        mData.addAll();
 
@@ -462,9 +456,28 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 //        ArrayList<Entry> ma30Entries = new ArrayList<>(INIT_COUNT);
 //        ArrayList<Entry> paddingEntries = new ArrayList<>(INIT_COUNT);
 
+
+
         ArrayList<Entry> paddingrendLine = new ArrayList<>();
         ArrayList<ICandleDataSet> sets = new ArrayList<>();
         List<ILineDataSet> lineList = new ArrayList<>();
+
+
+
+        if(isMain&&futuData!=null&&futuData.k_basic!=null&&futuData.k_basic.size()>0) {
+            ArrayList<CandleEntry> kEntry = new ArrayList<>(INIT_COUNT);
+            final List<HisData> list = Util.getK(futuData.k_basic);
+
+            for (int i = 0; i < list.size(); i++) {
+                HisData hisData = list.get(i);
+                kEntry.add(new CandleEntry(i, (float) hisData.getHigh(), (float) hisData.getLow(), (float) hisData.getOpen(), (float) hisData.getClose()));
+            }
+            CandleData kCandleData = new CandleData(setKLine(NORMAL_LINE, kEntry));
+            combinedData.setData(kCandleData);
+        }
+
+
+
 
         try {
 
@@ -510,9 +523,10 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
                 lineList);
 
         DrawingData candleData = new DrawingData(sets);
-        CombinedData combinedData = new CombinedData();
         combinedData.setData(lineData);
         combinedData.setData(candleData);
+
+
         appCombinedChart.setData(combinedData);
 
         appCombinedChart.setVisibleXRange(MAX_COUNT, MIN_COUNT);
