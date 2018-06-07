@@ -61,6 +61,8 @@ public class StockDetailModel extends BaseModel implements Serializable {
         public String sellFourPri;
         public String sellFive;
         public String sellFivePri;
+        public String quantity_ratio;
+        public String change_rate;
     }
 
     public class TradeDetailModel extends BaseModel implements Serializable {

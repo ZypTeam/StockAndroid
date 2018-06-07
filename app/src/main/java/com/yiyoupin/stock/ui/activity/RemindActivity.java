@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.activity;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -68,8 +69,12 @@ public class RemindActivity extends BaseTakeActivity {
         titlebar.setRightText("保存", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                setRemindNet();
-                isVip();
+
+                if("1".equals(viewBuy.getState())||"1".equals(viewMai.getState())) {
+                    isVip();
+                }else{
+                    setRemindNet();
+                }
             }
         });
 
@@ -86,6 +91,8 @@ public class RemindActivity extends BaseTakeActivity {
 
 
     protected void setRemindNet() {
+        Log.e("tag","viewZhang.getText()="+viewZhang.getText());
+        Log.e("tag","viewZhang.getText()="+TextUtils.isEmpty(viewZhang.getText()));
         if (TextUtils.isEmpty(viewZhang.getText())) {
             Toast.makeText(mContext, "请输入股票涨到", Toast.LENGTH_SHORT).show();
             return;
@@ -160,8 +167,6 @@ public class RemindActivity extends BaseTakeActivity {
                     public void call(VipModel userDataModel) {
                         hideLoadDialog();
                         if (userDataModel.getCode() == 0) {
-
-
                             if (userDataModel.data != null && "1".equals(userDataModel.data.isvip)) {
                                 setRemindNet();
                             }else{

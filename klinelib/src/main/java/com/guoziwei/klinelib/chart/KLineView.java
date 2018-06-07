@@ -412,7 +412,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
                     initNormalData(hisData);
                 } else if (model.mainData.type == 2) {
-                    drawFus(model.mainData.data2, mainFuChart, true);
+                    drawFus(model.mainData.data2, mChartPrice, true);
                 }
             }
             if (model.incidentalData != null) {
@@ -434,7 +434,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
     public void drawFus(FuAllModel futuData, AppCombinedChart appCombinedChart, boolean isMain) {
         appCombinedChart.setVisibility(VISIBLE);
         if (isMain) {
-            mChartPrice.setVisibility(GONE);
+//            mChartPrice.setVisibility(GONE);
         } else {
             mChartVolume.setVisibility(GONE);
             mChartMacd.setVisibility(GONE);

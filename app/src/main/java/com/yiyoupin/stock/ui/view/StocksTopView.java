@@ -73,8 +73,8 @@ public class StocksTopView extends BaseView {
             textGao.setText(model.stock_detail.todayMax);
             textDi.setText(model.stock_detail.todayMin);
             textKai.setText(model.stock_detail.todayStartPri);
-            textHuan.setText(model.stock_detail.offset_size);
-            textLiang.setText(model.stock_detail.traNumber);
+            textHuan.setText(model.stock_detail.change_rate+"%");
+            textLiang.setText(model.stock_detail.quantity_ratio);
             textE.setText(model.stock_detail.traAmount);
 
             textPrice.setText(model.stock_detail.stock_price);

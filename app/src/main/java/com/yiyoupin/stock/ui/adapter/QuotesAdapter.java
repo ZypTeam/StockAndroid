@@ -141,12 +141,18 @@ public class QuotesAdapter extends ExpandableRecyclerViewAdapter<QuotesAdapter.Q
 
             String groupName = group.getTitle();
             title.setData(groupName);
+            up_down.setTextColor(0xfffe4a2e);
+            cur_price.setTextColor(0xfffe4a2e);
+
             if ("涨幅榜".equals(groupName)) {
                 cur_price.setText(model.getClose() + "");
                 up_down.setText(model.getOffset_size()+"");
             } else if (StringUtil.equals("跌幅榜", groupName)) {
                 up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getClose() + "");
+
+                up_down.setTextColor(0xff2eac39);
+                cur_price.setTextColor(0xff2eac39);
             } else if (StringUtil.equals("成交额榜", groupName)) {
                 up_down.setText(model.getOffset_size()+"");
                 cur_price.setText(model.getTrade_amount() + "");

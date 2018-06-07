@@ -33,7 +33,7 @@ public class BayVipActivity extends BaseStockActivity {
 
     @Override
     public void initDatas() {
-        userModel= UserInfoDelegate.getInstance().getUserInfo();
+        userModel = UserInfoDelegate.getInstance().getUserInfo();
     }
 
     @Override
@@ -52,7 +52,8 @@ public class BayVipActivity extends BaseStockActivity {
     public void initAction() {
         titleView.setTitle("购买VIP服务器");
         nameUser.setName("姓名");
-        nameUser.setContent(userModel.getNick_name());
+        if (userModel != null)
+            nameUser.setContent(userModel.getNick_name());
 
         startTime.setName("开始时间");
         startTime.setContent("2018-02-01");

@@ -3,6 +3,10 @@ package com.yiyoupin.stock.ui.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jusfoun.baselibrary.net.Api;
@@ -32,6 +36,10 @@ public class StrategiesDetailActivity extends BaseStockActivity {
     protected TextView textHisPhone;
     protected RecyclerView recyclerPhone;
     protected RecyclerView recyclerHis;
+    protected RelativeLayout layoutNoVipToday;
+    protected RelativeLayout layoutNoVipPhone;
+    protected ImageView imgRiqi;
+    protected Button btnBuy;
 
 
     private HomeListAdapter todayAdapter, phoneAdapter, hisAdapter;
@@ -64,6 +72,10 @@ public class StrategiesDetailActivity extends BaseStockActivity {
         textHisPhone = (TextView) findViewById(R.id.text_his_phone);
         recyclerPhone = (RecyclerView) findViewById(R.id.recycler_phone);
         recyclerHis = (RecyclerView) findViewById(R.id.recycler_his);
+        layoutNoVipToday = (RelativeLayout) findViewById(R.id.layout_no_vip_today);
+        layoutNoVipPhone = (RelativeLayout) findViewById(R.id.layout_no_vip_phone);
+        imgRiqi = (ImageView) findViewById(R.id.img_riqi);
+        btnBuy = (Button) findViewById(R.id.btn_buy);
 
     }
 
@@ -100,6 +112,20 @@ public class StrategiesDetailActivity extends BaseStockActivity {
         hisAdapter.setChoicenessId(choiceness_id);
 
         getTechnologyNet();
+
+
+        layoutNoVipToday.setVisibility(View.VISIBLE);
+        layoutNoVipPhone.setVisibility(View.VISIBLE);
+        recyclerToday.setVisibility(View.GONE);
+        recyclerPhone.setVisibility(View.GONE);
+
+
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
 

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_main">
+    android:background="@color/bg_main"
+    android:orientation="vertical">
 
 
     <com.yiyoupin.stock.ui.view.BackTitleView
@@ -78,6 +78,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
+                        android:paddingRight="50dp"
                         android:text="今日股票"
                         android:textColor="#d2d2d2"
                         android:textSize="14sp" />
@@ -113,6 +114,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <RelativeLayout
+                android:id="@+id/layout_no_vip_today"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_no_vip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="该部分功能需要开通VIP服务器功能才能看到"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
 
             <View
                 android:layout_width="match_parent"
@@ -146,6 +177,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
+                        android:paddingRight="50dp"
                         android:text="推送至手机"
                         android:textColor="#d2d2d2"
                         android:textSize="14sp" />
@@ -181,6 +213,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <RelativeLayout
+                android:id="@+id/layout_no_vip_phone"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_no_vip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="该部分功能需要开通VIP服务器功能才能看到"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -194,7 +255,8 @@
                 android:paddingEnd="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingStart="16dp">
+                android:paddingStart="16dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -214,6 +276,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
+                        android:paddingRight="50dp"
                         android:text="策略回测"
                         android:textColor="#d2d2d2"
                         android:textSize="14sp" />
@@ -235,6 +298,80 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
+                android:background="@color/line_color_black"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingStart="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_gravity="bottom"
+                        android:background="#fc4a2f"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingRight="50dp"
+                        android:text="历史牛股"
+                        android:textColor="#d2d2d2"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_gravity="bottom"
+                        android:background="#fc4a2f" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/img_riqi"
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_riqi"
+                    android:textColor="#9d9d9d" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_his"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
                 android:background="@color/line_color_black" />
 
             <RelativeLayout
@@ -263,7 +400,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="历史牛股"
+                        android:paddingRight="50dp"
+                        android:text="会员订购"
                         android:textColor="#d2d2d2"
                         android:textSize="14sp" />
 
@@ -274,22 +412,23 @@
                         android:background="#fc4a2f" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/line_color" />
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_his"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btn_buy"
+                android:layout_width="208dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="35dp"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/bg_btn_buy"
+                android:text="立即购买"
+                android:textColor="#ffffff" />
+
 
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

@@ -59,7 +59,7 @@ public class HomeBottomQuotesView extends BaseView {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString(StockShowActivity.ID,model.plate_id+"");
-                bundle.putString(StockShowActivity.CODE, model.plate_name);
+                bundle.putString(StockShowActivity.CODE, model.plate_code);
                 bundle.putString(StockShowActivity.CHOICENESS_ID, "");
                 UiUtils.goStockShowActivity(mContext, bundle);
             }
