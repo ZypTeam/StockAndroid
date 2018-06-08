@@ -455,4 +455,15 @@ public interface ApiService {
     @GET("/stock/time-detail/cl.do")
     Observable<StrategiesTimeMFModel> getStockTimeSharingFX(@QueryMap Map<String, String> params);
 
+
+
+    /**
+     * 策略详情
+     *
+     * @param params
+     * @return
+     */
+    @GET("/stock/securityselection/bulls-history-list.do")
+    Observable<StrategiesDetailModel> gethistoryListNet(@QueryMap Map<String, String> params);
+
 }

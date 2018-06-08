@@ -17,11 +17,13 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
 
     public class StrategiesDetailDataModel extends BaseModel implements Serializable {
         public List<QuotesItemModel> today_stock;
+        public List<QuotesItemModel> rows;
         public List<QuotesItemModel> to_phone_stock;
         public List<QuotesItemModel> history_stock;
         public TacticReviewModel tactic_review;
         public BuyselectionModel buyselection;
         public BuyselectionModel tactic;
+        public  VipModel  vip_status;
 
 
     }
@@ -42,7 +44,13 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
         public String choiceness_name;
         public String description;
         public String tactics_name;
+    }
 
+    public class VipModel extends BaseModel implements Serializable{
+
+        public String end_time;
+        public String begin_time;
+        public int isvip;
 
     }
 }
