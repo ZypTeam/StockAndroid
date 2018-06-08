@@ -188,6 +188,12 @@
             android:name=".ui.activity.BayVipActivity"
             android:screenOrientation="portrait" />
 
+        <!--策略历史-->
+        <activity
+            android:name=".ui.activity.HisListActivity"
+            android:screenOrientation="portrait" />
+
+
 
         <!--qq分享-->
         <activity

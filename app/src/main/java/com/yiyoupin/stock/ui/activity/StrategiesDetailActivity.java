@@ -1,6 +1,7 @@
 package com.yiyoupin.stock.ui.activity;
 
 import android.app.DatePickerDialog;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -184,6 +185,17 @@ public class StrategiesDetailActivity extends BaseStockActivity {
                     imgKaiguan.setImageResource(R.drawable.img_remid_close);
                 }
 
+            }
+        });
+
+
+        textHisToday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("tactics_id",choiceness_id);
+                goActivity(bundle,HisListActivity.class);
             }
         });
     }

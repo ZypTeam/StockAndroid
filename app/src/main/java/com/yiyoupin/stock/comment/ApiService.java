@@ -466,4 +466,14 @@ public interface ApiService {
     @GET("/stock/securityselection/bulls-history-list.do")
     Observable<StrategiesDetailModel> gethistoryListNet(@QueryMap Map<String, String> params);
 
+
+    /**
+     * 策略详情
+     *
+     * @param params
+     * @return
+     */
+    @GET("/stock/securityselection/history-list.do")
+    Observable<StrategiesDetailModel> getStrategieHisNet(@QueryMap Map<String, String> params);
+
 }

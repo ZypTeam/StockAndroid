@@ -15,6 +15,7 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
 
     public StrategiesDetailDataModel data;
 
+
     public class StrategiesDetailDataModel extends BaseModel implements Serializable {
         public List<QuotesItemModel> today_stock;
         public List<QuotesItemModel> rows;
@@ -24,6 +25,7 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
         public BuyselectionModel buyselection;
         public BuyselectionModel tactic;
         public  VipModel  vip_status;
+        public int total_number;
 
 
     }

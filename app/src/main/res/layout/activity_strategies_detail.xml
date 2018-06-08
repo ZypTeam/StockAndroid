@@ -199,13 +199,15 @@
                     android:drawablePadding="10dp"
                     android:drawableRight="@drawable/img_right_arrow"
                     android:text="历史"
-                    android:textColor="#9d9d9d" />
+                    android:textColor="#9d9d9d"
+                    android:visibility="gone"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
