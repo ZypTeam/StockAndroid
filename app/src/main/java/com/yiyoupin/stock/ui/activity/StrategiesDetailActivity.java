@@ -14,11 +14,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.jusfoun.baselibrary.Util.PhoneUtil;
 import com.jusfoun.baselibrary.net.Api;
 import com.yiyoupin.stock.R;
 import com.yiyoupin.stock.comment.ApiService;
+import com.yiyoupin.stock.delegate.UserInfoDelegate;
 import com.yiyoupin.stock.model.StrategiesDetailModel;
+import com.yiyoupin.stock.model.UserDataModel;
 import com.yiyoupin.stock.ui.adapter.HomeListAdapter;
 import com.yiyoupin.stock.ui.base.BaseStockActivity;
 import com.yiyoupin.stock.ui.view.BackTitleView;
@@ -133,6 +137,11 @@ public class StrategiesDetailActivity extends BaseStockActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(TextUtils.isEmpty(UserInfoDelegate.getInstance().getUserId())){
+                    goActivity(null,LoginActivity.class);
+                }else{
+                    goActivity(null,BayVipActivity.class);
+                }
 
             }
         });
@@ -178,11 +187,13 @@ public class StrategiesDetailActivity extends BaseStockActivity {
             @Override
             public void onClick(View view) {
                 if (!isOpen) {
-                    isOpen  =!isOpen;
+                    isOpen  =true;
                     imgKaiguan.setImageResource(R.drawable.img_remid_open);
+                    pushSend("1");
                 } else {
-                    isOpen  =!isOpen;
+                    isOpen  =false;
                     imgKaiguan.setImageResource(R.drawable.img_remid_close);
+                    pushSend("0");
                 }
 
             }
@@ -216,7 +227,7 @@ public class StrategiesDetailActivity extends BaseStockActivity {
                         if (model.getCode() == 0) {
                             if (model.data != null) {
                                 todayAdapter.refreshList(model.data.today_stock);
-                                phoneAdapter.refreshList(model.data.to_phone_stock);
+//                                phoneAdapter.refreshList(model.data.to_phone_stock);
                                 hisAdapter.refreshList(model.data.history_stock);
                                 if (model.data.tactic != null) {
                                     if (!TextUtils.isEmpty(model.data.tactic.tactics_name)) {
@@ -230,7 +241,6 @@ public class StrategiesDetailActivity extends BaseStockActivity {
 
 
                                 if (model.data.vip_status != null) {
-
                                     if (model.data.vip_status.isvip == 1) {
                                         layoutNoVipToday.setVisibility(View.GONE);
                                         layoutNoVipPhone.setVisibility(View.GONE);
@@ -243,6 +253,15 @@ public class StrategiesDetailActivity extends BaseStockActivity {
                                         recyclerToday.setVisibility(View.GONE);
                                         layoutPushPhone.setVisibility(View.GONE);
                                         layoutBuy.setVisibility(View.VISIBLE);
+                                    }
+                                }
+
+                                if(model.data.to_phone_stock!=null){
+                                    editPhone.setText(model.data.to_phone_stock.phone);
+                                    if(model.data.to_phone_stock.is_push==1){
+                                        imgKaiguan.setImageResource(R.drawable.img_remid_open);
+                                    }else{
+                                        imgKaiguan.setImageResource(R.drawable.img_remid_close);
                                     }
                                 }
 
@@ -286,4 +305,40 @@ public class StrategiesDetailActivity extends BaseStockActivity {
                     }
                 });
     }
+
+
+    /**
+     * 推送至手机
+     */
+    private void pushSend(String is_push) {
+
+        if(!PhoneUtil.isCellphone(this,editPhone.getText().toString())){
+            Toast.makeText(this,"请输入正确的是手机号",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        showLoadDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("security_selection_id", choiceness_id);
+        map.put("phone", editPhone.getText().toString());
+        map.put("is_push", is_push);
+
+        addNetwork(Api.getInstance().getService(ApiService.class).pushPhone(map)
+                , new Action1<UserDataModel>() {
+                    @Override
+                    public void call(UserDataModel model) {
+                        hideLoadDialog();
+                        if (model.getCode() == 0) {
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoadDialog();
+                    }
+                });
+    }
+
+
+
 }

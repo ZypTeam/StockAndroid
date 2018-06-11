@@ -5,6 +5,7 @@ import com.guoziwei.klinelib.chart.my.model.StrategiesFiveTimeMFModel;
 import com.guoziwei.klinelib.chart.my.model.StrategiesKMFModel;
 import com.jusfoun.baselibrary.base.NoDataModel;
 import com.yiyoupin.stock.model.AboutModel;
+import com.yiyoupin.stock.model.BuyModel;
 import com.yiyoupin.stock.model.BuySelectionMoreModel;
 import com.yiyoupin.stock.model.ChartDetailModel;
 import com.yiyoupin.stock.model.ChartsListModel;
@@ -476,4 +477,24 @@ public interface ApiService {
     @GET("/stock/securityselection/history-list.do")
     Observable<StrategiesDetailModel> getStrategieHisNet(@QueryMap Map<String, String> params);
 
+
+    /**
+     * 策略详情
+     *
+     * @param params
+     * @return
+     */
+    @GET("/stock/pay/unifiedorder.do")
+    Observable<BuyModel> getBuyInfo(@QueryMap Map<String, String> params);
+
+
+    /**
+     * 推送至手机
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/stock/securityselection/push-phone.do")
+    Observable<UserDataModel> pushPhone(@FieldMap Map<String, String> params);
 }

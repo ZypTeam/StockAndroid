@@ -84,14 +84,28 @@
 
     <ImageView
         android:id="@+id/qr_code"
-        app:layout_constraintTop_toBottomOf="@+id/price"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_line"
+        app:layout_constraintHorizontal_bias="0.774"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_line"
-        android:src="@mipmap/logo"
-        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/price"
+        app:layout_constraintVertical_bias="0.509" />
+
+    <ImageView
+        android:id="@+id/qr_code_zfb"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
-    
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_line"
+        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price"
+        app:layout_constraintVertical_bias="0.509" />
+
+
 
 </android.support.constraint.ConstraintLayout>

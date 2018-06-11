@@ -165,6 +165,7 @@ public class StockShowActivity extends BaseStockActivity {
             public void onClick(View view) {
 
                 Bundle bundle = new Bundle();
+//                bundle.putString("tactics_id", stockCode);
                 bundle.putString("stock_code", stockCode);
                 UiUtils.goRemindActivity(StockShowActivity.this, bundle);
             }

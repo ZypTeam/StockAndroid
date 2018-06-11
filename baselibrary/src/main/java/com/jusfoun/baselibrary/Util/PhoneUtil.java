@@ -16,10 +16,13 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author  wangchenchen
@@ -447,5 +450,18 @@ public class PhoneUtil {
             result = context.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    public static boolean isCellphone(Context mContext,String str) {
+
+        if(str.length()<11){
+            Toast.makeText(mContext,"请输入正确的是手机号",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+        Pattern pattern = Pattern.compile("^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(17[0,1,3,5,6,7,8]))\\d{8}$");
+        Matcher matcher = pattern.matcher(str);
+        return matcher.matches();
     }
 }

@@ -37,6 +37,7 @@ public class RemindActivity extends BaseTakeActivity {
 
 
     private String stock_code;
+    private String tactics_id;
 
 
     @Override
@@ -47,6 +48,7 @@ public class RemindActivity extends BaseTakeActivity {
     @Override
     public void initDatas() {
         stock_code = getIntent().getStringExtra("stock_code");
+//        tactics_id = getIntent().getStringExtra("tactics_id");
     }
 
     @Override

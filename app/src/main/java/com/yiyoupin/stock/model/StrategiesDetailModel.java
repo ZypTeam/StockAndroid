@@ -19,13 +19,14 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
     public class StrategiesDetailDataModel extends BaseModel implements Serializable {
         public List<QuotesItemModel> today_stock;
         public List<QuotesItemModel> rows;
-        public List<QuotesItemModel> to_phone_stock;
         public List<QuotesItemModel> history_stock;
         public TacticReviewModel tactic_review;
         public BuyselectionModel buyselection;
         public BuyselectionModel tactic;
         public  VipModel  vip_status;
         public int total_number;
+
+        public PhoneStockModel to_phone_stock;
 
 
     }
@@ -55,4 +56,11 @@ public class StrategiesDetailModel extends BaseModel implements Serializable {
         public int isvip;
 
     }
+
+    public class PhoneStockModel extends BaseModel implements Serializable{
+
+        public String phone;
+        public int is_push;
+    }
 }
+
